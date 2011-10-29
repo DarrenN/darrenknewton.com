@@ -1,2 +1,16 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
+body > header h1 {
+	font-weight: 800;
+	margin-bottom: 0;
+	color: $header-title-color;
+}
+
+body > header h2 {
+	font-family: $header-subtitle-font-family;
+	font-weight: 400;
+	font-weight: normal;
+	color: $header-title-color;
+	font-size: 0.8em;
+	margin-top: 0;
+}
