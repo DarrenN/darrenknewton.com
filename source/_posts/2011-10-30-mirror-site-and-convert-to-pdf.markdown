@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to: Mirror a site and convert to PDFs"
+title: "How to: Convert site to PDF with wkhtmltopdf and wget"
 date: 2011-10-30 18:29
 comments: true
 categories: [Code, Bash, PDF, wget, wkhtmltopdf]
