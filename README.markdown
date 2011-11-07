@@ -1,3 +1,7 @@
+## darrenknewton.com - a simple blog about code, culture and other things.
+
+Based on Octopress, so I'm leaving the original readme below. I've made some adjustments to the layout and some other things.
+
 ## What is Octopress?
 
 Octopress is [Jekyll](https://github.com/mojombo/jekyll) blogging at its finest.
