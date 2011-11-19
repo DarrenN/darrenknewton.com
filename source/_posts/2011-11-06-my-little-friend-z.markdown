@@ -5,7 +5,7 @@ date: 2011-11-06 16:50
 comments: true
 categories: [Bash, Shell, Tools]
 keywords: Bash, Shell, Z, Unix, Linux, CLI, utilities, tools
-description: "Z is a little command line utility that remembers your directories"
+description: "Z is a Unix program that remembers your directories for you"
 ---
 
 I'm a command line interface kind of guy, which is funny since I do everything on Macs. Then again, I first embraced PCs with an Apple IIe, which was a CLI only experience.

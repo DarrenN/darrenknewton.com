@@ -4,6 +4,7 @@ title: "I got gamed on Stack Overflow"
 date: 2011-1-28 19:46
 comments: true
 categories: [Code, Stack Overflow, PHP]
+description: "How I got suckered into doing someone's PHP homework on Stack Overflow"
 ---
 
 {% img left http://images.darrenknewton.com/trollface.png 256 256 'Le Trollface' 'trollface' %}

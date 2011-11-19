@@ -5,7 +5,7 @@ date: 2011-10-30 18:29
 comments: true
 categories: [Code, Bash, PDF, wget, wkhtmltopdf]
 keywords: code, bash, pdf, wget, site, mirror, convert, wkhtmltopdf
-description: "Use wget and wkhtmltopdf to mirror a site and convert to PDFs"
+description: "How to use wget and wkhtmltopdf to mirror a site and convert to PDFs : Unix, OS X"
 ---
 
 A friend of mine emailed me the other day with a quick question: _"What's an easy way to convert an entire site to PDF? Are there tools for this?"_

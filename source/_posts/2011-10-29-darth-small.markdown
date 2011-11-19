@@ -3,7 +3,8 @@ layout: post
 title: "Darth Small"
 date: 2011-10-29 20:23
 comments: true
-categories: [Photo, 恒志] 
+categories: [Photo, 恒志]
+description: "Sith Lord Darth Small casts his steely gaze upon me"
 ---
 
 
