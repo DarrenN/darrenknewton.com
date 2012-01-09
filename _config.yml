@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://darrenknewton.com
-title: miscellanea
+title: Miscellanea
 subtitle: Code, design and cultural ephemera from Darren Newton
 author: Darren Newton
 simple_search: http://google.com/search
@@ -56,7 +56,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/twitter.ht
 # ----------------------- #
 
 # Github repositories
-github_user: 
+github_user:
 github_repo_count: 0
 github_show_profile_link: true
 github_skip_forks: true
@@ -92,6 +92,6 @@ disqus_show_comment_count: false
 
 # Google Analytics
 google_analytics_tracking_id: UA-26663515-1
-   
+
 # Facebook Like
-facebook_like: true   
+facebook_like: true
