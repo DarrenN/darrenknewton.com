@@ -786,22 +786,23 @@ article footer .nav-back a:hover {
   color: #ff6600;
   text-decoration: none;
   font-weight: 400;
+  margin: 0 10px 0 0;
 }
-/* line 587, ../sass/screen.scss */
+/* line 588, ../sass/screen.scss */
 #generic article ul li i {
   font-weight: 600;
   color: #cccccc;
   padding: 0 0 0 20px;
   font-size: 0.9rem;
 }
-/* line 594, ../sass/screen.scss */
+/* line 595, ../sass/screen.scss */
 #generic article ul li em {
   color: #cccccc;
   font-style: italic;
   font-size: 0.9rem;
 }
 
-/* line 608, ../sass/screen.scss */
+/* line 609, ../sass/screen.scss */
 .missing h3.other-things {
   color: #4d4d4d;
   font-size: 1.4rem;
@@ -810,23 +811,23 @@ article footer .nav-back a:hover {
   font-style: "normal";
   font-weight: 600;
 }
-/* line 615, ../sass/screen.scss */
+/* line 616, ../sass/screen.scss */
 .missing ul li {
   margin: 10px 0;
 }
-/* line 617, ../sass/screen.scss */
+/* line 618, ../sass/screen.scss */
 .missing ul li b {
   font-family: "proxima-nova", "Gill Sans", "Helvetica", arial, sans-serif;
   font-style: "normal";
   font-weight: 600;
 }
-/* line 620, ../sass/screen.scss */
+/* line 621, ../sass/screen.scss */
 .missing ul li form {
   margin: 10px 0;
 }
 
 @media (min-width: 1em) and (max-width: 40em) {
-  /* line 633, ../sass/screen.scss */
+  /* line 634, ../sass/screen.scss */
   #masthead {
     clear: both;
     padding: 15px 0 15px 0;
@@ -834,7 +835,7 @@ article footer .nav-back a:hover {
     font-style: "normal";
     font-weight: 400;
   }
-  /* line 638, ../sass/screen.scss */
+  /* line 639, ../sass/screen.scss */
   #masthead #masthead-logo {
     float: none;
     width: auto;
@@ -846,7 +847,7 @@ article footer .nav-back a:hover {
     margin: 0 0 20px 0;
     text-align: center;
   }
-  /* line 644, ../sass/screen.scss */
+  /* line 645, ../sass/screen.scss */
   #masthead #masthead-logo img {
     display: block;
     position: relative;
@@ -854,7 +855,7 @@ article footer .nav-back a:hover {
     float: none;
     clear: both;
   }
-  /* line 651, ../sass/screen.scss */
+  /* line 652, ../sass/screen.scss */
   #masthead #masthead-logo span {
     display: block;
     padding: 0;
@@ -863,11 +864,11 @@ article footer .nav-back a:hover {
     font-size: 1.6rem;
     font-weight: 600;
   }
-  /* line 658, ../sass/screen.scss */
+  /* line 659, ../sass/screen.scss */
   #masthead #masthead-logo span i {
     display: none;
   }
-  /* line 664, ../sass/screen.scss */
+  /* line 665, ../sass/screen.scss */
   #masthead nav {
     float: none;
     width: auto;
@@ -877,31 +878,31 @@ article footer .nav-back a:hover {
     clear: both;
     display: block;
   }
-  /* line 668, ../sass/screen.scss */
+  /* line 669, ../sass/screen.scss */
   #masthead nav ul {
     text-align: center;
   }
-  /* line 671, ../sass/screen.scss */
+  /* line 672, ../sass/screen.scss */
   #masthead nav li {
     font-size: 1.4rem;
   }
 
-  /* line 679, ../sass/screen.scss */
+  /* line 680, ../sass/screen.scss */
   article header {
     text-align: center;
   }
-  /* line 681, ../sass/screen.scss */
+  /* line 682, ../sass/screen.scss */
   article header time {
     margin: 20px 0;
     font-size: 1.2rem;
     color: #b3b3b3;
   }
-  /* line 690, ../sass/screen.scss */
+  /* line 691, ../sass/screen.scss */
   article footer {
     font-size: 1.2rem;
     text-align: center;
   }
-  /* line 693, ../sass/screen.scss */
+  /* line 694, ../sass/screen.scss */
   article footer .metadata {
     float: none;
     width: auto;
@@ -909,28 +910,28 @@ article footer .nav-back a:hover {
     #margin-left: auto;
     display: block;
   }
-  /* line 696, ../sass/screen.scss */
+  /* line 697, ../sass/screen.scss */
   article footer .nav-back {
     display: none;
   }
 
-  /* line 702, ../sass/screen.scss */
+  /* line 703, ../sass/screen.scss */
   #article-nav {
     display: none;
   }
 
-  /* line 705, ../sass/screen.scss */
+  /* line 706, ../sass/screen.scss */
   #article-nav-mobile {
     display: block;
   }
 
-  /* line 709, ../sass/screen.scss */
+  /* line 710, ../sass/screen.scss */
   #colophon {
     padding: 0;
     height: auto;
   }
 
-  /* line 716, ../sass/screen.scss */
+  /* line 717, ../sass/screen.scss */
   #colophon-a,
   #colophon-b {
     display: block;
@@ -945,12 +946,12 @@ article footer .nav-back a:hover {
     line-height: 140%;
   }
 
-  /* line 725, ../sass/screen.scss */
+  /* line 726, ../sass/screen.scss */
   #badges-a {
     display: none;
   }
 
-  /* line 729, ../sass/screen.scss */
+  /* line 730, ../sass/screen.scss */
   #badges-b {
     float: none;
     width: auto;
@@ -959,27 +960,27 @@ article footer .nav-back a:hover {
     display: block;
     text-align: center;
   }
-  /* line 734, ../sass/screen.scss */
+  /* line 735, ../sass/screen.scss */
   #badges-b ul li {
     margin: 0 0 10px 0;
   }
-  /* line 736, ../sass/screen.scss */
+  /* line 737, ../sass/screen.scss */
   #badges-b ul li img {
     height: 64px;
     width: 64px;
   }
 
-  /* line 746, ../sass/screen.scss */
+  /* line 747, ../sass/screen.scss */
   #generic article h2 {
     text-align: center;
   }
-  /* line 752, ../sass/screen.scss */
+  /* line 753, ../sass/screen.scss */
   #generic article ul li span {
     display: block !important;
     text-align: center;
     margin: 0 0 5px 0 !important;
   }
-  /* line 758, ../sass/screen.scss */
+  /* line 759, ../sass/screen.scss */
   #generic article ul li a {
     font-size: 1.6rem;
     font-weight: 600 !important;
@@ -987,14 +988,14 @@ article footer .nav-back a:hover {
     display: block;
     text-align: center;
   }
-  /* line 766, ../sass/screen.scss */
+  /* line 767, ../sass/screen.scss */
   #generic article ul li i {
     font-weight: 600;
     color: #cccccc;
     font-size: 1rem;
     padding: 0;
   }
-  /* line 773, ../sass/screen.scss */
+  /* line 774, ../sass/screen.scss */
   #generic article ul li em {
     color: #cccccc;
     font-style: normal !important;

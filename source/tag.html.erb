@@ -9,7 +9,7 @@ description: Articles tagged with
 <ul>
 <% if @articles %>
   <% @articles[0...12].each do |article| %>
-    <li><a itemprop="itemListElement" href="<%= article.url %>"><%= article.title %></a> - published on <time itemprop="datePublished"><%= article.date.strftime('%b %e, %Y') %></time></li>
+    <li itemprop="itemListElement"><%= link_to article.title, article.url %> <span>published on <time itemprop="datePublished"><%= article.date.strftime('%b %e') %></time></span></li>
   <% end %>
 <% end %>
 </ul>
