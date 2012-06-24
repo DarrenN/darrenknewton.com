@@ -1,0 +1,42 @@
+{
+    "feed": {
+       "id": "urn:uuid:<%= settings.uuid %>",
+        "link": [
+            {
+                "@attributes": {
+                    "href": "http://darrenknewton.com/atom.json",
+                    "rel": "self"
+                }
+            },
+            {
+                "@attributes": {
+                    "href": "http://darrenknewton.com/"
+                }
+            }
+        ],
+        "title"    : "Miscellanea",
+        "subtitle" : "Code, design &amp; cultural ephemera",
+        "updated"  : "<%= Time.now.strftime('%FT%T%:z') %>",
+        "author": {
+            "name": "Darren Newton"
+        },
+        "rights" : "Copyright (c) <%= Date.today.strftime('%Y') %>, Darren Newton",
+        "entry": {
+            "content": {
+                "@attributes": {
+                    "type": "html"
+                }
+            },
+            "id": "urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + @atom_article.url, UUID::NameSpace_URL) %>",
+            "link": {
+                "@attributes": {
+                    "href": "http://darrenknewton.com<%= @atom_article.url %>"
+                }
+            },
+            "summary" : "<%= strip_tags js_escape_html @atom_article.summary %>",
+            "content" : "<%= js_escape_html @atom_article.body %>",
+            "title"   : "<%= js_escape_html @atom_article.title %>",
+            "updated" : "<%= @atom_article.date.strftime('%FT%T%:z') %>"
+        }
+    }
+}

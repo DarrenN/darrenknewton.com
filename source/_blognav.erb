@@ -1,0 +1,12 @@
+<ul>
+	<li id="article-nav-left">
+		<% unless current_article.previous_article.nil? %>
+		<%= link_to "<span>&lt;</span> " + current_article.previous_article.title, current_article.previous_article.url %>
+		<% end %>
+	</li>
+	<li id="article-nav-right">
+		<% unless current_article.next_article.nil? %>
+		<%= link_to current_article.next_article.title + " <span>&gt;</span>", current_article.next_article.url %> 
+		<% end %>
+	</li>
+</ul>

@@ -1,0 +1,5 @@
+<ul>
+<% settings.achievements.each do |achievement| %>
+	<li><a href="http://coderwall.com/DarrenN"><img src="<%= achievement.badge %>" width="42" height="42" alt="<%= achievement.name %>" title="<%= achievement.description %>"></a></li>	
+<% end %>
+</ul>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Miscellanea</title>
+  <subtitle>Code, design &amp; cultural ephemera</subtitle>
+  <link href="http://darrenknewton.com/atom.xml" rel="self"/>
+  <link href="http://darrenknewton.com/"/>
+  <id>urn:uuid:<%= settings.uuid %></id>
+  <updated><%= Time.now.strftime('%FT%T%:z') %></updated>
+  <rights>Copyright (c) <%= Date.today.strftime('%Y') %>, Darren Newton</rights>
+  <author>
+    <name>Darren Newton</name>
+  </author>
+  <% blog.articles.each do |article| %>
+  <entry>
+    <title type="html"><%= escape_html article.title %></title>
+    <link href="http://darrenknewton.com<%= article.url %>"/>
+    <link rel="alternate" type="text/html" href="http://darrenknewton.com<%= article.url %>index.html"/>
+    <updated><%= article.date.strftime('%FT%T%:z') %></updated>
+    <id>urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + article.url, UUID::NameSpace_URL) %></id>
+    <summary><%= strip_tags article.summary %></summary>
+    <content type="html"><![CDATA[<%= article.body %>]]></content>
+  </entry>
+  <% end %>    
+</feed>

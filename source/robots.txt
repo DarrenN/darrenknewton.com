@@ -1,0 +1,6 @@
+# sachiko.v25media.com
+
+User-agent: *
+Allow: /
+
+Sitemap: http://www.v25media.com/sitemap.xml

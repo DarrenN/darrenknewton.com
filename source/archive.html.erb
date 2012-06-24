@@ -1,0 +1,16 @@
+---
+layout: generic
+description: Article archives
+---
+<% content_for :generic_title do %>
+	Article archives
+<% end %>
+<% @archives.each do |archive| %>
+	<h2><%= archive[:year] %></h2>
+	<meta itemprop="itemListOrder" content="Descending" />
+	<ul>
+		<% archive[:articles].each do |article| %>
+			<li itemprop="itemListElement"><%= link_to article.title, article.url %> <span>published on <time itemprop="datePublished"><%= article.date.strftime('%b %e') %></time><span> <span><i>Topics:</i> <em><%= article.data.tags.gsub(/,/,' / ') %></em></span></li>
+		<% end %>
+	</ul>
+<% end %>

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Miscellanea]]></title>
+  <link href="http://darrenknewton.com/atom.xml" rel="self"/>
+  <link href="http://darrenknewton.com/"/>
+  <updated>2012-04-16T08:27:21-04:00</updated>
+  <id>http://darrenknewton.com/</id>
+  <author>
+    <name><![CDATA[Darren Newton]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Protip: URL Parameters with Nginx & PHP]]></title>
+    <link href="http://darrenknewton.com/blog/2011/12/08/protip-url-parameters-with-nginx-and-php/"/>
+    <updated>2011-12-08T09:11:00-05:00</updated>
+    <id>http://darrenknewton.com/blog/2011/12/08/protip-url-parameters-with-nginx-and-php</id>
+    <content type="html"><![CDATA[<h3>TL;DR</h3>
+
+<p>To pass URL parameters to your PHP front controller under nginx setup your <code>nginx.conf</code> like so:</p>
+
+<pre><code>location /www {
+    try_files $uri $uri/ /www/index.php?$args;
+}
+</code></pre>
+
+<h3>What happened</h3>
+
+<p>I&#8217;m currently working on a small PHP application built with <a href="http://silex.sensiolabs.org/">Silex</a> and served up with <a href="http://www.nginx.org/">nginx</a>.
+The application makes use of Twitter&#8217;s API with OAuth 1.0 (which in my opinion is very difficult to use compared to Facebook&#8217;s OAuth2 implementation.)</p>
+
+<p>OAuth 1.0 requires GET/POSTing with urls like:</p>
+
+<pre><code>/www/twitter/auth?oauth_token=XXX&amp;oauth_verifier=XXX
+</code></pre>
+
+<p>Everything was working fine on my laptop under Apache, but not when I moved it to my dev server under nginx. Some logging revealed that the URL parameters
+were not getting picked up by Silex&#8217;s <code>Request</code> class.</p>
+
+<p>I took a look at my <code>nginx.conf</code> and found the culprit, the redirect to the front controller was setup like so:</p>
+
+<pre><code>location /www {
+    try_files $uri $uri/ /www/index.php;
+}
+</code></pre>
+
+<p>This doesn&#8217;t pass any URL parameters to <code>index.php</code>, so I simply added <code>?$args</code> to the redirect:</p>
+
+<pre><code>location /www {
+    try_files $uri $uri/ /www/index.php?$args;
+}
+</code></pre>
+
+<p>and <strong>booya!</strong> everything is working again.</p>
+
+<p><em>Reference: <a href="http://forum.nginx.org/read.php?11,172365,172365">nginx + php-fpm - where are my $_GET params?</a></em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[For Programmers: The Best of edw519]]></title>
+    <link href="http://darrenknewton.com/blog/2011/11/19/for-programmers-the-best-of-edw519/"/>
+    <updated>2011-11-19T11:35:00-05:00</updated>
+    <id>http://darrenknewton.com/blog/2011/11/19/for-programmers-the-best-of-edw519</id>
+    <content type="html"><![CDATA[<p>A while back on <a href="http://news.ycombinator.com/item?id=2564099">Hacker News</a> <a href="http://news.ycombinator.com/user?id=edw519">edw519</a> (Ed Weissman) posted his collection of tips and advice for programmers.</p>
+
+<h3>It was amazing stuff.</h3>
+
+<p>His <a href="http://edweissman.com/53640595">original post</a> didn&#8217;t have much in the way of formatting, so using a series of regexes I made a slightly more styled version with links to sections and formatted code which I posted on the Hacker News thread. Mr. Weissman didn&#8217;t seem to mind, and made note of some places where I had munged his formatting a little (which I promptly corrected.)</p>
+
+<p>I stumbled across that file this morning while cleaning up one of my servers and decided to re-post the link for posterity&#8217;s sake: <a href="http://static.v25media.com/edw519_mod.html">http://static.v25media.com/edw519_mod.html</a>. It is loaded with gems for folks making a living or seeking to make a living as a programmer. <em>I highly suggest reading it.</em></p>
+
+<blockquote><p>The reason you&#8217;re not passionate about your work is because something is missing. Identifying what is missing is your first step in determining where to go from here.</p><footer><strong>edw519</strong><cite><a href='http://edweissman.com/53640595'>edweissman.com/53640595/&hellip;</a></cite></footer></blockquote>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My little friend z]]></title>
+    <link href="http://darrenknewton.com/blog/2011/11/06/my-little-friend-z/"/>
+    <updated>2011-11-06T16:50:00-05:00</updated>
+    <id>http://darrenknewton.com/blog/2011/11/06/my-little-friend-z</id>
+    <content type="html"><![CDATA[<p>I&#8217;m a command line interface kind of guy, which is funny since I do everything on Macs. Then again, I first embraced PCs with an Apple IIe, which was a CLI only experience.</p>
+
+<p>One little tool I&#8217;ve had installed for a while is <a href="https://github.com/rupa/z">z</a> by <a href="https://github.com/rupa">Rupa</a>. It&#8217;s a nice little shell script that keeps tabs on the directories you&#8217;ve been <a href="http://compute.cnr.berkeley.edu/cgi-bin/man-cgi?cd">cd</a>ing in and out of and then lets you quickjump to them using a simple regex. So instead of remembering a long path like:</p>
+
+<pre><code>$ cd /Users/shibuya/github/octopress
+</code></pre>
+
+<p>I can just do something like:</p>
+
+<pre><code>$ z octo
+</code></pre>
+
+<p>If I have two directories with similar names, like <code>website_development</code> and <code>website_master</code> I can differentiate them like so:</p>
+
+<pre><code>$ z web d       # Will cd to /website_developement
+$ z web m       # Will cd to /website_master
+</code></pre>
+
+<p>All in all it saves me quite a few keystrokes. Check out more examples in the <a href="https://github.com/rupa/z/blob/master/README">README</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Occupy Wall Street - Design Edition]]></title>
+    <link href="http://darrenknewton.com/blog/2011/11/05/occupy-wall-street-design-edition/"/>
+    <updated>2011-11-05T14:23:00-04:00</updated>
+    <id>http://darrenknewton.com/blog/2011/11/05/occupy-wall-street-design-edition</id>
+    <content type="html"><![CDATA[<p>My fellow worker bees over at <a href="http://gabardine.com">Gabardine.com</a> decided to flex their design chops by lending a hand to the folks downtown at Liberty Square. While Occupy Wall Street gives us a much needed civics lesson, and the 1% continues to skim the cream off your bank accounts, <a href="http://gabardine.com/is/scott-grant">Scott Grant</a> took some of the DIY signs from the occupation and re-made them as snappy posters.</p>
+
+<p><a href="http://gabardine.com/thread/2011/11/design-makeover-occupy-wallstreet/">You should check them out here</a>.</p>
+
+<p><a href="hhttp://gabardine.com/thread/2011/11/design-makeover-occupy-wallstreet/"><img class="center" src="http://gbrd.in/uuSOFu" title="'#OWS - The Police Are 1 Layoff Away From Joining Us'" ></a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to: Convert site to PDF with wkhtmltopdf and wget]]></title>
+    <link href="http://darrenknewton.com/blog/2011/10/30/mirror-site-and-convert-to-pdf/"/>
+    <updated>2011-10-30T18:29:00-04:00</updated>
+    <id>http://darrenknewton.com/blog/2011/10/30/mirror-site-and-convert-to-pdf</id>
+    <content type="html"><![CDATA[<p>A friend of mine emailed me the other day with a quick question: <em>&#8220;What&#8217;s an easy way to convert an entire site to PDF? Are there tools for this?&#8221;</em></p>
+
+<p><em>Why yes, yes there are</em>. In fact, it&#8217;s pretty easy to do if you&#8217;re on a Mac or Linux OS using <a href="https://en.wikipedia.org/wiki/Wget">wget</a> and <a href="https://code.google.com/p/wkhtmltopdf/">wkhtmltopdf</a>:</p>
+
+<pre><code>mkdir /wget
+wget --mirror -w 2 -p --html-extension --convert-links -P /wget http://darrenknewton.com
+find darrenknewton.com -name '*.html' -exec wkhtmltopdf {} {}.pdf \;
+mkdir pdfs
+find darrenknewton.com -name '*.pdf' -exec mv {} pdfs/ \;
+</code></pre>
+
+<h3>Explanation</h3>
+
+<p><code>wget</code> is a great little program to grab content from the web. It&#8217;s a web Swiss Army Knife<sup>&reg;</sup>. <code>wkhtmltopdf</code> is another great piece of software which converts <code>html</code> to <code>pdf</code>. It can take content from the web itself, or pickup files from your desktop.</p>
+
+<p>You can install both packages easily with <a href="http://mxcl.github.com/homebrew/">Homebrew</a>. If you&#8217;re a <a href="http://www.macports.org/index.php">MacPorts</a> person then you&#8217;re out of luck with <code>wkhtmltopdf</code> and will need to pickup a <a href="https://code.google.com/p/wkhtmltopdf/downloads/list">binary</a>.</p>
+
+<p>In this example I am mirroring the site to my desktop using <code>wget</code> and then doing the conversion to <code>pdf</code>. I could probably rig up a way to pass urls to <code>wkhtmltopdf</code> but I think making a local copy first gives me some flexibility and for a really big site I would be able to do the PDF conversion offline and at my leisure.</p>
+
+<p>So first, let&#8217;s mirror the site with <code>wget</code> (I&#8217;m going to use this site as an example):</p>
+
+<pre><code>wget --mirror -w 2 -p --html-extension --convert-links -P /wget http://darrenknewton.com
+</code></pre>
+
+<p>This will spider the site and dump all of its files into <code>/wget</code>, a directory I made for this demo. When you spider my site <code>wget</code> will create a directory called <code>darrenknewton.com</code> like this:</p>
+
+<pre><code>$ ls -alh darrenknewton.com
+
+drwxr-xr-x  12 shibuya  staff   408B Oct 30 18:17 .
+drwxr-xr-x   5 shibuya  staff   170B Oct 30 18:26 ..
+drwxr-xr-x   3 shibuya  staff   102B Oct 30 18:17 about
+-rw-r--r--   1 shibuya  staff   8.3K Oct 30 17:39 about.1.html
+-rw-r--r--   1 shibuya  staff   6.6K Oct 30 09:31 atom.xml
+drwxr-xr-x   6 shibuya  staff   204B Oct 30 18:17 blog
+-rw-r--r--   1 shibuya  staff   561B Oct 30 17:38 favicon.png
+drwxr-xr-x   8 shibuya  staff   272B Oct 30 17:39 images
+-rw-r--r--   1 shibuya  staff    13K Oct 30 17:39 index.html
+drwxr-xr-x   6 shibuya  staff   204B Oct 30 17:39 javascripts
+-rw-r--r--   1 shibuya  staff    22B Oct 30 09:31 robots.txt
+drwxr-xr-x   3 shibuya  staff   102B Oct 30 17:39 stylesheets
+</code></pre>
+
+<p>The <code>.html</code> files are all tucked away into directories, and we don&#8217;t want to go manually searching for them, so we will let <code>find</code> do it for us. The following snippet will find all of the <code>.html</code> files and pass them to <code>wkhtmltopdf</code> for conversion:</p>
+
+<pre><code>find darrenknewton.com -name '*.html' -exec wkhtmltopdf {} {}.pdf \;
+</code></pre>
+
+<p>This creates PDFs alongside the <code>html</code> files in the directory. So let&#8217;s grab those and dump them into their own directory.</p>
+
+<pre><code>mkdir pdfs
+find darrenknewton.com -name '*.pdf' -exec mv {} pdfs/ \;
+</code></pre>
+
+<p>And there you go, you should have a directory full of PDFs that <a href="http://images.darrenknewton.com/index.html.pdf">look something like this</a>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Darth Small]]></title>
+    <link href="http://darrenknewton.com/blog/2011/10/29/darth-small/"/>
+    <updated>2011-10-29T20:23:00-04:00</updated>
+    <id>http://darrenknewton.com/blog/2011/10/29/darth-small</id>
+    <content type="html"><![CDATA[<p><img class="center" src="http://images.darrenknewton.com/6290293892_4c36f96814_z.jpg" width="612" height="612" title="'Darth Small'" ></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I got gamed on Stack Overflow]]></title>
+    <link href="http://darrenknewton.com/blog/2011/01/28/i-got-gamed-on-stack-overflow/"/>
+    <updated>2011-01-28T19:46:00-05:00</updated>
+    <id>http://darrenknewton.com/blog/2011/01/28/i-got-gamed-on-stack-overflow</id>
+    <content type="html"><![CDATA[<p><img class="left" src="http://images.darrenknewton.com/trollface.png" width="256" height="256" title="Le Trollface" alt="trollface"></p>
+
+<p>Silly me. I stumbled across a question on Stack Overflow that was right up my alley, as it was something I had worked on before: <a href="http://stackoverflow.com/questions/4828154/extract-relevant-tag-keywords-from-text-block/4828528">Extract Relevant Tag/Keywords from Text block</a>. The question posted by <a href="http://stackoverflow.com/users/593778/user593778">user593778</a> indicated that they wanted to use PHP or JavaScript to lift relevant keywords from a block of text.</p>
+
+<p><em>Awesome</em>. So I <a href="http://stackoverflow.com/questions/4828154/extract-relevant-tag-keywords-from-text-block/4828528#4828528">started to answer the question</a>, outlining an approach for the poster to use to solve her problem. What I didn&#8217;t pay attention to was the fact that the user had a <em>single</em> point on Stack Overflow.</p>
+
+<p>Stack Overflow works on a point system: it taps the lizard brain in most geeks by awarding points for answering questions, posting question, upvoting, etc. You <em>want</em> a high score. You&#8217;re awarded badges for hitting different thresholds in the system. Points are the carrot and the stick (you lose points on downvotes) that get people to participate and behave themselves in the community.</p>
+
+<p>Having <strong>1</strong> point means you just logged into the system. You haven&#8217;t upvoted any other answers or answered any other questions. You haven&#8217;t even completed your user profile. <em>This is a red flag.</em></p>
+
+<p>Almost immediately the poster started to request more and more detail, basically asking for an implementation. We went back and forth a bit until I finally posted a full code example to the problem, at which point the poster disappeared.</p>
+
+<p>So, I did their work and didn&#8217;t even get tagged as &#8220;the answer&#8221;, which means I received no points. <em>I got played.</em></p>
+
+<h3>Solution</h3>
+
+<p>My solution is somewhat naive, but it works (see Gist below). It takes the input text and breaks it into an array of words, which are then filtered against a <a href="https://raw.github.com/gist/802249/240045c799bb5c11894a9f68ff7436b485c097a8/stop_words.txt">giant list of stop words</a>.</p>
+
+<div><script src='https://gist.github.com/802249.js?file=stopwords.php'></script>
+<noscript><pre><code>&lt;?php
+
+function stopWords($text, $stopwords) {
+
+  // Remove line breaks and spaces from stopwords
+  $stopwords = array_map(function($x){return trim(strtolower($x));}, $stopwords);
+
+  // Replace all non-word chars with comma
+  $pattern = '/[0-9\W]/';
+  $text = preg_replace($pattern, ',', $text);
+
+  // Create an array from $text
+  $text_array = explode(&quot;,&quot;,$text);
+
+  // remove whitespace and lowercase words in $text
+  $text_array = array_map(function($x){return trim(strtolower($x));}, $text_array);
+
+  foreach ($text_array as $term) {
+    if (!in_array($term, $stopwords)) {
+      $keywords[] = $term;
+    }
+  };
+
+  return array_filter($keywords);
+}
+
+$stopwords = file('stop_words.txt');
+$text = &quot;Requirements - Working knowledge, on LAMP Environment using Linux, Apache 2, MySQL 5 and PHP 5, - Knowledge of Web 2.0 Standards - Comfortable with JSON - Hands on Experience on working with Frameworks, Zend, OOPs - Cross Browser Javascripting, JQuery etc. - Knowledge of Version Control Software such as sub-version will be preferable.&quot;;
+
+print_r(stopWords($text, $stopwords));
+
+?&gt;
+</code></pre></noscript></div>
+
+
+<p>This is not something you would probably want to do in real time on a text of any length. You would probably schedule this as a background task.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Project Euler #3 in CoffeeScript]]></title>
+    <link href="http://darrenknewton.com/blog/2010/12/21/euler3coffeescript/"/>
+    <updated>2010-12-21T11:43:00-05:00</updated>
+    <id>http://darrenknewton.com/blog/2010/12/21/euler3coffeescript</id>
+    <content type="html"><![CDATA[<p>I always figure one of the best ways to learn a new language is to try out a couple of Project Euler exercises using it. I had solved this one with JavaScript previously, but using CoffeeScript let me use some more Python-style comprehensions to get to the same solution:</p>
+
+<div><script src='https://gist.github.com/750315.js?file='></script>
+<noscript><pre><code># Project Euler #3 -&gt; http://projecteuler.net/index.php?section=problems&amp;id=3
+# Q: What is the largest prime factor of the number 600851475143 ?
+
+# Generate a Sieve of Eratosthenes (an array loaded with prime numbers)
+primes = []
+sieve = (set, pos) -&gt;
+  return false if pos &gt;= set.length
+  if set[pos] * set[pos] &lt; set[set.length-1]
+    primes = (x for x in set when x == set[pos] or x % set[pos] != 0)
+  return sieve(primes,pos+1)
+sieve([2..200000],0)
+
+# Factor a number into its primes - we use our Sieve above to quickly check if number is prime
+factors = []
+factorial = (primes, target, count) -&gt;
+  if primes[count] &lt; target
+    if target % primes[count] == 0
+      factors.push(primes[count])
+      target = target / primes[count]
+    else
+      count++
+
+    if (num for num in primes when num == target).length &gt; 0
+      factors.push(target)
+    else
+      factorial(primes, target, count)
+
+factorial(primes, 600851475143, 0)
+console.log(factors)
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>

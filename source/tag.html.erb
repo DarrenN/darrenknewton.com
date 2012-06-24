@@ -1,0 +1,15 @@
+---
+layout: generic
+description: Articles tagged with
+---
+<% content_for :generic_title do %>
+	Articles tagged with <%= @tag %>
+<% end %>
+<meta itemprop="itemListOrder" content="Descending" />
+<ul>
+<% if @articles %>
+  <% @articles[0...12].each do |article| %>
+    <li><a itemprop="itemListElement" href="<%= article.url %>"><%= article.title %></a> - published on <time itemprop="datePublished"><%= article.date.strftime('%b %e, %Y') %></time></li>
+  <% end %>
+<% end %>
+</ul>
