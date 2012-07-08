@@ -13,6 +13,12 @@
 		<meta name="author" content="<%= current_page.data.author %>" />
 		<meta name="msvalidate.01" content="BE7DA3BEF0F11153F6E4B5585C12DB20" />
 
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:creator" content="@d_run" />
+		<meta name="twitter:url" content="http://darrenknewton.com<%= current_page.url %>" />
+		<meta name="twitter:title" content="<%= data.page.title %>" />
+		<meta name="twitter:description" content="<%= strip_tags(current_page.summary)[0..197] %>..." />
+
 		<link href="atom.xml" type="application/atom+xml" rel="alternate" title="<%= data.page.title %> ATOM Feed" />
 		<link href="atom.json" type="application/atom+json" rel="alternate" title="<%= data.page.title %> JSON Feed" />
 
@@ -23,6 +29,17 @@
 		<%= stylesheet_link_tag 'pastie.css' %>
 
 		<script src="http://use.typekit.com/lbz5aep.js"></script>
+		<script>
+			var _gaq = _gaq || [];
+		    _gaq.push(['_setAccount', 'UA-26663515-1']);
+		    _gaq.push(['_trackPageview']);
+
+		    (function() {
+		      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		    })();
+		</script>
 		<script>try{Typekit.load();}catch(e){}</script>
 	</head>
 	<body id="article" itemscope itemtype="http://schema.org/Blog">
@@ -98,17 +115,7 @@
 			</div>
 		</footer>
 		<script>
-		    var _gaq = _gaq || [];
-		    _gaq.push(['_setAccount', 'UA-26663515-1']);
-		    _gaq.push(['_trackPageview']);
-
-		    (function() {
-		      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		    })();
-
-      		var disqus_shortname = 'miscellaneacode';       
+		 	var disqus_shortname = 'miscellaneacode';       
 	        var disqus_identifier = 'http://darrenknewton.com/blog<%= current_page.url %>';
 	        var disqus_url = 'http://darrenknewton.com<%= current_page.url %>';
 	        var disqus_script = 'embed.js';

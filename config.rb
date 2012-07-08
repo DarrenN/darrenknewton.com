@@ -121,7 +121,7 @@ helpers do
     unless url.nil?
       img_tag = link_to img_tag, url
     end
-    '<div class="entry-content-asset photo-full">' + img_tag + '</div>'
+    '<meta name="twitter:image" content="' + img[:url] + '" /><div class="entry-content-asset photo-full">' + img_tag + '</div>'
   end
 
   # Strip all HTML tags from string
