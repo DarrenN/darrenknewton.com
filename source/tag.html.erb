@@ -2,9 +2,8 @@
 layout: generic
 description: Articles tagged with
 ---
-<% content_for :generic_title do %>
-	Articles tagged with <%= @tag %>
-<% end %>
+<% content_for :generic_title do %>Articles tagged with <%= @tag %><% end %>
+<% content_for :generic_description do %>Articles containing the metadata tag <%= @tag %><% end %>
 <meta itemprop="itemListOrder" content="Descending" />
 <ul>
 <% if @articles %>

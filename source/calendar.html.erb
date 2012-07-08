@@ -11,6 +11,15 @@ description: Article archives
     Archives for <%= @year %>
   <% end %>
 <% end %>
+<% content_for :generic_description do %>
+  <% if @day %>
+    Article archives for <%= Date.new(@year, @month, @day).strftime('%b %e %Y') %>
+  <% elsif @month %>
+    Article archives for <%= Date.new(@year, @month, 1).strftime('%b %Y') %>
+  <% else %>
+    Article archives for <%= @year %>
+  <% end %>
+<% end %>
 <meta itemprop="itemListOrder" content="Descending" />
 <ul>
   <% @articles.each_with_index do |article, i| %>

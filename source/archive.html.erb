@@ -2,9 +2,7 @@
 layout: generic
 description: Article archives
 ---
-<% content_for :generic_title do %>
-	Article archives
-<% end %>
+<% content_for :generic_title do %>Article archives<% end %>
 <% @archives.each do |archive| %>
 	<h2><%= archive[:year] %></h2>
 	<meta itemprop="itemListOrder" content="Descending" />
