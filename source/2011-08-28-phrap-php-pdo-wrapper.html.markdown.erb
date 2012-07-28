@@ -1,0 +1,61 @@
+---
+title: "Introducing Phrap"
+date: 2011-08-28 19:46
+author: Darren
+tags: Code, PHP, MySQL
+description: "It reads, it writes, it deletes. It's a little PHP PDO wrapper to save you some time with your database. Sexy it is not."
+keywords: code, PHP, PDO, MySQL
+---
+
+<%= entry_asset({:url => 'http://images.darrenknewton.com/phrap.jpg', :alt => 'Phrap', :title => "Phrap - simple PDO wrapper for PHP/MySQL"}) %>
+
+[Phrap] is a super-light PHP  database wrapper using PDO for basic CRUD operations with MySQL. If that doesn't sound sexy, well, _that's because it isn't_. READMORE
+
+<p>I often write light web-service type apps that require simple DB access, but are far to simple to spin up a big ORM like Doctrine. <strong>Phrap</strong> is a tiny library (script) that provides simple read/write/delete to the DB using <a href="http://us.php.net/manual/en/book.pdo.php">PDO</a> to handle escaping and such.</p>
+
+<p>It reads, it writes, it deletes. It doesn't do associations, joins or validations, unless you feel like forking and adding. It keeps you from having to write a lot of <code>SELECT * FROM blah blah blah</code> and <code>$stmt-&gt;prepare()</code> every time you need something from your database, yet its stupid small so it doesn't drag on your resources (much).</p>
+
+<p>This was something I needed for myself but I also used this little project to teach myself <a href="https://github.com/sebastianbergmann/phpunit/">PHPUnit</a>, and yes, I now see some of the benefits of testing your software.</p>
+
+<p>Speaking of which, read the tests to get a better idea how it works.</p>
+
+<p><a href="https://github.com/DarrenN/phrap">Get it Fresh on the GitHubs</a></p>
+
+<p>A little <strong>Phrap</strong>:</p>
+
+	:::php
+	<?php
+	class FileUpload extends Model
+	{
+	    public $table = "files";
+	    public $id;
+	    public $filename;
+	    public $userid;
+	    public $email;
+	 }
+
+	// Create
+	$dbh  = new DB($database);
+	$file = new FileUpload($dbh);
+	$file->create();
+	$file->set(array('filename' => 'heffalump.txt', 'codswoddle' => 'phiminster'));
+	$file->save();
+
+	// Query
+	$result = $file->find('first');
+	$result = $file->find('all');
+	$result = $file->find('first', array('email' => 'dazza@email.com'));
+	$result = $file->query(
+	     'SELECT * FROM files WHERE email = :email ORDER BY userid LIMIT 1',
+	     array(':email' => 'dazza@email.com')
+	 );
+
+	// Delete manually by id
+	$file->delete(1);
+
+	// Set id in object then delete it
+	$file->find('first');
+	$file->delete();
+	?>
+
+[Phrap]: https://github.com/DarrenN/phrap
