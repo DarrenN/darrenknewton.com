@@ -15,27 +15,18 @@
             }
         ],
         "title"    : "Miscellanea",
-        "subtitle" : "Code, design &amp; cultural ephemera",
+        "subtitle" : "Code, design &amp; cultural ephemera from Darren Newton's brain",
         "updated"  : "<%= Time.now.strftime('%FT%T%:z') %>",
         "author": {
             "name": "Darren Newton"
         },
         "rights" : "Copyright (c) <%= Date.today.strftime('%Y') %>, Darren Newton",
         "entry": {
-            "content": {
-                "@attributes": {
-                    "type": "html"
-                }
-            },
-            "id": "urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + @atom_article.url, UUID::NameSpace_URL) %>",
-            "link": {
-                "@attributes": {
-                    "href": "http://darrenknewton.com<%= @atom_article.url %>"
-                }
-            },
-            "summary" : "<%= strip_tags js_escape_html @atom_article.summary %>",
-            "content" : "<%= js_escape_html @atom_article.body %>",
-            "title"   : "<%= js_escape_html @atom_article.title %>",
+            "id"      : "urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + @atom_article.url, UUID::NameSpace_URL) %>",
+            "link"    : "http://darrenknewton.com<%= @atom_article.url %>",
+            "summary" : <%= @atom_article.summary.to_json %>,
+            "content" : <%= @atom_article.body.to_json %>,
+            "title"   : <%= @atom_article.title.to_json %>,
             "updated" : "<%= @atom_article.date.strftime('%FT%T%:z') %>"
         }
     }

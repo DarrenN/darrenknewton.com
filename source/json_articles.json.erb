@@ -15,25 +15,23 @@
             }
         ],
         "title"    : "Miscellanea",
-        "subtitle" : "Code, design &amp; cultural ephemera",
+        "subtitle" : "Code, design &amp; cultural ephemera from Darren Newton's brain",
         "updated"  : "<%= Time.now.strftime('%FT%T%:z') %>",
         "author": {
             "name": "Darren Newton"
         },
         "rights" : "Copyright (c) <%= Date.today.strftime('%Y') %>, Darren Newton",
+        "entries" : [
         <% blog.articles.each do |article| %>
-        "entry": {
-            "summary" : "<%= js_escape_html strip_tags article.summary %>",
-            "content" : "<%= js_escape_html strip_tags article.body %>",
-            "title"   : "<%= js_escape_html article.title %>",
-            "updated" : "<%= article.date.strftime('%FT%T%:z') %>",
-            "id"      : "urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + article.url, UUID::NameSpace_URL) %>",
-            "link": {
-                "@attributes": {
-                    "href": "http://darrenknewton.com<%= article.url %>"
-                }
-            }
-        },
+            {
+                "summary" : <%= article.summary.to_json %>,
+                "content" : <%= article.body.to_json %>,
+                "title"   : <%= article.title.to_json %>,
+                "updated" : "<%= article.date.strftime('%FT%T%:z') %>",
+                "id"      : "urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + article.url, UUID::NameSpace_URL) %>",
+                "link"    : "http://darrenknewton.com<%= article.url %>"
+            }<%= "," unless article == blog.articles.last %>
         <% end %>
+        ]
     }
 }

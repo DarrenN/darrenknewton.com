@@ -21,9 +21,6 @@
 
 		<%= stylesheet_link_tag 'screen.css' %>
 		<%= stylesheet_link_tag 'pastie.css' %>
-
-		<script src="http://use.typekit.com/lbz5aep.js"></script>
-		<script>try{Typekit.load();}catch(e){}</script>
 	</head>
 	<body id="article" itemscope itemtype="http://schema.org/Blog">
 
@@ -74,29 +71,10 @@
 			</aside>
 		</div>
 
-		<footer id="footer-page">
-			<div class="container">
-				<div id="colophon">
-					<div id="colophon-a">
-						You should follow me on Twitter <a href="https://twitter.com/#!/d_run">here</a>, or you could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. Oh yeah, and <a href="https://plus.google.com/106799502423019983125?rel=author">Google</a>
-					</div>
-					<div id="colophon-b">
-						&copy; 2012 <span itemprop="author">Darren Newton</span>, all rights reserved.
-					</div>
-				</div>
-				<div id="badges">
-					<div id="badges-a">
-						<ul>
-							<li><%= link_to 'JSON', 'atom.json', :type => "application/json", :rel => "alternate", :relative => true %></li>
-							<li><%= link_to 'XML', 'atom.xml', :type => "application/atom+xml", :rel => "alternate", :relative => true %></li>
-						</ul>
-					</div>
-					<div id="badges-b">
-						<%= partial "coderwall" %>
-					</div>
-				</div>
-			</div>
-		</footer>
+		<%= partial "footer" %>
+		
+		<script src="http://use.typekit.com/lbz5aep.js"></script>
+		<script>try{Typekit.load();}catch(e){}</script>
 		<script>
 		    var _gaq = _gaq || [];
 		    _gaq.push(['_setAccount', 'UA-26663515-1']);

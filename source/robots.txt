@@ -3,4 +3,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://www.v25media.com/sitemap.xml
+Sitemap: http://darrenknewton.com/sitemap.xml

@@ -1,0 +1,25 @@
+		<footer id="footer-page">
+			<div class="container">
+				<div id="colophon">
+					<div id="colophon-a">
+						You should follow me on Twitter <a href="https://twitter.com/#!/d_run">here</a>, or you could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. Oh yeah, and <a href="https://plus.google.com/106799502423019983125?rel=author">Google</a>
+					</div>
+					<div id="colophon-b">
+						&copy; <%= Date.today.year %> <span itemprop="author">Darren Newton</span>, all rights reserved.
+					</div>
+				</div>
+				<div id="badges">
+					<div id="badges-a">
+						<% if current_page.data.layout != 'generic' %>
+						<ul>
+							<li><%= link_to 'JSON', current_article.url + 'atom.json', :type => "application/json", :rel => "alternate", :relative => true %></li>
+							<li><%= link_to 'XML', current_article.url + 'atom.xml', :type => "application/atom+xml", :rel => "alternate", :relative => true %></li>
+						</ul>
+						<% end %>
+					</div>
+					<div id="badges-b">
+						<%= partial "coderwall" %>
+					</div>
+				</div>
+			</div>
+		</footer>

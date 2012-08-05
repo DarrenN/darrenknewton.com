@@ -9,7 +9,7 @@
 		<title>Miscellanea | Code, design, &amp; cultural ephemera</title>
 
 		<meta name="author" content="Darren Newton">
-		<meta name="description" content="Unix tricks, programming, interface design and cultural observations from Brooklyn">
+		<meta name="description" content="Unix tricks, programming, interface design and cultural observations from Darren Newton's brain">
 
 		<meta name="msvalidate.01" content="BE7DA3BEF0F11153F6E4B5585C12DB20" />
 
@@ -22,9 +22,6 @@
 
 		<%= stylesheet_link_tag 'screen.css' %>
 		<%= stylesheet_link_tag 'pastie.css' %>
-
-		<script src="http://use.typekit.com/lbz5aep.js"></script>
-		<script>try{Typekit.load();}catch(e){}</script>
 	</head>
 	<body id="home" itemscope itemtype="http://schema.org/Blog">
 
@@ -96,10 +93,10 @@
 			<div class="container">
 				<div id="colophon">
 					<div id="colophon-a">
-						You should follow me on Twitter <a href="https://twitter.com/#!/d_run">here</a>, or you could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. Oh yeah, and <a href="https://plus.google.com/106799502423019983125?rel=author">Google</a>
+						You should follow me on Twitter <a href="https://twitter.com/d_run">here</a>, or you could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. Oh yeah, and <a href="https://plus.google.com/106799502423019983125?rel=author">Google</a>
 					</div>
 					<div id="colophon-b">
-						&copy; 2012 <span itemprop="author">Darren Newton</span>, all rights reserved.
+						&copy; <%= Date.today.year %> <span itemprop="author">Darren Newton</span>, all rights reserved.
 					</div>
 				</div>
 				<div id="badges">
@@ -116,6 +113,8 @@
 				</div>
 			</div>
 		</footer>
+		<script src="http://use.typekit.com/lbz5aep.js"></script>
+		<script>try{Typekit.load();}catch(e){}</script>
 		<script>
 		    var _gaq = _gaq || [];
 		    _gaq.push(['_setAccount', 'UA-26663515-1']);

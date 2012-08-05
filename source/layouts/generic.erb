@@ -16,9 +16,6 @@
 
 		<%= stylesheet_link_tag 'screen.css' %>
 		<%= stylesheet_link_tag 'pastie.css' %>
-
-		<script src="http://use.typekit.com/lbz5aep.js"></script>
-		<script>try{Typekit.load();}catch(e){}</script>
 	</head>
 	<body id="generic" itemscope itemtype="http://schema.org/WebPage">
 
@@ -46,7 +43,7 @@
 				<footer>
 					<div class="metadata"></div>
 					<div class="nav-back">
-						<a href="/" title="">← Back to homepage</a>
+						<a href="/">← Back to homepage</a>
 					</div>
 				</footer>
 			</article>
@@ -55,29 +52,14 @@
 		<div id="article-nav-container">
 			<aside id="article-nav" class="container"></aside>
 			<aside id="article-nav-mobile">
-				<a href=""><span>&lt;</span> Back to homepage</a>
+				<a href="/"><span>&lt;</span> Back to homepage</a>
 			</aside>
 		</div>
 
-		<footer id="footer-page">
-			<div class="container">
-				<div id="colophon">
-					<div id="colophon-a">
-						You should follow me on Twitter <a href="https://twitter.com/#!/d_run">here</a>, or you could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. Oh yeah, and <a href="https://plus.google.com/106799502423019983125?rel=author">Google</a>
-					</div>
-					<div id="colophon-b">
-						&copy; 2012 <span itemprop="author">Darren Newton</span>, all rights reserved.
-					</div>
-				</div>
-				<div id="badges">
-					<div id="badges-a">
-					</div>
-					<div id="badges-b">
-						<%= partial "coderwall" %>
-					</div>
-				</div>
-			</div>
-		</footer>
+		<%= partial "footer" %>
+		
+		<script src="http://use.typekit.com/lbz5aep.js"></script>
+		<script>try{Typekit.load();}catch(e){}</script>
 		<script>
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-26663515-1']);
