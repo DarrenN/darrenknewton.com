@@ -1,0 +1,137 @@
+---
+title: "Hacking up sites with Middleman"
+date: 2012-09-16 12:14
+author: Darren
+tags: Code, Ruby
+description: "Use the Middleman Gem to quickly hack up static or dynamic sites using common Ruby tools."
+keywords: ruby, middleman, code, websites, static, dynamic
+image: "middleman.png"
+---
+
+<%= entry_asset({:url => 'middleman.png', :alt => 'Middleman', :title => "Middleman: makes developing websites simple"}) %>
+
+**TL;DR** - I'm going to walk through how I rebuilt this blog using a static site generator. In the first half I walk through my decision for moving to a static site. You can [skip down](#hack) to the tech talk if you want.
+
+When re-designing/building my [portfolio](http://v25media.com "Darren Newton Creative Services") site in 2007 I did the tried and true geek thing: I hacked up my own custom CMS using [CakePHP](http://cakephp.org/ "PHP Rails clone") backed by MySQL. It was pretty standard stuff, complete with a blog engine modeled after WordPress. Putting it together was a great learning experience, similar to the ["15 minute blog"](http://youtu.be/tUH1hewXnC0) videos from the Rails heyday of 2005-2007. If you want to learn a language/framework, build something in it.
+
+It was also **complete overkill**. As you get older, hopefully wiser and more experienced with a technology you start to realize that less is more. Over time I started to ditch the big, heavy Rails clones like CakePHP and move to smaller routers like [Sinatra](http://www.sinatrarb.com/) and [SlimPHP](http://www.slimframework.com/) to meet my [server-side](https://github.com/DarrenN/backbone-demo/blob/master/server.rb) needs. When it came time to redesign my site I made a decision to separate the portfolio and blog, and also decied to build them in static HTML.
+
+## I got 99 reasons...
+
+* __Speed__: Nothing loads faster than static HTML. Apache or nginx will spit files out crazy fast.
+* __Simplicity__: No more database. No more backend. Just you and your server config.
+* __Tooling__: You can now build static sites with a variety of tools in your language of choice.
+* __CDN__: If you want you don't even need a server, you could drop everything on Amazon S3 or GitHub.
+* __Services__: Disqus allows you to offload comments to a service, and they do it better than you will.
+* __Security__: No more SQL injection, CSRF tokens, session fixation, etc ad nauseum. That's Disqus' problem.
+* __Load__: You can handle a Reddit/Fireballing better.
+
+To be honest tooling was the most important. There is no way I would make a static site without a generator tool to handle menus and links. A lot of static site generators have popped up in just about every language: 
+
+* [Nanoc](http://nanoc.stoneship.org/) (Ruby)
+* [Jekyll](http://jekyllrb.com/) (Ruby)
+* [Hyde](http://ringce.com/hyde) (Python)
+* [Hakyll](http://jaspervdj.be/hakyll/tutorial.html) (Haskell)
+* [Phrozn](http://www.phrozn.info/en/) (PHP)
+* [And many, many more...](http://iwantmyname.com/blog/2011/02/list-static-website-generators.html)
+
+I settled on [Middleman](http://middlemanapp.com/), which is a self-contained Ruby Gem, because it's written in Ruby and relies on Sinatra, both of which I already have experience with. I also liked its anything goes philosophy: you could generate a dynamic PHP site with it if you wished.
+
+## <a id="hack"></a>Hackety hack hack
+
+At the time that I rebuilt my blog (June 2012) Middleman 3 was still in Beta. The developers were releasing RCs rapidly, so I made a decision to develop against 3.0 instead of building the site in 2.x and then having to upgrade later. This caused some friction and headaches as documentation was out of date or I ran into Gem incompatabilities. This is to be expected when following a moving target, and the devs were fairly responsive to my [cries for help](https://github.com/middleman/middleman-blog/issues/49). This site (the one you're on right now) is also in a [GitHub repo](https://github.com/DarrenN/darrenknewton.com) so you can rummage around in the source.
+
+## Philosophy
+
+If you come from a Ruby web development background, Middleman will be very familiar to you. Middleman is essentially a Sinatra application that renders web pages to flat HTML files instead of dynamically serving them from a Ruby application server such as Passenger or Thin. You create templates and page content files, which Middleman renders out into static pages, pretty much like a typical dynamic site. This allows you to use just about any Ruby templating library that Sinatra already supports, which is pretty much all of them. It also lets you use partials to organize your templates. Middleman also loads in template helpers from the [Padrino](http://www.padrinorb.com/ "The Elegant Ruby Framework") project to help out with links, forms, assets and more.
+
+Since Middleman is a Sinatra app this allows you to run the application in server mode during development with live updating of content. Development is a breeze as you can tweak the site in real time and then refresh your browser on ```localhost``` to see the changes.
+
+YAML is the preferred method for storing [data](http://middlemanapp.com/metadata/local-data/ "Local YAML data") about your site (navigation, tags) and [front matter](https://github.com/mojombo/jekyll/wiki/yaml-front-matter) for a page. If you're coming from Jekyll/Octopress this is already familiar. You could hookup SQLite3 or MySQL if you wanted to, but then why are you building a static site?
+
+## Templating issues: Stack 'em deep
+
+One early quirk I ran into was with the page template system. Middleman will render pretty much anyting you enable an engine for. I found it easiest in my case to use [ERB](http://ruby-doc.org/stdlib-1.9.3/libdoc/erb/rdoc/ERB.html "eRubis") for my template files. These are the skeleton of the site itself, and you use them just like you do in a Rails site. I find HAML to abstract, and it was a lot easier for me to make my templates by hand with HTML5 Boilerplate as a starting point and then backfill the ERB markup tags in place of content. This also made it easy to load partials in the standard ERB way, so I could split out my footers and navigation into common files.
+
+I prefer writing content in [Markdown](http://daringfireball.net/projects/markdown/ "Markdown is a text-to-HTML conversion tool for web writers") whenever possible. The way you achieve this in Middleman is to create files in your ```/source``` directory with a stacked file extension, such as ```foo.html.markdown```. Middleman will render that as ```foo.html``` using whatever Markdown engine you enabled (in my case it's Kramdown) and drop it into your templates.
+
+However, Markdown doesn't support inline Ruby code, which means I couldn't use custom helpers like ```entry_asset({:url => '...'})```. After poking around for a while, I finally found out that you could keep stacking file extensions onto your files for additional parsing. So my content files were now named ```foo.html.markdown.erb```. Middleman first parsed the ERB, then the Markdown during compilation.
+
+Also, I had to explicitly tell the Markdown parser that my template files were ERB. So when all was said and done my Markdown configuration block looked like this:
+
+	:::ruby
+	set :markdown_engine, :kramdown
+	set :markdown, :layout_engine => :erb, 
+                   :tables => true, 
+                   :autolink => true,
+                   :smartypants => true
+
+## Extend yourself
+
+One of the other attractive features of Middleman was the ability to create extensions, and a growing list of community extensions already available. Extensions are Gems which you drop into your project. Since I was making a blog, it made sense to install the [Blogging](http://middlemanapp.com/extensions/blog/ "Out of the box blogging") extension. This extensions gave me some basic additions such as Article, Tag and Calendar pages, which are basically blog archive pages. It also provided some helpers to deal with pagination and other blog-centric issues.
+
+Once you install the extension, you pass it a configuration block which tells the Gem where to find template files:
+
+	:::ruby
+	activate :blog do |blog|
+	  blog.layout        = "article"
+	  blog.taglink       = "metadata/:tag.html"
+	  blog.tag_template  = "tag.html"
+	  blog.year_template = "calendar.html"
+	end
+
+Being on a simplicity kick I decided that I didn't need the full blown calendar/archive pages that the extension provides. A [simple list](http://darrenknewton.com/archive/ "Blog archives") of articles grouped by year would suffice. To pull this off I used one of the more powerful features of Middleman which is the ability to create what it calls [dynamic pages](http://middlemanapp.com/advanced/dynamic-pages/). These are basically pages you create on the fly programmatically from within Middleman, without a content file.
+
+In my case I setup a little block of code that gathered all of the blog articles, grouped them by year and dropped them into an array. The array is then passed into a template and the ```/archive.html``` page is generated. This is run everytime the site is compiled, so the page is always up-to-date:
+
+	:::ruby
+	archive_resources = []
+	blog.articles.group_by {|a| a.date.year }.each do |year, year_articles|
+	  archive_resources << {:year => year, :articles => year_articles}
+	end
+	page "/archive.html", :layout => :generic do
+	  @archives = archive_resources
+	end
+
+I use a similar process to dynamically build the Sitemap and RSS feeds for the site everytime it's built. This automates a lot of tedious jobs that I would most likely forget to do on my own.
+
+## Custom helpers
+
+You can write your own Sinatra-style helpers to help out with repetetive tasks. One of my main goals for the new blog was the create a clean reading experience that looked good on a variety of platforms. This meant using a responsive design so it looked sharp on mobile devices, but it also meant I wanted it to look good when viewed on an application like [Readability](https://www.readability.com "Read Comfortably - Anytime, Anywhere") (_full disclosure:_ I work for [Arc90](http://arc90.com "Super nerds!"), Readability's parent company.). Readability has a set of [article publishing guidelines](https://www.readability.com/developers/guidelines) which explains what their parsers are looking for in your HTML.
+
+I wanted a helper that would wrap my main article image in ```.entry-content-asset``` classed tags so Readability and others would scoop it up as an important image. The helper is pretty simple, and uses the existing ```image_tag``` helper to do the job:
+
+	:::ruby
+	# Properly format a content_entry_asset
+	def entry_asset(img, url = nil)
+	  img_tag = image_tag(
+	  	img[:url], 
+	  	:itemprop => "image", 
+	  	:alt => img[:alt], 
+	  	:title => img[:title]
+	  )
+	  # if we have a URL then link the image with link_to
+	  unless url.nil?
+	    img_tag = link_to img_tag, url
+	  end
+	  '<div class="entry-content-asset photo-full">' + img_tag + '</div>'
+	end
+
+I could now drop the following tag at the top of my Markdown pages and the image would get wrapped in the appropriate ```<div>``` tags:
+
+	:::ruby
+	entry_asset({
+	  :url => 'http://images.darrenknewton.com/backbone.jpg', 
+	  :alt => 'Spine', 
+	  :title => "Backbone.js - keep your kneebones connected to your thighbones"
+	})
+
+I also needed to create a helper that would generate the [Coderwall](http://coderwall.com/darrenn) badges in the footer of this site. This one was a little more complex as I needed to hit the Coderwall API and parse out the relevant information. I thought it would be best to wrap it up as a module in the ```/lib``` folder that was then pulled into Middleman via ```require "lib/coderwall_helpers"```. You can see the [source for that module](https://github.com/DarrenN/darrenknewton.com/blob/master/lib/coderwall_helpers.rb "Coderwall Helper Module") in the repo.
+
+## Re-usability
+
+The ultimate test came when I decided to port my [design portfolio](http://v25media.com "Darren Newton Creative Services") over to Middleman as well. Simply copying the project over into a new repo, tweaking the templates to handle multiple large images and stripping out some things I didn't need (such as Coderwall badges and Disqus comments) had me up and running in a very short amount of time.
+
+Overall I had a positive experience with Middleman. There was some initial weirdness figuring out the core [Sitemap](http://middlemanapp.com/metadata/sitemap/) resources which are at the heart of the application, but I chalk this up to being in beta and having spotty documentation. A fair amount of time was spent in the YARD docs figuring out what methods were available to build navigation.
+
+I also spent a lot of time generating [Schema.org](http://schema.org "Rich metadata") metadata on the sites as well as alternative JSON representations of the pages to compliment traditional RSS, but that's a topic for another blog post.
