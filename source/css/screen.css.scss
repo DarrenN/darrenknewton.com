@@ -1,0 +1,786 @@
+// ---------------------------------------------------------------------------
+// Imports
+
+@import "base";
+
+/* -------------------------------------------------------------------------*/
+/* Layout */
+
+html {
+  background: #333;
+}
+
+body {
+  background: #fbfbfb;
+  text-rendering: optimizeLegibility;
+}
+
+.container {
+  @include container;
+  @include susy-grid-background;
+}
+
+#masthead-container {
+  background: #fff;
+  box-shadow: #ccc 0px 0px 5px;
+}
+
+#masthead {
+  clear: both;
+  padding: 35px 0 20px 0;
+  @include font-title(400);
+
+  #masthead-logo {
+    @include span-columns(2,4);
+    @include font-title(300);
+    color: lighten($color-text-base, 40);
+    a {
+      color: lighten($color-text-base, 40);
+      text-decoration: none;
+    }
+    em {
+      color: lighten($color-text-base, 20);
+    }
+    img {
+      display: inline-block;
+      float: left;
+      position: relative;
+      margin-top: -12px;
+      margin-left: 5px;
+    }
+    span {
+      padding: 0 0 0 5px;
+      position: absolute;
+    }
+  }
+
+  nav {
+    @include span-columns(2 omega, 4);
+    color: lighten($color-text-base, 40);
+    @include font-title(300);
+    ul {
+      text-align: right;
+      margin: 0 10px 0 0;
+    }
+    li {
+      display: inline-block;
+      a {
+        padding: 0 5px;
+        color: lighten($color-text-base, 40);
+        text-decoration: none;
+      }
+      a:hover {
+        color: $color-link-base;
+        text-decoration: underline;
+      }
+    }
+    li:after {
+      content: ' | ';
+    }
+    li:last-child {
+      a {
+        padding: 0 0 0 5px;
+      }
+    }
+    li:last-child:after {
+      content: '';
+    }
+  }
+}
+
+article {
+  clear: both;
+
+  header {
+    @include font-title(600);
+
+    time {
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: lighten($color-text-base, 40);
+      display: block;
+      margin: 30px 0;
+    }
+
+    h1 {
+      color: $color-text-base;
+      font-size: 2.4rem;
+      margin: 0 0 30px 0;
+      @include ligatures;
+    }
+  }
+
+  img {
+    box-shadow: #999 0px 0px 5px;
+    display: block;
+  }
+
+  .entry-content-asset {
+    margin: 20px 0;
+    img {
+        width: 100%;
+        display: block;
+      }
+  }
+
+  .photo-full {
+    @include span-columns(4 omega,4);
+    margin: 0 0 20px 0;
+    clear: both;
+  }
+
+  .photo-left {
+    @include span-columns(2,4);
+    margin-bottom: 20px;
+  }
+
+  .photo-right {
+    @include span-columns(2 omega,4);
+    margin: 0 0 20px 20px;
+  }
+
+  p {
+    @include font-text(400);
+    color: lighten($color-text-base, 10);
+    font-size: 1.2rem;
+    line-height: 150%;
+    margin: 30px 0;
+
+    strong {
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+    em:hover {
+      background: lighten($color-link-base, 40);
+      color: lighten($color-link-base, 10);
+    }
+    code {
+      @include font-code(1rem);
+      color: darken($color-code-base, 10);
+      background: lighten($color-code-base, 65);
+      padding: 3px;
+      line-height: 110%;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    a {
+      color: $color-link-base;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+
+  footer {
+    clear: both;
+    margin: 20px 0;
+    padding: 20px 0;
+    border-bottom: #ccc 1px solid;
+    min-height: 20px;
+
+    @include font-title(400);
+
+    .metadata {
+      @include span-columns(3,4);
+      strong {
+        color: lighten($color-text-base, 20);
+      }
+      ul {
+        display: inline-block;
+      }
+      li {
+        display: inline-block;
+        @include font-title(300);
+        color: lighten($color-text-base, 40);
+        a {
+          padding: 0 5px;
+          color: lighten($color-text-base, 40);
+          text-decoration: none;
+        }
+        a:hover {
+          color: $color-link-base;
+          text-decoration: underline;
+        }
+      }
+      li:after {
+        content: ' / ';
+      }
+      li:last-child {
+        a {
+          padding: 0 0 0 5px;
+        }
+      }
+      li:last-child:after {
+        content: '';
+      }
+    }
+
+    .nav-back {
+      @include span-columns(1 omega,4);
+      text-align: right;
+      a {
+        @include font-title(300, italic);
+        color: $color-link-base;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+}
+
+
+
+#article-nav-container {
+  margin: 40px 0 0 0;
+  background: #ccc;
+  @include background-image(linear-gradient(#f3f2f2, #d3d3d3));
+  border-top: #fff 1px solid;
+  box-shadow: #333 0 0 1px;
+}
+
+#article-nav {
+  clear: both;
+  padding: 15px 0;
+  @include font-title(300);
+
+  ul {
+    width: 100%;
+    display: block;
+  }
+  li {
+    a {
+      color: lighten($color-text-base, 40);
+      font-size: 1.1rem;
+      text-decoration: none;
+
+      span {
+        font-weight: 600;
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 20px;
+        background: lighten($color-text-base, 50);
+        color: lighten($color-text-base, 70);
+      }
+    }
+    a:hover {
+      color: $color-link-base;
+
+      span {
+        background: $color-link-base;
+        color: #fff;
+      }
+    }
+  }
+
+  #article-nav-left {
+    display: block;
+    float: left;
+  }
+  #article-nav-right {
+    display: block;
+    float: right;
+  }
+}
+
+#article-nav-mobile {
+  display: none;
+  text-align: center;
+  padding: 15px;
+  @include font-title(300);
+  a {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    color: lighten($color-text-base, 40);
+    font-size: 1.3rem;
+    text-decoration: none;
+    padding: 14px 10px 10px 10px;
+    border: lighten($color-text-base, 50) 1px solid;
+    border-radius: 14px;
+    box-shadow: #fff 0 1px 1px;
+    span {
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 20px;
+      box-shadow: #fff 0 1px 1px;
+      background: lighten($color-text-base, 50);
+      color: lighten($color-text-base, 70);
+      position: relative;
+      top: -2px;
+      margin: 0 2px 0 0;
+    }
+  }
+  a:hover {
+    color: $color-link-base;
+    span {
+      background: $color-link-base;
+      color: #fff;
+    }
+  }
+}
+
+#footer-page {
+  padding: 20px 0;
+  background: #333;
+  @include background-image(linear-gradient(darken($color-text-base, 10) 1%, $color-text-base 5%));
+}
+
+#colophon {
+  clear: both;
+  @include font-title(300);
+  padding: 0 0 20px 0;
+  margin: 0;
+  border-bottom: darken($color-text-base, 10) 1px solid;
+  font-size: 0.9rem;
+  color: lighten($color-text-base, 50);
+  height: 40px;
+}
+
+#colophon-a {
+  @include span-columns(2, 4);
+  line-height: 140%;
+  a {
+    color: lighten($color-text-base, 80);
+  }
+}
+
+#colophon-b {
+  @include span-columns(2 omega, 4);
+  text-align: right;
+  color: lighten($color-text-base, 20);
+}
+
+#badges {
+  @include font-title(400);
+  font-size: 0.8rem;
+  padding: 20px 0 40px 0;
+  margin: 0;
+  border-top: lighten($color-text-base, 10) 1px solid;
+}
+
+#badges-a {
+  @include span-columns(1, 4);
+  li {
+    display: inline-block;
+    margin: 10px 5px 0 0;
+
+    a {
+      display: inline-block;
+      padding: 5px;
+      background: lighten($color-text-base, 20);
+      border-radius: 4px;
+      color: lighten($color-text-base, 60);
+      text-decoration: none;
+      text-shadow: darken($color-text-base, 10) 0 1px 1px;
+    }
+    a:hover {
+      background: darken($color-text-base, 20);
+      color: lighten($color-text-base, 60);
+    }
+  }
+}
+
+#badges-b {
+  @include span-columns(3 omega,4);
+  text-align: right;
+  ul {
+    margin: 0;
+
+    li {
+      display: inline-block;
+    }
+
+    img {
+      height: 50px;
+      width: 50px;
+    }
+  }
+}
+
+// ===
+// Homepage Specific Styles
+// ===
+#home {
+  @extend #article;
+  article {
+    header {
+      h1 {
+        margin: 40px 0 0 0;
+        a {
+          color: $color-text-base;
+          text-decoration: none;
+        }
+        a:hover {
+          color: $color-link-base;
+        }
+      }
+    }
+    .entry-content {
+      a.read-more {
+        font-style: italic;
+        padding: 0 0 0 10px;
+      }
+    }
+    footer {
+      border-bottom: #ccc 1px solid;
+      .metadata {
+        @include reset-columns;
+        font-weight: 400;
+        color: lighten($color-text-base, 20);
+        span, strong {
+          color: lighten($color-text-base, 40);
+          font-weight: 300;
+        }
+      }
+    }
+  }
+  article:last-child {
+    footer {
+      border-bottom: 0px;
+    }
+  }
+}
+
+// ===
+// Article Specific Styles
+// ===
+#article {
+  article {
+    .entry-content {
+
+      blockquote {
+          display: block;
+          padding: 0 20px;
+          margin: 10px 20px;
+          border-left: lighten($color-text-base, 50) 3px solid;
+          p {
+            font-style: italic;
+            font-size: 1.6rem;
+            @include ligatures;
+          }
+          h3 {
+            @include font-title(300);
+            font-size: 1.6rem;
+            color: lighten($color-text-base, 20);
+            @include ligatures;
+          }
+      }
+
+      // Code styles
+      .highlight {
+        margin: 0;
+        padding: 20px 30px;
+        background: lighten($color-text-base, 75);
+        display: block;
+        overflow: auto;
+        border-radius: 10px;
+        box-shadow: lighten($color-text-base, 60) 0 0 3px inset;
+        pre {
+          @include font-code(1rem);
+          padding: 0;
+          line-height: 140%;
+        }
+      }
+
+      h2 {
+        @include font-title(600);
+        font-size: 1.6rem;
+        color: $color-text-base;
+        display: block;
+        margin: 20px 0 0 0;
+      }
+
+      strong {
+        font-weight: bold;
+      }
+
+      em {
+        font-style: italic;
+      }
+
+      ol, ul {
+        @extend p;
+        margin: 20px 0;
+        padding: 10px 0;
+        border-top: (lighten($color-text-base, 60)) 1px solid;
+        border-bottom: (lighten($color-text-base, 60)) 1px solid;
+
+        li {
+          list-style-type: lower-roman;
+          margin: 10px 0 10px 40px;
+          color: $color-text-base;
+        }
+      }
+
+      ul {
+        li {
+          list-style-type: disc;
+        }
+      }
+    }
+  }
+}
+
+// ===
+// Disqus Styles
+// ===
+#comments {
+  @include font-title(300);
+  color: $color-text-base;
+
+  h1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+  }
+
+  a {
+    color: $color-link-base;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+// ===
+// Generic Styles
+// ===
+#generic {
+  article {
+    header {
+      h1 {
+        margin: 40px 0 20px 0;
+        font-weight: 300;
+      }
+    }
+
+    h2 {
+      @include font-title(600);
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      color: lighten($color-text-base, 40);
+      display: block;
+      margin: 20px 0;
+    }
+
+    ul {
+      @include font-title(300);
+      margin: 0 0 20px 0;
+      padding: 0 0 20px 0;
+      border-top: lighten($color-text-base, 70) 1px solid;
+      li {
+        margin: 20px 0;
+        color: lighten($color-text-base, 30);
+
+        a {
+          color: $color-link-base;
+          text-decoration: none;
+          font-weight: 400;
+          margin: 0 10px 0 0;
+        }
+
+        i {
+          font-weight: 600;
+          color: lighten($color-text-base, 60);
+          padding: 0 0 0 20px;
+          font-size: 0.9rem
+        }
+
+        em {
+          color: lighten($color-text-base, 60);
+          font-style: italic;
+          font-size: 0.9rem
+        }
+      }
+    }
+  }
+}
+
+// ===
+// 404 Styles
+// ===
+.missing {
+  h3.other-things {
+    color: lighten($color-text-base, 10);
+    font-size: 1.4rem;
+    padding: 0 0 10px 0;
+    @include font-title(600);
+  }
+  ul {
+    li {
+      margin: 10px 0;
+      b {
+        @include font-title(600);
+      }
+      form {
+        margin: 10px 0;
+      }
+    }
+  }
+}
+
+
+// ===
+// Mobile Styles
+// ===
+@include at-breakpoint(1em 4 40em) {
+
+  #masthead {
+    clear: both;
+    padding: 15px 0 15px 0;
+    @include font-title(400);
+
+    #masthead-logo {
+      @include reset-columns;
+      clear: both;
+      display: block;
+      margin: 0 0 20px 0;
+      text-align: center;
+      img {
+        display: block;
+        position: relative;
+        margin: 0 auto;
+        float: none;
+        clear: both;
+      }
+      span {
+        display: block;
+        padding: 0;
+        margin: 10px 0 0 0;
+        position: relative;
+        font-size: 1.6rem;
+        font-weight: 600;
+        i {
+          display: none;
+        }
+      }
+    }
+
+    nav {
+      @include reset-columns;
+      clear: both;
+      display: block;
+      ul {
+        text-align: center;
+      }
+      li {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+
+  article {
+    header {
+      text-align: center;
+      time {
+        margin: 20px 0;
+        font-size: 1.2rem;
+        color: lighten($color-text-base, 50);
+      } 
+    }
+    p {
+
+    }
+    footer {
+      font-size: 1.2rem;
+      text-align: center;
+      .metadata {
+        @include reset-columns; 
+      }
+      .nav-back {
+        display: none;
+      }
+    }
+  }
+
+  #article-nav {
+    display: none;
+  }
+  #article-nav-mobile {
+    display: block;
+  }
+
+  #colophon {
+    padding: 0;
+    height: auto;
+
+  }
+
+  #colophon-a,
+  #colophon-b {
+    display: block;
+    @include reset-columns; 
+    text-align: center;
+    margin: 10px 0;
+    font-size: 1.2rem;
+    line-height: 140%;
+  }
+
+  #badges-a {
+    display: none;
+  }
+
+  #badges-b {
+    @include reset-columns;
+    text-align: center;
+
+    ul {
+      li {
+        margin: 0 0 10px 0;
+        img {
+      height: 64px;
+      width: 64px;
+    }
+      }
+    }
+  }
+
+  #generic {
+    article {
+      h2 {
+        text-align: center;
+      }
+
+      ul {
+        li {
+          span {
+            display: block !important;
+            text-align: center;
+            margin: 0 0 5px 0 !important;
+          }
+
+          a {
+            font-size: 1.6rem;
+            font-weight: 600 !important;
+            margin: 10px 0 6px 0;
+            display: block;
+            text-align: center;
+          }
+
+          i {
+            font-weight: 600;
+            color: lighten($color-text-base, 60);
+            font-size: 1rem;
+            padding: 0;
+          }
+
+          em {
+            color: lighten($color-text-base, 60);
+            font-style: normal !important;
+            font-size: 1rem;
+            padding: 0;
+          }
+        }
+      }
+    }
+  }
+
+}

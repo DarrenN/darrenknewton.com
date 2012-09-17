@@ -1,0 +1,47 @@
+// ---------------------------------------------------------------------------
+// Imports
+
+@import "compass/reset";
+@import "susy";
+
+// ---------------------------------------------------------------------------
+// Basic Grid
+$media-layout: 1em 4 40em;
+
+$total-columns  : 4;
+$column-width   : 11.0em;
+$gutter-width   : 1em;
+$grid-padding   : $gutter-width;
+
+$show-grid-backgrounds  : false;
+
+$color-text-base : #333;
+$color-link-base : #f60;
+$color-code-base : #00639c;
+
+// Typography
+@mixin font-text ($weight, $style : "normal") {
+	font-family: "chaparral-pro", "Hoefler Text", "Times", sans-serif;
+	font-style: $style;
+	font-weight: $weight;
+}
+
+@mixin font-title ($weight, $style : "normal") {
+	font-family: "proxima-nova", "Gill Sans", "Helvetica", arial, sans-serif;
+	font-style: $style;
+	font-weight: $weight;
+}
+
+@mixin font-code ($size : 1.1rem) {
+	font-family: "Consolas", "Inconsolata", "Menlo", "Andale Mono", courier, mono;
+	font-size: $size;
+}
+
+@mixin ligatures {
+	-moz-font-feature-settings: "liga=1, dlig=1";
+	-moz-font-feature-settings: "liga", "dlig";
+	-ms-font-feature-settings: "liga", "dlig";
+	-webkit-font-feature-settings: "liga", "dlig";
+	-o-font-feature-settings: "liga", "dlig";
+	font-feature-settings: "liga", "dlig";
+}
