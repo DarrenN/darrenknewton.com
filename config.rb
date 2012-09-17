@@ -8,6 +8,12 @@ require "date"
 
 activate :directory_indexes
 
+# Compass
+compass_config do |config|
+  config.output_style = :compact
+  config.line_comments = false
+end
+
 # Blog
 activate :blog do |blog|
   blog.layout        = "article"
@@ -39,7 +45,10 @@ ready do
 end
 
 set :markdown_engine, :kramdown
-set :markdown, :layout_engine => :erb, :tables => true, :autolink => true
+set :markdown, :layout_engine => :erb, 
+               :tables => true, 
+               :autolink => true,
+               :smartypants => true
 
 page "/index.html", :layout => false
 page "404.html", :layout => false
