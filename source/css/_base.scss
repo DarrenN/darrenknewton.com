@@ -27,7 +27,7 @@ $color-code-base : #00639c;
 }
 
 @mixin font-title ($weight, $style : "normal") {
-	font-family: "proxima-nova", "Gill Sans", "Helvetica", arial, sans-serif;
+	font-family: "proxima-nova", "Helvetica Neue", "Helvetica", arial, sans-serif;
 	font-style: $style;
 	font-weight: $weight;
 }
