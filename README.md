@@ -7,4 +7,4 @@ which has too many defaults to work around/with.
 ### Copyright / License information
 
 http://darrenknewton.com is made with open source software, however, all of the content and templates are 
-Copyright 2012, Darren Newton, all rights reserved.
+Copyright 2013, Darren Newton, all rights reserved.
