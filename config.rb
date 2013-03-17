@@ -6,8 +6,6 @@ require "lib/coderwall_helpers"
 require "lib/uuid"
 require "date"
 
-activate :directory_indexes
-
 # Compass
 compass_config do |config|
   config.output_style = :compact
@@ -43,6 +41,8 @@ ready do
     end
   end
 end
+
+activate :directory_indexes
 
 set :markdown_engine, :kramdown
 set :markdown, :layout_engine => :erb, 
