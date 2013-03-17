@@ -98,8 +98,8 @@
 		<script>try{Typekit.load();}catch(e){}</script>
 		<script>
 			var disqus_shortname  = 'miscellaneacode';       
-			var disqus_identifier = 'http://darrenknewton.com/blog<%= current_page.url %>';
-			var disqus_url        = 'http://darrenknewton.com<%= current_page.url %>';
+			var disqus_identifier = 'http://darrenknewton.com/blog<%= current_page.url.gsub(/.html/, '/') %>';
+			var disqus_url        = 'http://darrenknewton.com<%= current_page.url.gsub(/.html/, '/') %>';
 			var disqus_script     = 'embed.js';
       
 		    (function () {

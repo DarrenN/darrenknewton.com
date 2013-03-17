@@ -14,7 +14,7 @@ module CoderWallHelpers
 
   def achievements_of(username)
     raise(ArgumentError, "Invalid username") if username.empty?
-    url = URI.escape("http://coderwall.com/#{username}.json")
+    url = URI.escape("https://coderwall.com/#{username}.json")
     begin
       response = JSON.load(open(url))
     rescue OpenURI::HTTPError
