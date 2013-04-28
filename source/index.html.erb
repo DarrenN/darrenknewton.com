@@ -12,15 +12,18 @@
 		<meta name="description" content="Unix tricks, programming, interface design and cultural observations from Darren Newton's brain">
 
 		<meta name="msvalidate.01" content="BE7DA3BEF0F11153F6E4B5585C12DB20" />
-
+		<% article = blog.articles[0] %>
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Miscellanea | Code, design, &amp; cultural ephemera" />
 		<meta property="og:url" content="http://darrenknewton.com" />
-		<meta property="og:image" content="http://images.darrenknewton.com/sam_jackson_git.jpg" />
+		<meta property="og:image" content="http://darrenknewton.com<%= image_path article.metadata[:page]['image'] %>" />
 		<meta property="og:description" content="Unix tricks, programming, interface design and cultural observations from Darren Newton's brain" />
 
-		<meta name="twitter:card" value="summary">
-		<meta name="twitter:creator" value="@d_run">
+		<meta name="twitter:card" value="summary" />
+		<meta name="twitter:creator" value="@d_run" />
+		<meta name="twitter:title" value="Miscellanea | Code, design, &amp; cultural ephemera" />
+		<meta name="twitter:description" value="Unix tricks, programming, interface design and cultural observations from Darren Newton's brain" />
+		<meta name="twitter:image" value="http://images.darrenknewton.com<%= image_path article.metadata[:page]['image'] %>" />
 
 		<link rel="alternate" type="application/rss+xml" href="feed.rss" title="Sitewide RSS 2.0 Feed">
 		<link rel="alternate" type="application/atom+xml" href="atom.xml" title="Sitewide ATOM Feed">
@@ -138,3 +141,7 @@
 		<script>try{Typekit.load();}catch(e){}</script>
 	</body>
 </html>
+<!-- 
+	All content and design is 
+	Copyright (c) <%= Date.today.year %> Darren Newton, all rights reserved
+-->

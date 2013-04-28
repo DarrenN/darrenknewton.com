@@ -16,11 +16,14 @@
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="<%= data.page.title %>" />
 		<meta property="og:url" content="http://darrenknewton.com<%= current_page.url %>" />
-		<meta property="og:image" content="<%= current_page.data.image %>" />
+		<meta property="og:image" content="http://darrenknewton.com<%= image_path current_page.data.image %>" />
 		<meta property="og:description" content="<%= current_page.data.description %>" />
 
-		<meta name="twitter:card" value="summary">
-		<meta name="twitter:creator" value="@d_run">
+		<meta name="twitter:card" value="summary" />
+		<meta name="twitter:creator" value="@d_run" />
+		<meta name="twitter:title" value="<%= data.page.title %>" />
+		<meta name="twitter:description" value="<%= current_page.data.description %>" />
+		<meta name="twitter:image" value="http://darrenknewton.com<%= image_path current_page.data.image %>" />
 
 		<link href="atom.xml" type="application/atom+xml" rel="alternate" title="<%= data.page.title %> ATOM Feed" />
 		<link href="atom.json" type="application/atom+json" rel="alternate" title="<%= data.page.title %> JSON Feed" />
@@ -110,3 +113,7 @@
 		</script>
 	</body>
 </html>
+<!-- 
+	All content and design is 
+	Copyright (c) <%= Date.today.year %> Darren Newton, all rights reserved
+-->
