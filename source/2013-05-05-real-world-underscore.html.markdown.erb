@@ -10,7 +10,7 @@ image: "middleman.png"
 
 <%= entry_asset({:url => 'http://images.darrenknewton.com/middleman.png', :alt => 'Middleman', :title => "Middleman: makes developing websites simple"}) %>
 
-**TL;DR** - [Fogus](http://blog.fogus.me/) and [Raganwald](http://braythwayt.com/) dropped published the [underscore-contrib](https://github.com/documentcloud/underscore-contrib) repo recently which is loaded with functional JavaScript goodness based on the popular and indispensible [underscore](https://github.com/documentcloud/underscore) library. I'm gonna walk through some a _few_ real-world examples of fun you can have with the new hotness. <[Just skip to the code!](#examples)> READMORE
+**TL;DR** - [Fogus](http://blog.fogus.me/) and [Raganwald](http://braythwayt.com/) published the [underscore-contrib](https://github.com/documentcloud/underscore-contrib) repo recently which is loaded with functional JavaScript goodness based on the popular [underscore](https://github.com/documentcloud/underscore) library. I walk through a few examples of how I use it in the hopes you'll get interested in working out new ways to solve your own day-to-day issues. READMORE
 
 ## Table of Contents!
 
@@ -21,21 +21,22 @@ image: "middleman.png"
 
 ## <a id="background"></a>Background
 
-If you don't already use or know about Underscore.js, then just stop right now and [download it](https://github.com/documentcloud/underscore). Underscore provides a rich toolset of _functions_ for your projects, allowing you to quickly slice and dice arrays and objects while composing functions with ease. More importantly, as often pointed out by [aviflax](https://github.com/aviflax), it brings modern concepts like **map** and **reduce**, native to modern browsers, to older versions of Internet Explorer. (When I use **map** and **reduce** in my examples I'm going to show how to do it both natively and with underscore.)
+[Functional programming](https://en.wikipedia.org/wiki/Functional_programming) has been getting a lot of play recently, but many demos of languages like [Clojure](http://clojure.org/) and [Haskell](http://www.haskell.org/haskellwiki/Haskell) can be pretty intimidating and esoteric for your average front-end developer who primarily works in JavaScript. The reality is that JavaScript packs a lot of functional power and you can exploit this in your day-to-day work to get real results writing leaner and more flexible code.
 
-Michael Fogus ([Fogus](http://blog.fogus.me/)) and Reginald Braithwaite ([Raganwald](http://braythwayt.com/)) have been writing a recently about functional programming in JavaScript. Raganwald has written some of my fave books on the matter: [CoffeeScript Ristretto](https://leanpub.com/coffeescript-ristretto) and [JavaScript Allongé](https://leanpub.com/javascript-allonge). Fogus is publishing [Functional JavaScript](http://www.amazon.com/Functional-JavaScript-Introducing-Programming-Underscore-js/dp/1449360726/) soon, and I have that sucker on pre-order.
+If you don't already use or know about [Jeremy Ashkenas'](https://github.com/jashkenas) Underscore.js, then just stop right now and [download it](https://github.com/documentcloud/underscore). Underscore provides a rich toolset of _functions_ that ease manipulating Arrays, Objects and Functions. More importantly it brings [higher order functions](https://en.wikipedia.org/wiki/Higher_order_function) like **[map](http://bit.ly/QX7AFQ)** and **[reduce](http://bit.ly/10e1w3G)**, native to modern browsers, to older versions of Internet Explorer. (In my examples I'm going to show how to do it both natively and with Underscore.)
 
-This dynamic duo, when not back and forthing ideas on Twitter, put together the Underscore-Contrib library, which brings a whole new set of functional goodness to JavaScript using underscore.js as the foundation. _Nerd joy ensues._
+Michael Fogus ([Fogus](http://blog.fogus.me/)) and Reginald Braithwaite ([Raganwald](http://braythwayt.com/)) put together the [Underscore-Contrib](https://github.com/documentcloud/underscore-contrib) library, which brings a whole new set of functional goodness to JavaScript using underscore.js as the foundation. Raganwald has written two of the better books about JavaScript: [CoffeeScript Ristretto](https://leanpub.com/coffeescript-ristretto) and [JavaScript Allongé](https://leanpub.com/javascript-allonge). Fogus is working on and [Functional JavaScript](http://www.amazon.com/Functional-JavaScript-Introducing-Programming-Underscore-js/dp/1449360726/) 
 
-This post (maybe series?) is based on a quick talk I gave at last week's [Arc90](http://arc90.com) Code Review. The main premise is that I really dislike programming demos that use factorial and other math concepts to explain functional programming, so I put together my own contrived examples pulled from the day to day stuff you might do at work.
+This post is based on a quick talk I gave at an [Arc90](http://arc90.com) Code Review. The main idea is that with underscore & underscore-contrib you can think about some problems in a functional rather than imperative way, and may arrive at more flexible and powerful solutions to a given problem. Additionally I dislike programming demos that use factorial and other math concepts to explain functional programming. My own contrived examples are pulled from the day to day stuff I (and maybe you) do at work such as String and Date manipulation.
 
 ## <a id="getit"></a>How to get it
 
 **Clone the repo:** `$ git clone git@github.com:documentcloud/underscore-contrib.git`  
 **Or download a zip:** [master.zip](https://github.com/documentcloud/underscore-contrib/archive/master.zip)
 
-**JsFiddle:** I put together a JSFiddle [here](http://jsfiddle.net/darren_n/FgRkQ/1/) which has all of the libraries loaded up and a `log` function to output your work in HTML. You can use this to play along with the examples below. The `log` function itself uses underscore.js.
-<a id="examples"></a>
+**Demo code:** [functions.zip](http://static.v25media.com/functions.zip)
+
+**JsFiddle:** I put together a JSFiddle [here](http://jsfiddle.net/darren_n/FgRkQ/1/) which has all of the libraries loaded up and a `log` function to output your work in HTML. You can use this to play along with the examples below. (The `log` function itself uses underscore.js.)
 
 ## <a id="funcs"></a>Those promiscuous functions
 
@@ -61,6 +62,7 @@ Hey cool, I have three functions for operating on Strings, that I can use in dif
 
 	:::javascript
 	var ted = toMr(upperFirst(lower('TED')));
+
 	console.log(ted) // Mr. Ted
 
 That works, sure, but what if I need to do the _Mr._ transform in a lot of different places? I don't want to type out `toMr(upperFirst(lower('n')))` every time do you? So you would probably make another function like:
@@ -69,6 +71,7 @@ That works, sure, but what if I need to do the _Mr._ transform in a lot of diffe
 	var makeMr = function(s) {
 		return toMr(upperFirst(lower(s))); 
 	}
+
 	console.log(makeMr('ted')) // Mr. Ted
 
 Okay, much better, we're assembling functions to get things done. But hey, what if we had a function that could automatically compose other functions together for us in a generic manner? **We do**.
@@ -76,10 +79,12 @@ Okay, much better, we're assembling functions to get things done. But hey, what 
 	:::javascript
 	// underscore: _.compose()
 	var makeMr = _.compose(toMr, upperFirst, lower);
+
 	console.log(makeMr('TED')) // Mr. Ted
 
 	// underscore-contrib: _.pipeline()
 	var makeMr = _.pipeline(lower, upperFirst, toMr);
+
 	console.log(makeMr('TED')) // Mr. Ted
 
 `compose` and `pipeline` are two ways to get to the same place: a new _function_ composed of other functions. As long as each function in the chain returns a value for the next function, as all of our string functions do, you're set. The difference between `compose` and `pipeline` is the order in which your functions are called. `compose` calls them from right to left while `pipeline` is left to right. 
@@ -99,6 +104,7 @@ Now that we're quickly composing functions, we can build up our own library for 
 
 	// Make a function which reverses makeMr
 	var backMr = _.compose(backwards, makeMr);
+
 	console.log(makeMr('TED'), backMr('TED')) // Mr. Ted deT .rM
 
 You're making new functions on the fly now, using simple functions like Lego to make something more complex. This is pretty powerful when you think about it: all those admonitions to make small functions that do one thing well are starting to make sense.
@@ -114,8 +120,8 @@ Let's do something a little more tasty: imagine you want to take an array of Str
 
 	// _.juxt() from underscore-contrib returns a function that 
     // returns an array of the calls to each given function for some arguments. 
-
     var j = _.juxt(_.identity, makeMr);
+
     console.log(j('ted')) // ['ted','Mr. Ted']
 
     // Hold up! What's _.identity?
@@ -135,19 +141,17 @@ Let's do something a little more tasty: imagine you want to take an array of Str
 
     // Underscore _.map if you need to be safe
 	var nameTuples = _.map(names, _.juxt(_.identity, makeMr)); 
-
-    console.log(nameTuples);
     // [["ted","Mr. Ted"],["bob","Mr. Bob"],["jim","Mr. Jim"]]
 
     // Now make an Object from those tuples using _.object()
     // which takes key value pair arrays [key, value] and 
     // converts them into an Object {key : value}
-    console.log(_.object(nameTubles));
+
+    console.log(_.object(nameTuples));
     // {"ted":"Mr. Ted","bob":"Mr. Bob","jim":"Mr. Jim"}
 
     // Now let's do it in a terse manner without all the local vars:
     var nameObj = _.object(['ted','bob','jim'].map(_.juxt(_.identity, makeMr)));
-    console.log(nameObj);
     // {"ted":"Mr. Ted","bob":"Mr. Bob","jim":"Mr. Jim"}
 
     // Iterate!
@@ -158,7 +162,6 @@ Let's do something a little more tasty: imagine you want to take an array of Str
     // {"Ted":"deT .rM","Bob":"boB .rM","Jim":"miJ .rM"}   
 
 See what we did there? By combining functions from underscore and underscore-contrib with our own functions we're able to convert a simple Array of Strings into a new key value Object in one line of code. You can now quickly iterate through different function combinations to slightly or radically change the end Object as needed. By taking the time to reason through _what_ you want to do you can compose a flexible solution.
-
 
 There are a whole bunch of interesting [function combinators](https://github.com/documentcloud/underscore-contrib/blob/master/underscore.function.combinators.js) to play with, way more than I can cover here. 
 
@@ -197,21 +200,21 @@ Another common task in JavaScript is working with Dates. I usually toss in a lib
 Cool, we can make dates and convert them to ISO8601 strings. Let's play:
 
 	:::javascript
-	console.log(date_new('5/5/2013')) // "2013-05-05T04:00:00.000Z"
+	console.log(date_new('5/5/2013')) // "Sun May 05 2013 00:00:00 GMT-0400 (EDT)"
 
-	console.log(date_new()) // null
+	console.log(date_new()) // Invalid Date
 
-Whoops! If we forget to pass an argument to date_new() we get `null` back. This makes sense, `null` in means `null` out. What if we don't want that behavior for this application though? What if we want new_date() to always return a non-null value? How many times have you written this kind of _guard code_:
+Whoops! If we forget to pass an argument to date_new() we get `Invalid Date` back. What if we don't want that behavior for this application though? What if we want date_new() to have a default value? How many times have you written this kind of _guard code_:
 
 	:::javascript
 	var date_new = function (s) {
-		if (s === null) {
+		if (s === null || s === undefined) {
 			s = '1/1/1970';
 		}
 	    return new Date(s);
 	};
 
-	console.log(new_date()); // "1970-01-01T05:00:00.000Z"
+	console.log(date_new()); // "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)"
 
 You've probably written it a lot, and it can get tedious as times. Underscore-contrib gives us a nifty little function combinator called `fnull` that makes doing this type of thing easy:
 
@@ -221,36 +224,39 @@ You've probably written it a lot, and it can get tedious as times. Underscore-co
 	};
 	date_new = _.fnull(date_new, '1/1/1970');
 
-	console.log(new_date()); // "1970-01-01T05:00:00.000Z"
+	console.log(date_new()); // "Thu Jan 01 1970 00:00:00 GMT-0500 (EST)
 
 `fnull` checks the argument for a null value, and if true passes in the default argument you defined ('1/1/1970'). This is where you say: "Umm okay, but it doesn't save me that much code, and it's not inside my function so it may not be as clear."
 
 You're right, but what if your function were more like this:
 
 	:::javascript
-	// Lots of arguments, none can be null
-	var create_datetime = function(year, month, day, hour, min, sec) { 
-		var default = new Date(1970, 1, 1, 0, 0, 0);
-		if (arguments.length < 1) {
-			return default;
-		} else {
-			for (var i = 0; i < arguments.length; i++) {
-				if (arguments[i] === null) {
-					return default;
-				} 
-			}
-		}
-		return new Date(year, month, day, hour, min, sec);
-	}
+    // Lots of arguments, none can be null
+    var create_datetime = function(year, month, day, hour, min, sec) { 
+        var def = [1970, 1, 1, 0, 0, 0];
+        if (arguments.length < def.length) {
+            for (var i = arguments.length; i < def.length; i++) {
+                arguments[i] = def[i];
+            }
+        }
+        return new Date(
+            arguments[0], 
+            arguments[1], 
+            arguments[2], 
+            arguments[3], 
+            arguments[4], 
+            arguments[5]
+        );
+    }
 
-	// Using fnull
+	// Same thing using fnull
 	var create_datetime = function(year, month, day, hour, min, sec) {
 		return new Date(year, month, day, hour, min, sec);
 	}
 
 	create_datetime = _.fnull(create_datetime, 1970, 1, 1, 0, 0, 0);
 
-Not only is it a lot less verbose, but your defaults are not hardcoded inside `create_datetime`, so you can change them on the fly as needed in your application. Just another nice-to-have in contrib.
+Not only is using `fnull` less verbose, but your defaults are not hardcoded inside `create_datetime`, so you can change them on the fly as needed in your application. Just another nice-to-have in contrib.
 
 So now that we have some basic date functions, put them to work:
 
@@ -262,19 +268,17 @@ So now that we have some basic date functions, put them to work:
 	var dates = ['4/1/2012', '4/2/2012', null, '3/28/2012'];
 
 	// Turn these date strings into ISO8601 dates using map
-	var isos = dates.map(make_iso)
-	console.log(isos); 
+	var isos = dates.map(make_iso) 
 	// ["2012-4-1T4:0:0Z","2012-4-2T4:0:0Z","1970-1-1T5:0:0Z","2012-3-28T4:0:0Z"]
 
 	// Let's take those isos and break the time off
 	var isos_no_time = isos.map(iso_no_time);
-	console.log(isos_no_time);
 	// ["2012-4-1","2012-4-2","1970-1-1","2012-3-28"]
 
 	// Notice that the null in the array was caught by 
 	// fnull and defaulted to 1/1/1970
 
-Now that we haves arrays full of dates, we may want to find the oldest & newest dates. [`reduce`](http://underscorejs.org/#reduce) is a great way to find those values. `reduce` is an accumulator, so it walks down your array left-to-right operating on the values to return a single new value. Let's take a look:
+Now that we haves arrays full of dates, we may want to find the oldest & newest dates. [Array.reduce](https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/reduce) is a great way to find those values. `Array.reduce` is an accumulator, so it walks down your array left-to-right operating on the values to return a single new value (the underscore equivalent of `reduce` is [here](http://underscorejs.org/#reduce)). Let's take a look: 
 
 	:::javascript
 	// Let's find the most recent date in that array using reduce
@@ -282,7 +286,7 @@ Now that we haves arrays full of dates, we may want to find the oldest & newest 
 	// to the next value on the right. If the current value (l) is 
 	// greater than the next (r) use l as the current value in the next
 	// comparison, otherwise use r.
-	var recent = _.reduce(isos, function (l, r) {
+	var recent = isos.reduce(function (l, r) {
 	    return (iso_no_time(l) > iso_no_time(r)) ? l : r
 	});
 	console.log(recent); // 2012-4-2T4:0:0Z
@@ -290,7 +294,7 @@ Now that we haves arrays full of dates, we may want to find the oldest & newest 
 	// Let's find the oldest date in that array using reduce
 	// We do exactly the same as above, but we flip the comparison
 	// operator to l < r
-	var oldest = _.reduce(isos, function (l, r) {
+	var oldest = isos.reduce(function (l, r) {
 	    return (iso_no_time(l) < iso_no_time(r)) ? l : r
 	});
 	console.log(oldest); // 1970-1-1T5:0:0Z
