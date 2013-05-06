@@ -173,6 +173,12 @@ article {
     a:hover {
       text-decoration: underline;
     }
+
+    sup {
+      font-size: .8rem;
+      position: relative;
+      top: -6px;
+    }
   }
 
   footer {

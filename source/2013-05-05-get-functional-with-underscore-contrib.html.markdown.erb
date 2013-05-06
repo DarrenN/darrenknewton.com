@@ -10,7 +10,7 @@ image: "underscorejs.png"
 
 <%= entry_asset({:url => 'http://images.darrenknewton.com/underscorejs.png', :alt => 'UnderscoreJS', :title => "Underscore.JS | Underscore-Contrib"}) %>
 
-**TL;DR** - [Fogus](http://blog.fogus.me/) and [Raganwald](http://braythwayt.com/) published the [underscore-contrib](https://github.com/documentcloud/underscore-contrib) repo recently which is loaded with functional JavaScript goodness based on the popular [underscore](https://github.com/documentcloud/underscore) library. I walk through a few examples of how I use it in the hopes you'll get interested in working out new ways to solve your own day-to-day issues. READMORE
+**TL;DR** - [Fogus](http://blog.fogus.me/) and [Jeremy Ashkenas](https://github.com/jashkenas) published the [underscore-contrib](https://github.com/documentcloud/underscore-contrib) repo recently which is loaded with functional JavaScript goodness based on the popular [underscore](https://github.com/documentcloud/underscore) library. I walk through a few examples of how I use it in the hopes you'll get interested in working out new ways to solve your own day-to-day issues. READMORE
 
 ## Table of Contents!
 
@@ -25,7 +25,7 @@ image: "underscorejs.png"
 
 If you don't already use or know about [Jeremy Ashkenas'](https://github.com/jashkenas) Underscore.js, then just stop right now and [download it](https://github.com/documentcloud/underscore). Underscore provides a rich toolset of _functions_ that ease manipulating Arrays, Objects and Functions. More importantly it brings [higher order functions](https://en.wikipedia.org/wiki/Higher_order_function) like **[map](http://bit.ly/QX7AFQ)** and **[reduce](http://bit.ly/10e1w3G)**, native to modern browsers, to older versions of Internet Explorer. (In my examples I'm going to show how to do it both natively and with Underscore.)
 
-Michael Fogus ([Fogus](http://blog.fogus.me/)) and Reginald Braithwaite ([Raganwald](http://braythwayt.com/)) put together the [Underscore-Contrib](https://github.com/documentcloud/underscore-contrib) library, which brings a whole new set of functional goodness to JavaScript using underscore.js as the foundation. Raganwald has written two of the better books about JavaScript: [CoffeeScript Ristretto](https://leanpub.com/coffeescript-ristretto) and [JavaScript Allongé](https://leanpub.com/javascript-allonge). Fogus is working on and [Functional JavaScript](http://www.amazon.com/Functional-JavaScript-Introducing-Programming-Underscore-js/dp/1449360726/) 
+Michael Fogus ([Fogus](http://blog.fogus.me/)) put together the [Underscore-Contrib](https://github.com/documentcloud/underscore-contrib) library, which brings a whole new set of functional goodness to JavaScript using underscore.js as the foundation. [Reginald Braithwaite](http://braythwayt.com/)[^1] contributes to it as well and has written two of the better books about JavaScript: [CoffeeScript Ristretto](https://leanpub.com/coffeescript-ristretto) and [JavaScript Allongé](https://leanpub.com/javascript-allonge). Fogus is working on [Functional JavaScript](http://www.amazon.com/Functional-JavaScript-Introducing-Programming-Underscore-js/dp/1449360726/) 
 
 This post is based on a quick talk I gave at an [Arc90](http://arc90.com) Code Review. The main idea is that with underscore & underscore-contrib you can think about some problems in a functional rather than imperative way, and may arrive at more flexible and powerful solutions to a given problem. Additionally I dislike programming demos that use factorial and other math concepts to explain functional programming. My own contrived examples are pulled from the day to day stuff I (and maybe you) do at work such as String and Date manipulation.
 
@@ -302,3 +302,5 @@ Now that we haves arrays full of dates, we may want to find the oldest & newest 
 So, just like with our strings, we're able to quickly compose functions to operate on dates and iterate over collections with a very small amount of code. Additionally, your intent is made clear in the code itself: _"I want to reduce this array of dates to the most recent date."_
 
 Hopefully this jumble of code ignites your curiosity to go digging into these libraries. There are a lot of very interesting looking function combinators (that I am still figuring out how to use) which might inspire another article.
+
+[^1]: Thanks for the [clarification!](http://www.reddit.com/r/javascript/comments/1dscmr/functional_tricks_with_underscorecontrib/c9te10l)
