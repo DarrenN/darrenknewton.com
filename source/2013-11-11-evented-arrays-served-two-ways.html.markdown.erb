@@ -11,7 +11,7 @@ image: "underscorejs.png"
 <%= entry_asset({:url => 'http://images.darrenknewton.com/underscorejs.png', :alt => 'UnderscoreJS', :title => "Underscore.JS | Underscore-Contrib"}) %>
 
 This post takes a quick look at creating a custom Array-like data
-structure in CoffeeScript that allows you to register callbacks on
+structure in [CoffeeScript](http://coffeescript.org/) that allows you to register callbacks on
 accessor/mutator operations. Along the way I make a small diversion
 into functional programming land. The final project is on
 [GitHub](https://github.com/DarrenN/EventedArray). READMORE
@@ -59,8 +59,8 @@ mixin, but sometimes I just need something small and simple.
 
 I wanted this data structure to be as close to a regular
 [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
-as possible, with a standard Object Oriented type interface. The core
-library is written in [CoffeeScript](https://github.com/DarrenN/EventedArray/blob/master/source/coffee/EventedArray.coffee), but its geared to be used in
+as possible, with a standard Object Oriented type interface. The [core
+library](https://github.com/DarrenN/EventedArray/blob/master/source/coffee/EventedArray.coffee) is written in CoffeeScript, but its geared to be used in
 vanilla JS all the way:
 
     :::javascript
@@ -162,6 +162,98 @@ systems using this general concept, such as
 which filters items from one EventedArray into another:
 
 <iframe src="/js/mylibs/tests-jsonp.html" style="width: 100%;
-height: 410px; overflow: hidden" />
+height: 390px; overflow: hidden" />
+
+## Closure Flavored
+
+EventedArray is a nice little data structure that manages its own
+internal states with a simple interface. Could we do the same thing in
+a purely functional manner without creating an object? Sure. It's a
+little messier but pretty easy to achieve. Instead of creating an
+object that manages its values, we use
+[higher order functions](https://en.wikipedia.org/wiki/Higher-order_function)
+to close over some Arrays, creating new functions that do what we need (in CoffeeScript):
+
+    :::coffeescript
+    ###
+    #  Higher order functions which return functions that operate
+    #  on the data structures they close over.
+    ###
+
+    registerListener = (list, f) -> list.push f
+
+    # Create a function which sets a value onto
+    # coll and keeps coll within size, removing
+    # any values exceeding that size
+    buffer = (size, coll, set, remove) ->
+      (item) ->
+        set item
+        if coll.length > size then remove()
+        coll
+
+    # Return a function which sets a value onto the end of coll
+    # and triggers any callbacks in listeners
+    setter = (coll, listeners) ->
+      (items...) ->
+        items.forEach (i) ->
+          coll.push i
+          if listeners? then listeners.forEach (l) -> l i
+        coll
+
+    # Return a function which shifts values from coll
+    # and triggers any callbacks in listeners
+    remover = (coll, listeners) ->
+      ->
+        o = coll.shift()
+        if listeners? then listeners.forEach (l) -> l o
+        coll
+
+    # Return a function which looks for values in
+    # coll by numeric index and triggers any callbacks
+    # in listeners
+    getter = (coll, listeners) ->
+      (index) ->
+        i = if coll[index]? then coll[index] else undefined
+        if listeners? then listeners.forEach (l) -> l i
+        i
+
+We could then setup the same animated box example by building our
+queues like so - [live example](http://darrenn.github.io/EventedArray/test-fanimation.html):
+
+    :::coffeescript
+    ###
+    #  Queues
+    ###
+
+    # Display x/y tuples
+    # ==================
+
+    $displayQueue = $('#displayqueue')
+    dlist         = []
+    dset          = setter dlist, [(i) -> $displayQueue.html(JSON.stringify(dlist))]
+    dpop          = remover dlist, []
+    dQueue        = buffer 25, dlist, dset, dpop
+
+    # Display boxes
+    # =============
+
+    $canvas  = $('#drawing');
+    blist    = []
+    showBox  = (b) -> b.showBox() # tell the box to render
+    addPoint = (b) -> dQueue b.point # add x/y to $displayQueue
+    bset     = setter blist, [showBox, addPoint]
+    bpop     = remover blist, [(b) -> b.hideBox(); b = null]
+    bQueue   = buffer 25, blist, bset, bpop
+
+    # Capture MouseMove
+    onMove = (e) ->
+      bQueue new Box([e.x, e.y], $canvas)
+
+    document.getElementById('drawing').addEventListener('mousemove', onMove);
+
+The functional version isn't as fully-featured as EventedArray (and
+requires more setup), but it does illustrate a different way to think
+about the problem and this concept is a lot easier to transfer to a
+language like [ClojureScript](https://github.com/clojure/clojurescript), which I've been playing around with lately.
 
 [^1]: Thanks for the [clarification!](http://www.reddit.com/r/javascript/comments/1dscmr/functional_tricks_with_underscorecontrib/c9te10l)
