@@ -119,35 +119,7 @@ So what can we do with EventedArray? It really lends itself to
 managing streams of values, so here's a little DOM based animation
 example. Go ahead and waggle your cursor around in the box:
 
-<div id="drawing"></div>
-<div id="displayqueue"></div>
-
-<script>
-    // Create a Queue that holds 25 items and attach events
-    var Q = new EventedArray();
-    Q.setBuffer(25);
-    Q.register('set', function(b) { b.showBox(); });
-    Q.register('shift', function(b) { b.hideBox(); delete(b); });
-
-    // Create another queue to display our points
-    var displayQueue = $('#displayqueue');
-    var P = new EventedArray();
-    P.setBuffer(25);
-    P.register('set', function() { displayQueue.html(P.toString()); });
-
-    // Drawing area
-    var canvas = $('#drawing');
-    var offset = canvas.offset();
-    var canvasOffsetTop = offset.top - (canvas.height() / 2) + 40;
-    var canvasOffsetLeft = offset.left - (canvas.width() / 2) + 40;
-
-    // Mousemove listener
-    var onMove = function(e) {
-      Q.set(new Box([canvasOffsetLeft + e.x, canvasOffsetTop + e.y], canvas));
-      P.set([e.x, e.y]);
-    };
-
-    document.getElementById('drawing').addEventListener('mousemove', onMove);
-</script>
+<iframe src="/js/mylibs/test-animation.html" style="width: 100%;
+height: 400px; overflow: hidden" />
 
 [^1]: Thanks for the [clarification!](http://www.reddit.com/r/javascript/comments/1dscmr/functional_tricks_with_underscorecontrib/c9te10l)

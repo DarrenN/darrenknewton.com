@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EventedArray Animation Test</title>
+
+  <style type="text/css" media="screen">
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: 'Helvetica Neue', arial, sans-serif;
+        color: #333;
+    }
+    #drawing {
+        width: 99%;
+        height: 280px;
+        border: #ddd 1px solid;
+    }
+    #displayqueue {
+        text-align: center;
+        font-family: 'Inconsolata', 'Menlo', 'Courier', monospace;
+        font-size: 1em;
+        color: #666;
+        margin: 20px;
+    }
+  </style>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="underscore/underscore-min.js"></script>
+  <script src="EventedArray.js"></script>
+  <script src="Box.js"></script>
+</head>
+<body>
+  <div id="drawing"></div>
+  <div id="displayqueue"></div>
+  <script type="text/javascript">
+    // Create a Queue that holds 25 items and attach events
+    var Q = new EventedArray();
+    Q.setBuffer(25);
+    Q.register('set', function(b) { b.showBox(); });
+    Q.register('shift', function(b) { b.hideBox(); delete(b); });
+
+    // Create another queue to display our points
+    var displayQueue = $('#displayqueue');
+    var P = new EventedArray();
+    P.setBuffer(25);
+    P.register('set', function() { displayQueue.html(P.toString()); });
+
+    // Drawing area
+    var canvas = $('#drawing');
+
+    // Mousemove listener
+    var onMove = function(e) {
+      Q.set(new Box([e.x, e.y], canvas));
+      P.set([e.x, e.y]);
+    };
+    document.getElementById('drawing').addEventListener('mousemove', onMove);
+  </script>
+</body>
+</html>
