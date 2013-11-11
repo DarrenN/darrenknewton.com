@@ -11,16 +11,22 @@
         color: #333;
     }
     #drawing {
-        width: 99%;
+        width: auto;
+        margin: 0;
         height: 280px;
         border: #ddd 1px solid;
     }
     #displayqueue {
         text-align: center;
         font-family: 'Inconsolata', 'Menlo', 'Courier', monospace;
-        font-size: 1em;
+        font-size: 0.8em;
         color: #666;
-        margin: 20px;
+        margin: 20px 0 0 0;
+        padding: 10px;
+        background-color: #eee;
+        width: auto;
+        border-radius: 4px;
+        height: 80px;
     }
   </style>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -32,17 +38,18 @@
   <div id="drawing"></div>
   <div id="displayqueue"></div>
   <script type="text/javascript">
-    // Create a Queue that holds 25 items and attach events
-    var Q = new EventedArray();
-    Q.setBuffer(25);
-    Q.register('set', function(b) { b.showBox(); });
-    Q.register('shift', function(b) { b.hideBox(); delete(b); });
-
-    // Create another queue to display our points
+    // Create a queue to display our points
     var displayQueue = $('#displayqueue');
     var P = new EventedArray();
     P.setBuffer(25);
     P.register('set', function() { displayQueue.html(P.toString()); });
+
+    // Create a Queue that holds 25 items and attach events
+    var Q = new EventedArray();
+    Q.setBuffer(25);
+    Q.register('set', function(b) { b.showBox(); P.set(b.point) });
+    Q.register('shift', function(b) { b.hideBox(); b = null;
+                                 });
 
     // Drawing area
     var canvas = $('#drawing');
@@ -50,7 +57,6 @@
     // Mousemove listener
     var onMove = function(e) {
       Q.set(new Box([e.x, e.y], canvas));
-      P.set([e.x, e.y]);
     };
     document.getElementById('drawing').addEventListener('mousemove', onMove);
   </script>

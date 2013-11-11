@@ -120,6 +120,48 @@ managing streams of values, so here's a little DOM based animation
 example. Go ahead and waggle your cursor around in the box:
 
 <iframe src="/js/mylibs/test-animation.html" style="width: 100%;
-height: 400px; overflow: hidden" />
+height: 410px; overflow: hidden" />
+
+The code for this is pretty simple, we have one EventedArray with a
+buffer of 25 storing the boxes and a listener on the `mousemove` event
+passing those Boxes in:
+
+    :::javascript
+    // Create a queue to display our points
+    var displayQueue = $('#displayqueue');
+    var P = new EventedArray();
+    P.setBuffer(25);
+    // When points are set to this queue display them as a string
+    P.register('set', function() { displayQueue.html(P.toString()); });
+
+    // Create a Queue that holds 25 items and attach events
+    var Q = new EventedArray();
+    Q.setBuffer(25);
+
+    // As Boxes are set tell them to appear and also set their
+    // [x,y] to the displayQueue
+    Q.register('set', function(b) { b.showBox(); P.set(b.point) });
+
+    // As boxes are shifted off, tell them to fade out
+    // and null them out
+    Q.register('shift', function(b) { b.hideBox(); b = null; });
+
+    // Drawing area
+    var canvas = $('#drawing');
+
+    // Mousemove listener
+    var onMove = function(e) {
+      Q.set(new Box([e.x, e.y], canvas));
+    };
+    document.getElementById('drawing').addEventListener('mousemove', onMove);
+
+So this nice, Boxes are pushed into the queue and shifted off, with
+events triggering their behavior. You could wire up more elaborate
+systems using this general concept, such as
+[this one](http://darrenn.github.io/EventedArray/tests-jsonp.html)
+which filters items from one EventedArray into another:
+
+<iframe src="/js/mylibs/tests-jsonp.html" style="width: 100%;
+height: 410px; overflow: hidden" />
 
 [^1]: Thanks for the [clarification!](http://www.reddit.com/r/javascript/comments/1dscmr/functional_tricks_with_underscorecontrib/c9te10l)
