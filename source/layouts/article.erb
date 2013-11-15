@@ -91,6 +91,17 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="/js/libs/jquery.scrolldepth.min.js"></script>
 		<script>
+			var disqus_shortname  = 'miscellaneacode';       
+			var disqus_identifier = 'http://darrenknewton.com/blog<%= current_page.url.gsub(/.html/, '/') %>';
+			var disqus_url        = 'http://darrenknewton.com<%= current_page.url.gsub(/.html/, '/') %>';
+			var disqus_script     = 'embed.js';
+
+			(function () {
+		      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+		      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		    }());
+
 		    var _gaq = _gaq || [];
 		    _gaq.push(['_setAccount', 'UA-26663515-1']);
 		    _gaq.push(['_trackPageview']);

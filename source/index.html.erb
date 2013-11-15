@@ -52,24 +52,7 @@
 		</div>
 
 		<div class="container" itemprop="blogPosts">
-			<% article = blog.articles[0] %>
-			<article class="hentry" itemscope itemtype="http://schema.org/BlogPosting">
-				<header>
-					<h1 class="entry-title" itemprop="name"><%= link_to article.title, article.url %></h1>
-				</header>
-
-				<div class="entry-content" itemprop="articleBody">
-					<%= article.body %>
-					<p><%= link_to 'Join the conversation about ' + article.title + '&hellip;', article.url, :class => 'read-more' %></p>
-				</div>
-
-				<footer>
-					<div class="metadata">
-						<time class="updated" pubdate itemprop="datePublished" datetime="<%= article.date.strftime('%b-%e-%Y') %>"><span>Posted on</span> <%= article.date.strftime('%b %e, %Y') %></time> | <strong>Metadata:</strong> <%= article.tags.join(', ') %>
-					</div>
-				</footer>
-			</article>
-			<% blog.articles[1..4].each do |article| %>
+			<% blog.articles[0..9].each do |article| %>
 			<article class="hentry" itemscope itemtype="http://schema.org/BlogPosting">
 				<header>
 					<h1 class="entry-title" itemprop="name"><%= link_to article.title, article.url %></h1>
