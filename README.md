@@ -1,10 +1,9 @@
 ## http://darrenknewton.com
 ### Powered by [Middleman](http://beta.middlemanapp.com/)
 
-Converted my blog from Octopress over to Middleman. I just prefer Middleman's method of site generation to Octopress, 
-which has too many defaults to work around/with.
+Personal blog full of ramblings about programming and software.
 
 ### Copyright / License information
 
-http://darrenknewton.com is made with open source software, however, all of the content and templates are 
+http://darrenknewton.com is made with open source software, however, all of the content and templates are
 Copyright 2013, Darren Newton, all rights reserved.
