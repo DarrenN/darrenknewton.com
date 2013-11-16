@@ -45,8 +45,8 @@ end
 activate :directory_indexes
 
 set :markdown_engine, :kramdown
-set :markdown, :layout_engine => :erb, 
-               :tables => true, 
+set :markdown, :layout_engine => :erb,
+               :tables => true,
                :autolink => true,
                :smartypants => true
 
@@ -65,7 +65,7 @@ end
 # Code Highlighting
 ###
 
-use Rack::Codehighlighter, 
+use Rack::Codehighlighter,
   :pygments_api,
   :element => "pre>code",
   :pattern => /\A:::([-_+\w]+)\s*\n/,
@@ -102,6 +102,8 @@ set :js_dir, "js"
 
 # Change the images directory
 set :images_dir, "img"
+
+sprockets.append_path '/assets/'
 
 # Build-specific configuration
 configure :build do

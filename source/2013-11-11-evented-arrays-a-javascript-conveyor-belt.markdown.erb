@@ -1,0 +1,216 @@
+---
+title: "EventedArray: A JavaScript conveyor belt"
+date: 2013-11-11 19:30
+author: Darren
+tags: Code, CoffeeScript, JavaScript, Underscore
+description: "Listening to events on an array-like data structure in
+JavaScript - because we can"
+keywords: javascript, coffeescript, underscore, programming
+image: "underscorejs.png"
+---
+
+<%= entry_asset({:url =>
+'http://images.darrenknewton.com/eventedArray.jpg', :alt => 'Sushi by
+Steve Petrucelli', :title => "EventedArray | A JavaScript conveyor belt"}) %>
+
+This post takes a quick look at
+[EventedArray](https://github.com/DarrenN/EventedArray), a small Array-like
+JavaScript data structure (written in [CoffeeScript](http://coffeescript.org/)) that allows you to register callbacks on
+accessor/mutator operations and also create fixed size buffers. All
+examples are in JavaScript. READMORE
+
+## Background
+
+The concept of
+[Reactive Programming](https://en.wikipedia.org/wiki/Reactive_programming)
+has been gaining a lot of traction lately, especially when working with
+user interfaces. To oversimplify, Reactive Programming deals with streams of data or events which can be sampled,
+combined and observed to try an bring order to the chaos found in your
+typical web application. A lot of very smart folks have written some
+excellent libraries to achieve this, such as
+[RxJS](http://reactive-extensions.github.io/RxJS/) and
+[Bacon.js](https://github.com/baconjs/bacon.js). Go check 'em out.
+
+When working on small applications I often find a need for an
+"observable" data structure. It would be great to have something like
+an Array which I could treat like a stack, with events triggered
+whenever values are pushed on or shifted off. I could achieve this
+with either of the libraries noted above, or even Backbone.js's [Events](http://backbonejs.org/docs/backbone.html#section-13)
+mixin, but sometimes I just need something small and simple. Also,
+it's fun to learn how things work by rolling your own toy implementations.
+
+## The Basics
+
+I wanted this data structure to be as close to a regular
+[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+as possible, with a standard Object Oriented type interface. The [core
+library](https://github.com/DarrenN/EventedArray/blob/master/source/coffee/EventedArray.coffee)
+is written in CoffeeScript but you can pull it into any JavaScript
+project as a global or with [RequireJS](http://www.requirejs.org/). Let's take a look:
+
+    :::javascript
+    // Create a new data structure
+    var E = new EventedArray(1,2,3,4);
+
+    // It has setters & getters
+    E.set(5,6);
+    E.get(4); // returns 5, the 0 indexed value of the array
+    E.toString(); // "[1,2,3,4,5,6]"
+
+    // Remove values
+    E.remove(3);
+    E.toString(); // "[1,2,4,5,6]"
+
+    // Mess with the stack
+    E.pop();
+    E.toString(); // "[1,2,4,5]"
+    E.shift(); // 1
+    E.toString(); // "[2,4,5]"
+
+    // Underscore collection functions
+    E.each(function(i){ console.log(i*i); }); // 4 16 25
+    E.map(function(i){ return i^2; }); // [0,6,7]
+    E.filter(function(i){ return i%2 == 0; }); // [2,4]
+
+    // Raw access to the values
+    E.values; // [2,4,5]
+
+So that's cool, it behaves like an Array for the most part. Now I want
+to add some callbacks that are triggered when I set, get, shift, etc.
+
+    :::javascript
+    E.register('set', function(i){ console.log(i + ' was set on E'); });
+    E.set(6); // '6 was set on E'
+
+    E.register('remove', function(i){ console.log(i + ' was removed!'); });
+    E.remove(2); // '2 was removed!'
+
+You can register events on most of the methods available, like
+`reduce`, `every`, `contains` and many more. Take a look at the
+[source](https://github.com/DarrenN/EventedArray/blob/master/source/coffee/EventedArray.coffee#L54)
+to see all the methods available.
+
+## The Conveyor Belt
+
+A lot of times I want to treat my data structure like a fixed size
+stack, something that will only hold _n_ values, shifting older values
+off the front as new ones are pushed onto the end. So I went ahead and
+added a `setBuffer` method to do just that:
+
+    :::javascript
+    var E = new EventedArray();
+    E.setBuffer(5);
+    E.set(1,2,3,4,5,6);
+    E.toString(); // "[2,3,4,5,6]"
+    E.set(7,8,9,10);
+    E.toString(); // "[6,7,8,9,10]"
+
+**So what can we do with EventedArray?** It really lends itself to
+managing streams of values, so here's a little DOM based animation
+example. Go ahead and waggle your cursor around in the box:
+
+<iframe src="/assets/test-animation/" style="width: 100%;
+height: 410px; overflow: hidden" />
+
+The code for this is pretty simple, you can view it in action
+[here](http://darrenn.github.io/EventedArray/), we have one
+EventedArray with a buffer of 25 storing
+[Box](https://github.com/DarrenN/EventedArray/blob/master/test/coffee/Box.coffee)
+objects and a listener on the `mousemove` event
+passing those Boxes in:
+
+    :::javascript
+    // Create a queue to display our points
+    var displayQueue = $('#displayqueue');
+    var P = new EventedArray();
+    P.setBuffer(25);
+    // When points are set to this queue display them as a string
+    P.register('set', function() {
+        displayQueue.html(P.toString());
+    });
+
+    // Create a Queue that holds 25 items and attach events
+    var Q = new EventedArray();
+    Q.setBuffer(25);
+
+    // As Boxes are set tell them to appear and also set their
+    // [x,y] to the displayQueue
+    Q.register('set', function(b) {
+        b.showBox();
+        P.set(b.point)
+    });
+
+    // As boxes are shifted off, tell them to fade out
+    // and null them out
+    Q.register('shift', function(b) {
+        b.hideBox();
+        b = null;
+    });
+
+    // Drawing area
+    var canvas = $('#drawing');
+
+    // Mousemove listener
+    var onMove = function(e) {
+      Q.set(new Box([e.x, e.y], canvas)); // Make a Box
+    };
+
+    document.getElementById('drawing')
+            .addEventListener('mousemove', onMove);
+
+So this nice, Boxes are pushed into the queue and shifted off, with
+events triggering their behavior. You could wire up more elaborate
+systems using this general concept, such as a simple
+[Flickr search](http://darrenn.github.io/EventedArray/tests-jsonp.html)
+which filters items from one EventedArray into another:
+
+<iframe src="/assets/tests-jsonp/" style="width: 100%;
+height: 360px; overflow: hidden" />
+
+In this case we're using events on the `filter` method from Underscore
+to shift Photos off one stack and into another:
+
+    :::javascript
+    // Register a filter callback on stream which removes
+    // photos from the stream itself
+    stream.register('filter', function(f) {
+      _.each(f, function(i) { stream.remove(i) });
+    });
+
+    // Filter photos from Stream based on title
+    $filter_submit.on('click', function(e) {
+      e.preventDefault();
+
+      // make the search term lowercase
+      var filter = $.trim($filter.val()).toLowerCase();
+
+      // filter stream by the search term. This will trigger
+      // the filter callback on stream
+      var f = stream.filter(function(i) {
+        return i.title.toLowerCase().indexOf(filter) !== -1;
+      });
+
+      // Take all the filtered photos and create new elements
+      // in the filtered list
+      if (f.length > 0) {
+        filtered.each(function(i) { filtered.remove(i) });
+        _.each(f, function(i) {
+          filtered.set(new Photo(i.entry, $filtered, filtered_remove));
+        });
+      };
+    });
+
+You could get fancy and use drag and drop events to move items from
+one array to another, using events to do cleanup, trigger animations
+and such (at that point you would probably want one of the more fleshed out
+libraries I mentioned up at the top).
+
+EventedArray is a simple data structure. You could blow it out into
+something a bit more robust, registering multiple callbacks on a
+single event, feel free to expand it as a learning exercise.
+
+* All source code, tests and build instructions on
+[GitHub](https://github.com/DarrenN/EventedArray) - MIT Licensed
+* Photo courtesy of
+[Steve Petrucelli](http://www.flickr.com/photos/wizzer/10430726596/)
+via Flickr - Creative Commons

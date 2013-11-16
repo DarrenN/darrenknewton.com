@@ -1,6 +1,6 @@
 source "http://rubygems.org"
-gem "middleman", "~>3.0.0.beta.3"
-gem "middleman-blog", "~>3.0.0.beta.3"
+gem "middleman"
+gem "middleman-blog"
 gem "kramdown"
 gem "rack-codehighlighter"
 gem "sanitize"
