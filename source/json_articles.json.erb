@@ -4,13 +4,13 @@
         "link": [
             {
                 "@attributes": {
-                    "href": "http://darrenknewton.com/atom.json",
+                    "href": "http://darrennewton.com/atom.json",
                     "rel": "self"
                 }
             },
             {
                 "@attributes": {
-                    "href": "http://darrenknewton.com/"
+                    "href": "http://darrennewton.com/"
                 }
             }
         ],
@@ -28,8 +28,8 @@
                 "content" : <%= article.body.to_json %>,
                 "title"   : <%= article.title.to_json %>,
                 "updated" : "<%= article.date.strftime('%FT%T%:z') %>",
-                "id"      : "urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + article.url, UUID::NameSpace_URL) %>",
-                "link"    : "http://darrenknewton.com<%= article.url %>"
+                "id"      : "urn:uuid:<%= UUID.create_sha1('darrennewton.com' + article.url, UUID::NameSpace_URL) %>",
+                "link"    : "http://darrennewton.com<%= article.url %>"
             }<%= "," unless article == blog.articles.last %>
         <% end %>
         ]

@@ -4,13 +4,13 @@
         "link": [
             {
                 "@attributes": {
-                    "href": "http://darrenknewton.com/atom.json",
+                    "href": "http://darrennewton.com/atom.json",
                     "rel": "self"
                 }
             },
             {
                 "@attributes": {
-                    "href": "http://darrenknewton.com/"
+                    "href": "http://darrennewton.com/"
                 }
             }
         ],
@@ -22,8 +22,8 @@
         },
         "rights" : "Copyright (c) <%= Date.today.strftime('%Y') %>, Darren Newton",
         "entry": {
-            "id"      : "urn:uuid:<%= UUID.create_sha1('darrenknewton.com' + @atom_article.url, UUID::NameSpace_URL) %>",
-            "link"    : "http://darrenknewton.com<%= @atom_article.url %>",
+            "id"      : "urn:uuid:<%= UUID.create_sha1('darrennewton.com' + @atom_article.url, UUID::NameSpace_URL) %>",
+            "link"    : "http://darrennewton.com<%= @atom_article.url %>",
             "summary" : <%= @atom_article.summary.to_json %>,
             "content" : <%= @atom_article.body.to_json %>,
             "title"   : <%= @atom_article.title.to_json %>,
