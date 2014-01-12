@@ -6,7 +6,7 @@
     <meta content="width=device-width" name="viewport">
     <meta content="yes" name="apple-mobile-web-app-capable">
 
-    <title>Whoops! 404 | Miscellanea</title>
+    <title>404 | Miscellanea by Darren Newton</title>
 
     <meta name="author" content="Darren Newton">
     <meta name="description" content="404 - Looks like a page wandered off the reservation.">
@@ -45,7 +45,7 @@
 
         <div class="entry-content missing" itemprop="articleBody">
 
-          <%= entry_asset({:url => 'http://images.darrenknewton.com/404.jpg', :alt => '404', :title => "Frank Poole"}, 'http://images.darrenknewton.com/404.jpg') %>
+          <%= entry_asset({:url => 'http://images.darrennewton.com/404.jpg', :alt => '404', :title => "Frank Poole"}, 'http://images.darrenknewton.com/404.jpg') %>
 
           <p>Looks like a page wandered off the reservation. Could be a munged link, or maybe I nuked the article in question. Google might be able to help, you can use the search form below to try and find what you were looking for.</p>
           <p>
@@ -59,30 +59,30 @@
       </article>
     </div>
 
-    <footer id="footer-page">
-      <div class="container">
-        <div id="colophon">
-          <div id="colophon-a">
-            You should follow me on Twitter <a href="https://twitter.com/#!/d_run">here</a>, or you could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub.
-          </div>
-          <div id="colophon-b">
-            &copy; 2012 <span itemprop="author">Darren Newton</span>, all rights reserved.
-          </div>
-        </div>
-        <div id="badges">
-          <div id="badges-a">
-            <ul>
-              <li><%= link_to 'JSON', '/atom.json', :type => "application/json", :rel => "alternate" %></li>
-              <li><%= link_to 'RSS', '/feed.rss', :type => "application/xml", :rel => "alternate" %></li>
-              <li><%= link_to 'XML', '/atom.xml', :type => "application/atom+xml", :rel => "alternate" %></li>
-            </ul>
-          </div>
-          <div id="badges-b">
-            <%= partial "coderwall" %>
-          </div>
-        </div>
-      </div>
-    </footer>
+		<footer id="footer-page">
+			<div class="container">
+				<div id="colophon">
+					<div id="colophon-a">
+						You should follow me on <a href="https://twitter.com/#!/d_run">Twitter</a> or <a href="https://plus.google.com/106799502423019983125?rel=author" rel="author">Google</a>. You could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. My design portfolio is <a href="http://v25media.com" rel="me">here</a>.
+					</div>
+					<div id="colophon-b">
+						&copy; <%= Date.today.year %> <span itemprop="author">Darren Newton</span>, all rights reserved.
+					</div>
+				</div>
+				<div id="badges">
+					<div id="badges-a">
+						<ul>
+							<li><%= link_to 'JSON', '/atom.json', :type => "application/json", :rel => "alternate" %></li>
+							<li><%= link_to 'RSS', '/feed.rss', :type => "application/xml", :rel => "alternate" %></li>
+							<li><%= link_to 'XML', '/atom.xml', :type => "application/atom+xml", :rel => "alternate" %></li>
+						</ul>
+					</div>
+					<div id="badges-b">
+						<%= partial "coderwall" %>
+					</div>
+				</div>
+			</div>
+		</footer>
     <script>
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-26663515-1']);
@@ -96,3 +96,7 @@
     </script>
   </body>
 </html>
+<!--
+	All content and design is
+	Copyright (c) <%= Date.today.year %> Darren Newton, all rights reserved
+-->
