@@ -6,7 +6,7 @@
 		<meta content="width=device-width" name="viewport">
 		<meta content="yes" name="apple-mobile-web-app-capable">
 
-		<title>Miscellanea | Code, design, &amp; cultural ephemera</title>
+		<title>The Miscellanea of Darren Newton's brain</title>
 
 		<meta name="author" content="Darren Newton">
 		<meta name="description" content="Unix tricks, programming, interface design and cultural observations from Darren Newton's brain">
@@ -15,21 +15,21 @@
 		<% article = blog.articles[0] %>
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="Miscellanea | Code, design, &amp; cultural ephemera" />
-		<meta property="og:url" content="http://darrenknewton.com" />
-		<meta property="og:image" content="http://darrenknewton.com<%= image_path article.metadata[:page]['image'] %>" />
+		<meta property="og:url" content="http://darrennewton.com" />
+		<meta property="og:image" content="http://darrennewton.com<%= image_path article.metadata[:page]['image'] %>" />
 		<meta property="og:description" content="Unix tricks, programming, interface design and cultural observations from Darren Newton's brain" />
 
 		<meta name="twitter:card" value="summary" />
 		<meta name="twitter:creator" value="@d_run" />
 		<meta name="twitter:title" value="Miscellanea | Code, design, &amp; cultural ephemera" />
 		<meta name="twitter:description" value="Unix tricks, programming, interface design and cultural observations from Darren Newton's brain" />
-		<meta name="twitter:image" value="http://images.darrenknewton.com<%= image_path article.metadata[:page]['image'] %>" />
+		<meta name="twitter:image" value="http://images.darrennewton.com<%= image_path article.metadata[:page]['image'] %>" />
 
 		<link rel="alternate" type="application/rss+xml" href="feed.rss" title="Sitewide RSS 2.0 Feed">
 		<link rel="alternate" type="application/atom+xml" href="atom.xml" title="Sitewide ATOM Feed">
 		<link rel="alternate" type="application/atom+json" href="atom.json" title="Sitewide JSON Feed">
 
-		<link rel="canonical" href="http://darrenknewton.com">
+		<link rel="canonical" href="http://darrennewton.com">
   		<%= favicon_tag 'favicon.ico' %>
 
 		<%= stylesheet_link_tag 'screen.css' %>
@@ -43,7 +43,7 @@
 		<div id="masthead-container">
 			<div id="masthead" class="container">
 				<div id="masthead-logo">
-					<a href="/"><%= image_tag 'logo-small.png', :width => '40', :height => '40', :alt => '{(*)}', :itemprop => "image" %> <span><em itemprop="name">Miscellanea</em><i> / Code, design &amp; cultural ephemera</i></span></a>
+					<a href="/" title="a grab bag of scribblings by Darren Newton"><%= image_tag 'logo-small.png', :width => '40', :height => '40', :alt => '{(*)}', :itemprop => "image" %> <span><em itemprop="name">Miscellanea</em><i> / Code, design &amp; cultural ephemera</i></span></a>
 				</div>
 				<nav>
 					<%= partial "topnav" %>
@@ -78,7 +78,7 @@
 						<%= link_to "<span>&lt;</span> View all articles", '/archive' %>
 					</li>
 					<li id="article-nav-right">
-						<%= link_to blog.articles[1].title + " <span>&gt;</span>", blog.articles[1].url %> 
+						<%= link_to blog.articles[1].title + " <span>&gt;</span>", blog.articles[1].url %>
 					</li>
 				</ul>
 			</aside>
@@ -91,7 +91,7 @@
 			<div class="container">
 				<div id="colophon">
 					<div id="colophon-a">
-						You should follow me on <a href="https://twitter.com/#!/d_run">Twitter</a> or <a href="https://plus.google.com/106799502423019983125?rel=author" rel="author">Google</a>. You could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. My design portfolio is <a href="http://v25media.com" rel="me">here</a>. 
+						You should follow me on <a href="https://twitter.com/#!/d_run">Twitter</a> or <a href="https://plus.google.com/106799502423019983125?rel=author" rel="author">Google</a>. You could fork one of my <a href="https://github.com/DarrenN">repos</a> on GitHub. My design portfolio is <a href="http://v25media.com" rel="me">here</a>.
 					</div>
 					<div id="colophon-b">
 						&copy; <%= Date.today.year %> <span itemprop="author">Darren Newton</span>, all rights reserved.
@@ -123,14 +123,14 @@
 		      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		    })();
-		    
+
 			$(function() {
 			  $.scrollDepth();
 			});
 		</script>
 	</body>
 </html>
-<!-- 
-	All content and design is 
+<!--
+	All content and design is
 	Copyright (c) <%= Date.today.year %> Darren Newton, all rights reserved
 -->

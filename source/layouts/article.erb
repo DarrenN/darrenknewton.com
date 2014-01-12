@@ -6,7 +6,7 @@
 		<meta content="width=device-width" name="viewport">
 		<meta content="yes" name="apple-mobile-web-app-capable">
 
-		<title><%= data.page.title %> | Miscellanea</title>
+		<title><%= data.page.title %> | Miscellanea by Darren Newton</title>
 
 		<meta name="description" content="<%= current_page.data.description %>" />
 		<meta name="keywords" content="<%= current_page.data.keywords %>" />
@@ -15,20 +15,20 @@
 
 		<meta property="og:type" content="article" />
 		<meta property="og:title" content="<%= data.page.title %>" />
-		<meta property="og:url" content="http://darrenknewton.com<%= current_page.url %>" />
-		<meta property="og:image" content="http://darrenknewton.com<%= image_path current_page.data.image %>" />
+		<meta property="og:url" content="http://darrennewton.com<%= current_page.url %>" />
+		<meta property="og:image" content="http://darrennewton.com<%= image_path current_page.data.image %>" />
 		<meta property="og:description" content="<%= current_page.data.description %>" />
 
 		<meta name="twitter:card" value="summary" />
 		<meta name="twitter:creator" value="@d_run" />
 		<meta name="twitter:title" value="<%= data.page.title %>" />
 		<meta name="twitter:description" value="<%= current_page.data.description %>" />
-		<meta name="twitter:image" value="http://darrenknewton.com<%= image_path current_page.data.image %>" />
+		<meta name="twitter:image" value="http://darrennewton.com<%= image_path current_page.data.image %>" />
 
 		<link href="atom.xml" type="application/atom+xml" rel="alternate" title="<%= data.page.title %> ATOM Feed" />
 		<link href="atom.json" type="application/atom+json" rel="alternate" title="<%= data.page.title %> JSON Feed" />
 
-		<link rel="canonical" href="http://darrenknewton.com<%= current_page.url %>">
+		<link rel="canonical" href="http://darrennewton.com<%= current_page.url %>">
   		<%= favicon_tag 'favicon.ico' %>
 
 		<%= stylesheet_link_tag 'screen.css' %>
@@ -42,7 +42,7 @@
 		<div id="masthead-container">
 			<div id="masthead" class="container">
 				<div id="masthead-logo">
-					<a href="/"><%= image_tag 'logo-small.png', :width => '40', :height => '40', :alt => '{(v)}', :itemprop => "image" %> <span><em itemprop="name">Miscellanea</em><i> / Code, design &amp; cultural ephemera</i></span></a>
+					<a href="/" title="a inchoate collection by Darren Newton"><%= image_tag 'logo-small.png', :width => '40', :height => '40', :alt => '{(v)}', :itemprop => "image" %> <span><em itemprop="name">Miscellanea</em><i> / Code, design &amp; cultural ephemera</i></span></a>
 				</div>
 				<nav>
 					<%= partial "topnav" %>
@@ -93,7 +93,7 @@
 		<script>
 			var disqus_shortname  = 'miscellaneacode';
 			var disqus_identifier = 'http://darrenknewton.com/blog<%= current_page.url.gsub(/.html/, '/') %>';
-			var disqus_url        = 'http://darrenknewton.com<%= current_page.url.gsub(/.html/, '/') %>';
+			var disqus_url        = 'http://darrennewton.com<%= current_page.url.gsub(/.html/, '/') %>';
 			var disqus_script     = 'embed.js';
 
 			(function () {

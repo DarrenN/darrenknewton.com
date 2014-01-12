@@ -6,12 +6,11 @@
 		<meta content="width=device-width" name="viewport">
 		<meta content="yes" name="apple-mobile-web-app-capable">
 
-		<title><%= yield_content :generic_title %></title>
-		
+		<title><%= yield_content :generic_title %> | Miscellanea by Darren Newton</title>
+
 		<meta name="description" content="<%= current_page.data.description %>" />
   		<meta name="msvalidate.01" content="BE7DA3BEF0F11153F6E4B5585C12DB20" />
-
-  		<link rel="canonical" href="http://darrenknewton.com<%= current_page.url %>">
+  		<link rel="canonical" href="http://darrennewton.com<%= current_page.url %>">
   		<%= favicon_tag 'favicon.ico' %>
 
 		<%= stylesheet_link_tag 'screen.css' %>
@@ -22,7 +21,7 @@
 		<div id="masthead-container">
 			<div id="masthead" class="container">
 				<div id="masthead-logo">
-					<a href="/"><%= image_tag 'logo-small.png', :width => '40', :height => '40', :alt => '{(*)}', :itemprop => "image" %> <span><em itemprop="name">Miscellanea</em><i> / Code, design &amp; cultural ephemera</i></span></a>
+					<a href="/" title="a stream of consciousness from Darren Newton"><%= image_tag 'logo-small.png', :width => '40', :height => '40', :alt => '{(*)}', :itemprop => "image" %> <span><em itemprop="name">Miscellanea</em><i> / Code, design &amp; cultural ephemera</i></span></a>
 				</div>
 				<nav>
 					<%= partial "topnav" %>
@@ -57,7 +56,7 @@
 		</div>
 
 		<%= partial "footer" %>
-		
+
 		<script src="http://use.typekit.com/lbz5aep.js"></script>
 		<script>try{Typekit.load();}catch(e){}</script>
 		<script>
@@ -73,7 +72,7 @@
 		</script>
 	</body>
 </html>
-<!-- 
-	All content and design is 
+<!--
+	All content and design is
 	Copyright (c) <%= Date.today.year %> Darren Newton, all rights reserved
 -->
