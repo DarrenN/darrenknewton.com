@@ -1,0 +1,70 @@
+==================================================================
+https://keybase.io/darren_n
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://darrennewton.com
+  * I am darren_n (https://keybase.io/darren_n) on keybase.
+  * I have a public key with fingerprint 1271 D27B A948 0CBE 9D6F  9F57 4018 0853 11AF 301C
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "1271d27ba9480cbe9d6f9f574018085311af301c",
+            "host": "keybase.io",
+            "key_id": "4018085311af301c",
+            "uid": "23f6699a356f260c3aabf058fa6a8700",
+            "username": "darren_n"
+        },
+        "service": {
+            "hostname": "darrennewton.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1396798844,
+    "expire_in": 157680000,
+    "prev": "478dd2c03232589cd129d041bd3ed431940255736644d1df04be13462c8c956c",
+    "seqno": 5,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG/MacGPG2 v2.0.22 (Darwin)
+Comment: GPGTools - http://gpgtools.org
+
+owGbwMvMwMTIVMRyakuszzrG0we+JTEEO5YurVZKyk+pVLKqVspOBVNpmXnpqUUF
+RZl5JUpWSoZG5oYpRuZJiZYmFgbJSamWKWZplmmm5iYGhhYGFqbGhoaJacYGhslK
+OkoZ+cUgHUBjkhKLU/Uy84FiQE58ZgpQFIv6UrCEkXGamZmlZaKxqVmakZlBsnFi
+YlKagalFWqJZooW5gQFIYXFqUV5ibipQdUpiUVFqXnyeUq2OElC0LDM5FeRmkNUo
+KvJSy0vy8/SS83OB+guK8kvyk/NzgLIZJSUFViDNJZUFINXlqUnxUHPikzLzUoB+
+B2ooSy0qzszPU7IyBKpMLskEGWxobGlmbmlhYWKio5RaUZBZlBqfCVJham5mYQAE
+IGtSy0A+NbdISTFKNjA2MjYytbBMTjE0skwxMDFMSjFOTTExNrQ0MTAyNTU3NjMz
+MUkxTEkzMElKNTQ2MTNKtki2NDUDhUxxamFevpKVKdCZielAI4sz0/MSS0qLUpVq
+uTqZZFgYGJkY2FiZQNHHwMUpAIvUYln+fyYbl3T01/bFfHC68egfo6f5/wuNyiJP
++VIc3rpKqpzPCdj/fQ1DyLY7Do6maUWLuI7Zaeds3Biw821n/ry9ZvyhX9jXW+x9
+nHBj6QWR/ZpzVtqq/9xu8My6xcHA6akgxx35vT/sN/3aV/CX5/vb1PZTeTr8IYGZ
+x2cxVTz6GfKf4av+qf7LH5kCTjSwfWxifnPpuPO5+7d/7Bb+/WWbfsBe6Vt2PzLu
+Z85ouO4WeKzjS5C5j3Jvzgz1AqGE/dsPbPl5icVvS4Z6sX3TsZ2886x3eT7U73pp
+OO0J64MbkXm5D/bzrHk++dcDheK7T93CZe4tb/l5e6rTbMagjnh/Rj2TPDn33ubo
+JLmGVIWvdwOuR1mXrxewFbT7aTWjSexjqsdC36Vn4zw2+tcv7l/Zpy3UU5X5Q89v
+xont+cvilT4dOeQwx6LXyqncao2Dten0FfvszX2szGb3/ZnxMiTFo2+5f0pnXFxA
+TmPwvu96Kw8IN27edy/r9hM7qbUvTZ5/vMzZ/2Fr0oqAhbeOuD28/d+0kPuhdmSh
+j5RpiMMhRafm3Ae//SqC3Y980eTUODX5Kt911WZfXYZTj+r9pJ7P/6t7/MyjnNv/
+Q4J1X7mderd2m8KarX8UV825XbDSRrNtw9sSj4olzWcnV2zV3+YVfTuv5M7lVe7x
+k5SM5qznOO9k82Vzht40e3Zhiy/elw1EnhxZHeAzK2bZ/h5ZOwA=
+=TLQw
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/darren_n
+
+==================================================================
