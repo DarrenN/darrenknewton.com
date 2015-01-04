@@ -181,6 +181,35 @@ article {
     }
   }
 
+  table {
+    font-size: 1rem;
+    margin: 1.5em 0;
+
+    thead {
+      tr {
+        th {
+          @include font-title(400);
+          color: lighten($color-text-base, 20);
+          font-weight: 600;
+          padding: .5em;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          padding: .5em;
+
+          img {
+            box-shadow: none;
+            border: lighten($color-text-base, 70) 1px solid;
+          }
+        }
+      }
+    }
+  }
+
   footer {
     clear: both;
     margin: 20px 0;
@@ -690,7 +719,7 @@ article {
         margin: 20px 0;
         font-size: 1.2rem;
         color: lighten($color-text-base, 50);
-      } 
+      }
     }
     p {
 
@@ -699,7 +728,7 @@ article {
       font-size: 1.2rem;
       text-align: center;
       .metadata {
-        @include reset-columns; 
+        @include reset-columns;
       }
       .nav-back {
         display: none;
@@ -723,7 +752,7 @@ article {
   #colophon-a,
   #colophon-b {
     display: block;
-    @include reset-columns; 
+    @include reset-columns;
     text-align: center;
     margin: 10px 0;
     font-size: 1.2rem;
