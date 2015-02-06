@@ -5,6 +5,7 @@ require "rack/codehighlighter"
 require "lib/coderwall_helpers"
 require "lib/uuid"
 require "date"
+require "susy"
 
 # Compass
 compass_config do |config|
