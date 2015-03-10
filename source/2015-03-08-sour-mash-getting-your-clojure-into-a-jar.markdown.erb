@@ -1,0 +1,266 @@
+---
+title: "Sour Mash: getting your Clojure into a JAR"
+date: 2015-03-08 19:09 UTC
+author: Darren
+tags: Code, Clojure, Deployment
+description: Package your Clojure webapp with Uberjar for deployment
+keywords: clojure, compojure, uberjar, deploy
+image: mooshiners.jpg
+---
+
+<%= entry_asset({:url =>
+'http://images.darrennewton.com/moonshiners.jpg', :alt => 'Clojure jarring experts at work', :title => "Sour Mash | Packaging your Clojure into a JAR"}) %>
+
+This weekend I decided to finally bite the bullet and deploy one of my [Clojure](http://www.braveclojure.com/) apps as a **JAR**. _"Certainly"_ I thought to myself, _"there are great tutorials for this online"_. Yes, yes there are, except none of them worked for me and in fact did lead to the consumption of some rye whiskey.
+
+**Caveats**: Every Clojure app is different, and the details of your app will determine the steps necessary to build a JAR. None of the information I found online specifically addressed the problems I had, so I made this post for those who have a similar application with similar needs. [YMMV](http://chrisoncars.com/wp-content/uploads/2010/06/Ford_Pinto_1971_30.jpg). READMORE
+
+## What are we doing?
+
+This post will walk through distilling a small [Compojure](https://github.com/weavejester/compojure) web-app ([codegumi.com](http://codegumi.com)) into a nice [JAR](https://en.wikipedia.org/wiki/JAR_(file_format)) for deployment on a [VPS](https://www.linode.com/). This is an older app that gathers images from the Flickr API and dumps them into your browser. I used it to teach myself ClojureScript and core.async back before Om and React hit the scene.
+
+The application needs to compile [ClojureScript](https://github.com/clojure/clojurescript) and has static resources. It also works with the VPS's file system (caching searches as JSON files), a small feature that caused much pain.
+
+We still want the project to work in development with a simple `lein ring server` as well as a standalone JAR file. You can read all the [source code](https://github.com/DarrenN/codegumi-clj) if you like.
+
+## Why do I want a JAR?
+
+Prior to this exercise I deployed my app the way real hackers deploy apps, in the most ridiculous way possible: I tmuxed into my VPS, did a quick `lein trampoline ring server-headless 8080` and detached. **This worked great!** Except when my VPS got restarted or crashed (as they do) and I would then have to manually shell back in and restart the app.
+
+Creating a JAR would allow me to create an [upstart](http://upstart.ubuntu.com/) script so the OS could restart my app when necessary. It also seemed like the right thing to do.
+
+Previously I attempted to install [Tomcat](https://tomcat.apache.org/) and deploy a [WAR](https://www.youtube.com/watch?v=-xTGrfs5TXM) file, all of which failed miserably. The concept of a JAR file with an embedded server is very attractive to me and seems like something I should know how to do, so onwards!
+
+## Überjar
+
+You want to make a JAR, so you quickly drop _"clojure jar"_ into [DuckDuckGo](https://duckduckgo.com/?q=clojure+jar&ia=qa) and you will quickly see something about: `lein uberjar`. You type this into your terminal, and the whole world explodes into a Java stacktrace. _"But, but, my app ran fine with `lein ring server`!"_ you despair. Yes, yes it probably did, however JARs are different animals. [Fickle animals with sharp teeth](http://keithaowens.com/wp-content/uploads/2014/09/where-the-wild-things-are-2.jpeg). Lets take a look at how they work.
+
+## Main
+
+To make a JAR you need to have a `-main` function in your app. In a lot of Compojure tutorials you just define a `ring` handler in your `project.clj`:
+
+    :::clojure
+	(defproject codegumi "0.2.0"
+	  :description "codegumi.com in Clojure/ClojureScript"
+	  :url "http://codegumi.com"
+	  :license {:name "Eclipse Public License"
+	            :url "http://www.eclipse.org/legal/epl-v10.html"}
+	  :dependencies [[org.clojure/clojure "1.5.1"]
+	                 ...
+	                 [ring "1.3.2"]]
+	  :plugins [[lein-cljsbuild "1.0.1-SNAPSHOT"]
+	            [lein-ring "0.8.8"]
+	            [lein-environ "0.4.0"]]
+	  :source-paths ["src/clj" "src/cljs"]
+	  :ring {:handler codegumi.handler/app} ;; <---- Ring Handler
+
+When you run it with `lein` the handler is picked up and passed to `ring` from your Clojure file and away you go. This won't work with a JAR, you need to define a main entry point for your application. It can be as simple as passing your handler to [jetty](http://www.eclipse.org/jetty/):
+
+    :::clojure
+    (ns foo.handler
+      (:gen-class) ;; <--- you need this too!
+      (:require [compojure.core :refer :all]
+                [compojure.handler :as handler]
+                [compojure.route :as route]
+                [ring.adapter.jetty :refer :all] ;; <-- need a server!
+                ...
+                ))
+
+    ;; Compojure routes
+    (defroutes app-routes
+      (GET "/" ... ))
+
+    ;; Ring handler
+    (def app
+      (handler/site app-routes))
+
+    ;; Pass the handler to Jetty on port 8080
+    (defn -main []
+      (run-jetty app {:port 8080}))
+
+So in the above we did a few things:
+
+1. We added `(:gen-class)` which Uberjar needs.
+1. We added `ring.adapter.jetty` to embed the Jetty web server in our JAR.
+1. We added a `-main` function which passes the `ring` handler to jetty.
+
+Did you catch that part about embedding jetty into the JAR? That's right, our JAR will contain its own server. Previously `ring` would spin one up for us when we did `lein ring server`. Our new `-main` function will handle that for us.
+
+We need to tell Uberjar where the main file is, so we need to add a setting to our `project.clj`:
+
+    :::clojure
+	(defproject codegumi "0.2.0"
+	  :description "codegumi.com in Clojure/ClojureScript"
+	  :url "http://codegumi.com"
+	  :license {:name "Eclipse Public License"
+	            :url "http://www.eclipse.org/legal/epl-v10.html"}
+	  :dependencies [[org.clojure/clojure "1.5.1"]
+	                 ...
+	                 [ring "1.3.2"]]
+	  :plugins [[lein-cljsbuild "1.0.1-SNAPSHOT"]
+	            [lein-ring "0.8.8"]
+	            [lein-environ "0.4.0"]]
+	  :source-paths ["src/clj" "src/cljs"]
+      :main codegumi.handler ;; <---- Where -main lives
+	  :ring {:handler codegumi.handler/app}
+
+If your app is very simple, these may be the only changes you need to build a JAR. You should give it a shot and see what happens. In my case I needed to do more research to deal with files and compiling ClojureScript.
+
+## Where are the files?
+
+When I first tried to build a JAR, after creating my `-main` function, I got tons of errors about accessing directories that didn't exist within the JAR's _classpath_. Oh noes. The one thing every non-Java person fears is any mention of _classpath_, as this word is burdened with much lore and spoken through the gnashing of teeth on many a message board.
+
+I got these errors because my app needs to read/write JSON files to function and I was doing it all _horribly wrong_ when it comes to JARs. So lets go over some basics.
+
+Your typical Clojure/Compojure app has a directory structure something like:
+
+    :::bash
+    ├── LICENSE
+    ├── README.md
+    ├── doc
+    ├── project.clj
+    ├── resources
+    ├── src
+    ├── target
+    └── test
+
+In my case I have `clj` files for the server side and `cljs` files for the client in `src`:
+
+    :::bash
+    src
+    ├── clj
+    └── cljs
+
+My Compojure app has a number of static resources, like css, images, etc. I also need a place for my compiled ClojureScript to live. The convention is to drop those into the `resources/public` directory, as that will be included in the JAR automatically:
+
+    :::bash
+    resources
+    └── public
+        ├── css
+        ├── favicon.ico
+        ├── fonts
+        └── img
+
+If you're like me you don't come from a Java background and you don't know much about JAR files. By default anything you put in `resources` will be packed into the JAR you compile and made available to your Clojure code. However, [it isn't accessible as a _filepath_ because it is on the _classpath_](http://stackoverflow.com/questions/8009829/resources-in-clojure-applications). Within your app you access these files in a couple of ways.
+
+As mentioned above, Compojure defaults to looking for _classpath_ files in `resources/public`. It also gives you a [`route/resources`](http://weavejester.github.io/compojure/compojure.route.html#var-resources) method to handle this:
+
+    :::clojure
+	(defroutes app-routes
+	  (GET "/" [] ... )
+	  (route/resources "/")
+	  (route/not-found "Not Found"))
+
+All of my css, font and image files are now available from the root within my app. When it's running my template can call `/css/styles.css` and Compojure will pull that file from the _classpath_ and serve it up.
+
+If you needed to access a file from the `resource` directory from within your Clojure code, you would use `(clojure.java.io/resource "filename")`. This would return a _classpath_ which you could use to read the file.
+
+Now, these files are effectively static. JAR files are basically zip archives. You can read files within them, but you writing to them is probably not a good idea. It would mean mutating the JAR at runtime. This is important, because my app needs to write to the filesystem to cache JSON responses from Flickr, so it needs to know where to park those files and find them later.
+
+You may say to yourself, _"I will define the path to my directory in the app!"_ and do something like `(def json "foo/bar")`. That may work great when running locally with `lein`, and it _might_ work in a JAR depending on what you put in there. It might not, and it might not because a JAR is run by the Java Virtual Machine (JVM) and the JVM may have a different idea about relative paths than you do. You also may not want to embed a directory path into your application.
+
+There are different ways to approach this problem. You might make the writable path an environment variable. You might, [like I did](https://github.com/DarrenN/codegumi-clj/blob/19f57501075fc74261d3d14d750510df4d725f7d/src/clj/codegumi/handler.clj#L81), make it an argument that you pass into the JAR when you execute it. You could do both. Either way, you should determine how to tell your app where to find/write files, and use `clojure.java.io` to access them. I ended up packing the filepath passed in as an arg into an [atom](https://github.com/DarrenN/codegumi-clj/blob/19f57501075fc74261d3d14d750510df4d725f7d/src/clj/codegumi/handler.clj#L89) that I could use [elsewhere](https://github.com/DarrenN/codegumi-clj/blob/19f57501075fc74261d3d14d750510df4d725f7d/src/clj/codegumi/flickr.clj#L54) in the application.
+
+**To recap:** Use `(clojure.java.io/resource "foo.css")` to access files within your JAR's _classpath_ and `(clojure.java.io/file "foo.json")` to access a _filepath_ outside the JAR.
+
+## Compile the ClojureScripts
+
+Now, assuming your project has ClojureScript, you have probably already been compiling it with [`lein-cljsbuild`](https://github.com/emezeske/lein-cljsbuild). You are probably building it right into your `resources/public/js` folder via your compiler settings. This works great when your running with `lein`. This works not so great when you need to build a JAR.
+
+Luckily fixing this isn't a big deal. As we mentioned above, we want our ClojureScript to compile into `resources/public/js` so it will get packed into the JAR with our other resources files. All we need to do is add some hooks to our `project.clj` file to make this happen during an Uberjar build:
+
+    :::clojure
+	(defproject codegumi "0.2.0"
+	  :description "codegumi.com in Clojure/ClojureScript"
+	  :url "http://codegumi.com"
+	  :license {:name "Eclipse Public License"
+	            :url "http://www.eclipse.org/legal/epl-v10.html"}
+	  :dependencies [[org.clojure/clojure "1.5.1"]
+                     ...
+	                 [ring "1.3.2"]]
+	  :plugins [[lein-cljsbuild "1.0.1-SNAPSHOT"]
+	            [lein-ring "0.8.8"]
+	            [lein-environ "0.4.0"]]
+	  :source-paths ["src/clj" "src/cljs"]
+	  :hooks [leiningen.cljsbuild] ;; <--- Hook for uberjar to grab
+	  :main codegumi.handler
+	  :ring {:handler codegumi.handler/app}
+	  :profiles
+      ;; Uberjar profiles entry to specify how CLJS is compiled
+	  {:uberjar {:aot :all
+	             :cljsbuild {:builds [{:source-paths ["src/cljs"]
+	                                   :compiler {:output-to "resources/public/js/script.js"
+	                                              :optimizations :simple
+	                                              :pretty-print false}
+	                                   }]}}})
+
+
+Adding `:hooks [leiningen.cljsbuild]` will tell Uberjar to follow any CLJS compile directives when building the JAR. The compiled files, since they are in the `resources` folder, will get picked up.
+
+The addition of the `:uberjar` entry in `:profiles` give you some control over how your ClojureScript is compiled for JARs, which are usually meant for production.
+
+You also may have noticed the addition of the `{:aot :all}` directive to `:uberjar`. This tells Leiningen to [Ahead of Time](http://clojure.org/compilation) compile your Clojure source into JVM bytecode as part of the JAR building process. There are pros and cons to this, so if you run into issues you might remove this directive and do some more reading.
+
+## Ermagerd, we might have a JAR
+
+So after much trial and error you may have generated a JAR. _Cool_. By default Uberjar builds them in `/target`. We're interested in the _standalone_ JAR as that is self-contained and has everything we need. Lets go ahead and run it: `$ java -jar target/my-cool-app-standalone.jar`.
+
+If the stars are aligned and you have sacrificed the appropriate items to your gods of choice there might be a working application on whatever port it was told to run on. Say, http://127.0.0.1:8080.
+
+It may have exploded into a Java Stack Trace in which case remain calm, pour two fingers of [rye whiskey](http://www.bulleit.com/whiskey.aspx#!bulleit-rye) into a glass and settle in for some debugging time.
+
+Once it is working, go ahead and upload it to your VPS and see if it runs there as well. Make sure you have Java installed and all the directories your app needs to run, environment vars, etc. If you do, it runs and you're on Ubuntu we can now make a simple Upstart script so the OS can launch it.
+
+## Upstart
+
+Writing upstart scripts is a topic unto itself. I'll give you a quick starter one, but you may need to do some research to meet your needs: [The Upstart Cookbook](http://upstart.ubuntu.com/).
+
+Shell into your VPS and `cd` into `/etc/init/`. You will need `sudo` powers to make this file, and name it after your app, something like `coolapp.conf`:
+
+    :::bash
+    # Start the process when the VPS comes up, and stop it when it goes down
+    start on runlevel [2345]
+    stop on runlevel [016]
+
+    # If the process crashes, restart it up to 10 times in 5min
+    respawn
+    respawn limit 10 5
+
+    # Log stdout to file
+    console log
+
+    # Set these to the desired uid/gid you want Java to run under
+    setuid clojure
+    setgid clojure
+
+    # Set any environment vars you might need
+    env BAR=quux
+
+    chdir /path/to/jar
+    exec /usr/bin/java -jar cool-app-standalone.jar
+
+Save that file, and then run it `$ sudo start coolapp`. If all goes according to plan, your JAR should get launched and you should see it running with `ps` or `top`. It should be running as whatever user/group you instructed it to. Point your browser at it and see how it goes. If it does _huzzah!_, if not, pour some more whisky into your glass.
+
+Some things to note: your Upstart script is (in this case) run by the system, so it won't have access to `ENV` vars you set in your user configs, this is why we set them in the `conf` script.
+
+Upstart will automatically log output to `/var/log/upstart/coolapp.log`. This will help you when things go wrong (and they will.) You may also consider using alternative logging libraries available to Java/Clojure.
+
+I'd like to give a big shout out to my man [Aaron Bull Schaefer](http://elasticdog.com/) who cleaned up my initial shot at an upstart script. If you need to know anything about running infrastructure or [Factor](http://factorcode.org/) he's your man.
+
+## That's a wrap
+
+Hopefully you found this collection of information helpful in packaging up your application. Maybe you just got loaded. Either way, I hope you had fun.
+
+**Helpful references**
+
+- [Creating an executable jar from a clojure project?](http://stackoverflow.com/questions/1566363/creating-an-executable-jar-file-from-a-clojure-project)
+- [Serving static files with ring/compojure - from a war](http://stackoverflow.com/questions/7816465/serving-static-files-with-ring-compojure-from-a-war)
+- [Opening file in the same directory as running code in Clojure](http://stackoverflow.com/questions/15875859/opening-file-in-the-same-directory-as-running-code-in-clojure#15884225)
+- [Developing and Deploying a Simple Clojure Web Application](https://mmcgrana.github.io/2010/07/develop-deploy-clojure-web-applications.html)
+- [compojure.route.files](http://weavejester.github.io/compojure/compojure.route.html#var-files)
+- [clojure.tools/parse-opts](https://github.com/clojure/tools.cli)
+- [lein-cljsbuild hooks](https://github.com/emezeske/lein-cljsbuild#hooks)
+- [Upstart Cookbook](http://upstart.ubuntu.com/cookbook/)
+
+Photo courtesy of [Eli Christman](https://www.flickr.com/photos/gammaman/)
+via Flickr - Creative Commons

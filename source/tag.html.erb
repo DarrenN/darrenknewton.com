@@ -3,12 +3,12 @@ layout: generic
 description: Articles tagged with
 ---
 <% content_for :generic_title do %>
-	Articles tagged with <%= @tag %>
+	Articles tagged with <%= tagname %>
 <% end %>
 <meta itemprop="itemListOrder" content="Descending" />
 <ul>
-<% if @articles %>
-  <% @articles[0...12].each do |article| %>
+<% if articles %>
+  <% articles.each do |article| %>
     <li itemprop="itemListElement"><%= link_to article.title, article.url %> <span>published on <time itemprop="datePublished"><%= article.date.strftime('%b %e') %></time></span></li>
   <% end %>
 <% end %>

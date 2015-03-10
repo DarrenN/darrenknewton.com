@@ -13,7 +13,7 @@ description: Article archives
 <% end %>
 <meta itemprop="itemListOrder" content="Descending" />
 <ul>
-  <% @articles.each_with_index do |article, i| %>
+  <% articles.each_with_index do |article, i| %>
   <li><%= link_to article.title, article.url %> <time itemprop="datePublished"><%= article.date.strftime('%b %e') %></time></li>
   <% end %>
 </ul>
