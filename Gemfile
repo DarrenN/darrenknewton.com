@@ -1,8 +1,9 @@
-source "http://rubygems.org"
-gem "middleman"
-gem "middleman-blog"
-gem "kramdown"
-gem "rack-codehighlighter"
-gem "sanitize"
-gem "susy", "~> 1.0"
-gem "compass"
+source 'http://rubygems.org'
+gem 'middleman'
+gem 'middleman-blog'
+gem 'kramdown'
+gem 'rack-codehighlighter', :git => 'https://github.com/DarrenN/rack-codehighlighter'
+gem 'sanitize'
+gem 'susy', '~> 1.0'
+gem 'compass'
+gem 'pygments.rb'

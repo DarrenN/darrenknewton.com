@@ -66,7 +66,7 @@ end
 ###
 
 use Rack::Codehighlighter,
-  :pygments_api,
+  :pygments,
   :element => "pre>code",
   :pattern => /\A:::([-_+\w]+)\s*\n/,
   :markdown => true
