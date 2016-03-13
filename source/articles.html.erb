@@ -65,7 +65,7 @@ layout: false
 						<%= link_to "<span>&lt;</span> #{blog.articles[0].title}", '/archive' %>
 					</li>
 					<li id="article-nav-right">
-						<%= link_to blog.articles.last.title + " <span>&gt;</span>", blog.articles.last.url %> 
+						<%= link_to blog.articles.last.title + " <span>&gt;</span>", blog.articles.last.url %>
 					</li>
 				</ul>
 			</aside>
@@ -87,9 +87,7 @@ layout: false
 				<div id="badges">
 					<div id="badges-a">
 					</div>
-					<div id="badges-b">
-						<%= partial "coderwall" %>
-					</div>
+					<div id="badges-b"></div>
 				</div>
 			</div>
 		</footer>
@@ -105,7 +103,7 @@ layout: false
 		      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		    })();
-		    
+
 			$(function() {
 			  $.scrollDepth();
 			});

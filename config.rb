@@ -2,7 +2,6 @@ require "bundler"
 require "kramdown"
 require "sanitize"
 require "rack/codehighlighter"
-require "lib/coderwall_helpers"
 require "lib/uuid"
 require "date"
 require "susy"
@@ -67,7 +66,7 @@ end
 ###
 
 use Rack::Codehighlighter,
-  :pygments_api,
+  :pygments,
   :element => "pre>code",
   :pattern => /\A:::([-_+\w]+)\s*\n/,
   :markdown => true
@@ -92,8 +91,6 @@ helpers do
     Sanitize.clean(html.strip).strip
   end
 end
-helpers CoderWallHelpers
-set :achievements, CoderWallHelpers.achievements_of("darrenn")
 
 # Change the CSS directory
 set :css_dir, "css"
