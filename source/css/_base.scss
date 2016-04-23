@@ -22,13 +22,13 @@ $color-code-base : #00639c;
 
 // Typography
 @mixin font-text ($weight, $style : "normal") {
-  font-family: "chaparral-pro", "Hoefler Text", "Times", sans-serif;
+  font-family: "chaparral-pro-1", "chaparral-pro-2", "Hoefler Text", "Times", sans-serif;
   font-style: $style;
   font-weight: $weight;
 }
 
 @mixin font-title ($weight, $style : "normal") {
-  font-family: "proxima-nova", "Helvetica Neue", "Helvetica", arial, sans-serif;
+  font-family: "proxima-nova-1", "proxima-nova-2", "Helvetica Neue", "Helvetica", arial, sans-serif;
   font-style: $style;
   font-weight: $weight;
 }
