@@ -1,0 +1,50 @@
+---
+title: "Identicons with ClojureScript"
+date: 2016-12-17 14:56 UTC
+author: Darren
+tags: Code, ClojureScript, Identikon
+description: Generate SVG identicons in the browser with ClojureScript
+keywords: clojure, clojurescript, svg, identicon, identikon
+image: identikons.jpg
+---
+
+<%= entry_asset({:url =>
+'http://images.darrennewton.com/identikons.jpg', :alt => 'Identikon Circles', :title => "Identicons with ClojureScript"}) %>
+
+A while back I put together a [little graphics package](http://darrennewton.com/2015/01/04/deterministic-pixels/) written in [Racket](http://racket-lang.org) for generating [identicons](https://en.wikipedia.org/wiki/Identicon). This summer someone at work stumbled across it and asked if I could generate some of those identicons in the browser. I decided to give it a shot and whipped up a small subset of the original package in ClojureScript: [identikon-cljs](https://github.com/DarrenN/identikon-cljs) READMORE
+
+## Usage
+
+You can see the compiled JavaScript in action at [https://pool-chatter.gomix.me/](https://pool-chatter.gomix.me/)
+
+<iframe src="https://pool-chatter.gomix.me/" width="100%" height="325" />
+
+To get an interactive development environment run:
+
+    :::bash
+    lein figwheel
+
+and open your browser at [localhost:3449](http://localhost:3449/).
+This will auto compile and send all changes to the browser without the
+need to reload. After the compilation process is complete, you will
+get a Browser Connected REPL. An easy way to try it is:
+
+    :::clojure
+    (require '[identikon-cljs.core :as identikon] :reload)
+    (identikon/make-identikon "#idk0" 200 200 "identikon")
+
+and you should see an identikon appear in the browser window:
+
+![identikon](https://dl.dropbox.com/s/i9rk5vzxio44fnh/Screenshot%202016-02-21%2017.56.51.png)
+
+From JavaScript you can import `/resources/public/js/compiled/identikon_cljs.js` and then use it like so:
+
+    :::javascript
+    identikon_cljs.core.make_identikon("#idk0", 300, 300, "identikon");
+    identikon_cljs.core.make_identikon("p.idkp", 60, 60, "small identikons");
+
+## Rationale
+
+Since the original package was writte in Racket it made a lot of sense to use a Lisp for the browser version as well. The only real player in this space at the moment is [ClojureScript](https://clojurescript.org/), which I've used before on other projects. The downside to ClojureScript is it brings along a largish compiled runtime and I wanted to keep this as small as I could. The Google Closure compiler does a great job with dead code elimination, but the runtime still incurs a hit, so I decided to do away with SVG rendering libs and generate elements on my own using [Hiccups](https://github.com/teropa/hiccups). I also needed to generate SHA-1 hashes of input strings, so I leaned on [cljs-hash](https://github.com/davesann/cljs-hash). Finally I needed to manipulate HSB and Hex colors so I included the excellent [color](https://github.com/thi-ng/color) library.
+
+All in all it was fun to port Racket over to ClojureScript and also re-think a few things in the process.
