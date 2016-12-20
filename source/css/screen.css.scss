@@ -115,6 +115,12 @@ article {
     display: block;
   }
 
+  img.no-border {
+    box-shadow: none;
+    border: none;
+    display: block;
+  }
+
   .entry-content-asset {
     margin: 20px 0;
     img {
@@ -145,6 +151,18 @@ article {
     font-size: 1.2rem;
     line-height: 150%;
     margin: 30px 0;
+
+    &.image-with-caption {
+      margin-bottom: 10px;
+    }
+
+    &.caption {
+      @include font-title(300);
+      font-size: 1rem;
+      margin-top: 0px;
+      padding-top: 0px;
+      text-align: center;
+    }
 
     strong {
       font-weight: 600;
