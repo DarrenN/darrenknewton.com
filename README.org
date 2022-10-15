@@ -1,0 +1,7 @@
+* http://darrennewton.com
+
+Personal blog full of ramblings about programming and software. Written in org-mode, rendered with emacs.
+
+** Copyright / License information
+
+http://darrennewton.com is made with open source software, however, all of the content, design and templates are Copyright, Darren Newton, all rights reserved.

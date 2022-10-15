@@ -1,7 +1,0 @@
-<strong>Metadata:</strong>
-<ul itemprop="keywords">
-	<% current_article.tags.each do |tag| %>
-	  <% url = tag_path tag %>
-	  <li><%= link_to tag, url %></li>
-	<% end %>
-</ul>
