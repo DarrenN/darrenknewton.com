@@ -1,0 +1,23 @@
+#+options: html-link-use-abs-url:nil html-postamble:t html-header:nil
+#+options: html-scripts:nil html-style:nil toc:nil author:nil num:nil ':t
+#+options: html5-fancy:t tex:t
+#+html_doctype: html5
+#+html_container: div
+#+html_content_class: container
+#+description:
+#+keywords:
+#+html_link_home:
+#+html_link_up:
+#+html_mathjax:
+#+html_equation_reference_format: \eqref{%s}
+#+html_head: <link rel="stylesheet" href="https://use.typekit.net/eau0tob.css">
+#+html_head: <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@500;700">
+#+html_head: <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
+#+html_head_extra:
+#+subtitle:
+#+infojs_opt:
+#+latex_header:
+#+author: DarrenN
+;; https://donjon.bin.sh/scifi/name/#type=cp;cp=megacorp
+;;#+creator: Saito Industries Advanced Text Processor
+#+generator: Saito Industries Advanced Text Processor

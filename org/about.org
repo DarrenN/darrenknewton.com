@@ -1,0 +1,10 @@
+#+setupfile: ~/github/darrenknewton.com/template.org
+#+TITLE: About
+#+date: <2033-10-13 Thur>
+#+description: About this special internet website
+#+keywords: biography, website, recursion
+#+creator: Tsukuda Specialized Services | Artifical Intelligence Unit
+
+Hello!
+
+

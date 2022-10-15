@@ -1,4 +1,5 @@
-#+TITLE: Sitemap for project org-notes
+#+TITLE: Sitemap for project blog-notes
 
+- [[file:about.org][About]]
 - [[file:index.org][Miscellanea]]
 - [[file:test-a.org][Racket / Org-Mode Test]]

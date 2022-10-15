@@ -1,9 +1,9 @@
-#+setupfile: ~/.emacs.d/org-templates/level-0.org
+#+setupfile: ~/github/darrenknewton.com/template.org
 #+TITLE: Miscellanea
 #+date: <2033-10-13 Thur>
 #+description: Random words from @d_run
 #+keywords: emacs, computers, v25media, lisp, scheme, racket
 #+creator: WSC Advanced Defense | String Division
 
-- [[file:test-a.org][Racket / Org-Mode Test]]
+- [[file:test-a.org][Racket / Org-Mode Test]] <2022-10-02 Sun>
 

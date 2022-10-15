@@ -1,4 +1,4 @@
-#+setupfile: ~/.emacs.d/org-templates/level-0.org
+#+setupfile: ~/github/darrenknewton.com/template.org
 #+title: Racket / Org-Mode Test
 #+date: <2022-10-02 Sun>
 #+description: Testing Org-Mode / Babel with Racket
