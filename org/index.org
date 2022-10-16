@@ -5,5 +5,5 @@
 #+keywords: emacs, computers, v25media, lisp, scheme, racket
 #+creator: WSC Advanced Defense | String Division
 
-- [[file:test-a.org][Racket / Org-Mode Test]] <2022-10-02 Sun>
+- [[file:test-a.org][Racket / Org-Mode Test]] | <2022-10-02 Sun>
 
