@@ -1,0 +1,10 @@
+User-agent: Googlebot
+Disallow: /js/
+
+User-agent: AdsBot-Google
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.example.com/sitemap.xml

@@ -1,0 +1,15 @@
+/* TEAM */
+Owner: Darren Newton
+Site: https://darrennewton.com
+Mastodon: @d_run@mastodon.social
+Location: Brooklyn, USA
+
+/* THANKS */
+Big ups to all the computers out there
+
+/* SITE */
+Software: Emacs, Elisp
+
+
+
+
