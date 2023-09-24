@@ -1,6 +1,6 @@
 #+TITLE: Sitemap for project blog-notes
 
-- [[file:about.org][About]]
+- [[file:about.org][Hello]]
 - [[file:index.org][Miscellanea]]
 - [[file:quadtree.org][Quadtrees]]
 - [[file:test-a.org][Racket / Org-Mode Test]]

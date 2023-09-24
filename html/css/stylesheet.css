@@ -36,6 +36,14 @@ img {
     max-width: 100%;
 }
 
+figure {
+    margin: 1rem 0;
+}
+
+header {
+    display: block;
+}
+
 h1, h2, h3, h4, h5 {
     font-family: var(--sans-font-family);
     font-weight: 500;
@@ -44,6 +52,16 @@ h1, h2, h3, h4, h5 {
 h2, h3, h4, h4 {
     margin-top: 3rem;
     margin-bottom: 1rem;
+}
+
+h1.title {
+    margin-bottom: 0;
+}
+
+p.publish-date {
+    font-family: var(--sans-font-family);
+    margin-top: 0;
+    color: #333;
 }
 
 a {
@@ -79,10 +97,6 @@ blockquote {
 blockquote > p {
     font-style: italic;
     font-weight: 400;
-}
-
-header {
-    display: block;
 }
 
 table {

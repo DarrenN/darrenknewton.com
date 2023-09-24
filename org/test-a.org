@@ -3,7 +3,7 @@
 #+date: <2022-10-02 Sun>
 #+description: Testing Org-Mode / Babel with Racket
 #+keywords: racket org-mode emacs
-#+creator: Yoseka Industrial Group | Advanced Text Processor
+#+OPTIONS: title:nil
 
 * Testing Racket and Org-Babel, now
 

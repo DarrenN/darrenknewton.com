@@ -3,6 +3,7 @@
 #+date: <2033-10-13 Thur>
 #+description: Random words from @d_run
 #+keywords: emacs, computers, v25media, lisp, scheme, racket
+#+OPTIONS: title:nil html-preamble:"<nav><ol><li class=\"nav-first\">📝 Miscellanea ::</li><li><a href=\"index.html\">Index</a></li><li><a href=\"about.html\">About</a></li></ol></nav>"
 
 - [[file:test-a.org][Racket / Org-Mode Test]] | <2022-10-02 Sun>
 
