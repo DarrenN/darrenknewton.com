@@ -17,6 +17,4 @@
 #+infojs_opt:
 #+latex_header:
 #+author: DarrenN
-;; https://donjon.bin.sh/scifi/name/#type=cp;cp=megacorp
-;;#+creator: Saito Industries Advanced Text Processor
 #+generator: Saito Industries Advanced Text Processor

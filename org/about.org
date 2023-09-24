@@ -1,12 +1,8 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
-#+TITLE: About
+#+TITLE: Hello
 #+date: <2033-10-13 Thur>
 #+description: About this special internet website
 #+keywords: biography, website, recursion
-#+creator: Tsukuda Specialized Services | Artifical Intelligence Unit
 
-Hello on <2022-10-16 Sun>
-
-
-
+Nice to meet you. I'm a [[https://lisp-lang.org/][parenthesis enthusiast]] in New York City who co-founded [[https://paperswelove.org/][Papers We Love]] and it's [[https://pwlconf.org/][eponymous conference]] with [[https://github.com/zeeshanlakhani][Zeeshan Lakhani]]. You can find me on 🦣 [[https://mastodon.social/@d_run@mastodon.social][@d_run@mastodon.social]].
 
