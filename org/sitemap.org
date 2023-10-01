@@ -2,6 +2,7 @@
 
 - [[file:about.org][Hello]]
 - [[file:index.org][Miscellanea]]
+- [[file:papers-we-love-at-strangeloop.org][Papers We Love at Strangeloop]]
 - [[file:quadtree.org][Quadtrees]]
 - [[file:test-a.org][Racket / Org-Mode Test]]
 - [[file:unstraight-lines.org][Unstraight Lines]]

@@ -3,7 +3,7 @@
 #+date: <2022-10-02 Sun>
 #+description: Testing Org-Mode / Babel with Racket
 #+keywords: racket org-mode emacs
-#+OPTIONS: title:nil
+#+options: title:nil
 
 * Testing Racket and Org-Babel, now
 
@@ -74,6 +74,18 @@ The image below is generated with some Racket code within a =#+BEGIN_SRC= block.
 
 #+RESULTS:
 [[file:/Users/yuzu/github/darrenknewton.com/org/img/circle.png]]
+
+** Let's do some HTML!
+
+#+BEGIN_SRC elisp :exports results :results html
+  (make-photo-block
+   '(("img/2023-09-22 13.10.01.jpg" "The gang" "PWL Crew 2023")
+     ("img/2023-09-22 13.09.33.jpg" "The GANG!" "PWL Crew 2023+")))
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<b>Boo!</b>
+#+END_EXPORT
 
 
 

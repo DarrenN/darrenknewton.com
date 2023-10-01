@@ -60,6 +60,7 @@ h1.title {
 
 p.publish-date {
     font-family: var(--sans-font-family);
+    font-size: 90%;
     margin-top: 0;
     color: #333;
 }
@@ -188,6 +189,26 @@ tbody tr:hover {
 
 #postamble > p > a {
     color: rgb(112, 184, 255);
+}
+
+/* Photos */
+div.photo-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+div.photo-container > figure {
+    display: block;
+    margin: 1rem 0.5rem;
+}
+
+div.photo-container > figure > figcaption {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+div.photo-container > figure > a > img {
+    border: #eee 1px solid;
 }
 
 /* Medium screen devices (768px and above) */
