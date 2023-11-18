@@ -1,8 +1,8 @@
 #+TITLE: Sitemap for project blog-notes
 
-- [[file:about.org][Hello]]
+- [[file:about.org][About]]
 - [[file:index.org][Miscellanea]]
-- [[file:papers-we-love-at-strangeloop.org][Papers We Love at Strangeloop]]
 - [[file:quadtree.org][Quadtrees]]
 - [[file:test-a.org][Racket / Org-Mode Test]]
+- [[file:papers-we-love-at-strangeloop.org][Requiem for a Strange Loop]]
 - [[file:unstraight-lines.org][Unstraight Lines]]

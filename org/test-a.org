@@ -1,21 +1,21 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
-#+title: Racket / Org-Mode Test
-#+date: <2022-10-02 Sun>
-#+description: Testing Org-Mode / Babel with Racket
-#+keywords: racket org-mode emacs
 #+options: title:nil
+#+title: Racket / Org-Mode Test
+#+date: <2023-10-13 Fri>
 #+BEGIN_SRC elisp :exports results :results raw
-  (make-og-metadata
-   "Racket / Org-Mode Test!"
-   "Testing Org-Mode / Babel with Racket"
-   '((img-url . "http://darrennewton.com/img/circle.png")
+  (make-metadata
+   '((title . "Racket / Org-Mode Test")
+     (description . "Testing Org-Mode / Babel with Racket")
+     (date . "<2023-10-13 Fri>")
+     (Keywords . "racket org-mode emacs")
+     (img-url . "http://darrennewton.com/img/circle.png")
      (img-type . "image/png")
      (img-width . "200")
      (img-height . "200")
      (img-alt . "Image of a circle, yo")))
 #+END_SRC
 
-* Testing Racket and Org-Babel, now!
+* Testing Racket and Org-Babel
 
 Mauris pharetra et ultrices neque ornare aenean. *Id eu nisl* nunc mi /ipsum faucibus vitae/. Sed faucibus turpis in eu mi bibendum. [[file+sys:index.org][Back home]]. Et malesuada fames ac turpis egestas integer eget. Et netus et malesuada fames. Tristique risus nec feugiat in. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Id aliquet lectus proin nibh nisl condimentum. In pellentesque massa placerat duis ultricies lacus sed. Condimentum lacinia quis vel eros donec ac odio tempor orci. Ullamcorper dignissim cras tincidunt lobortis feugiat. Nisi vitae suscipit tellus mauris a diam maecenas. Id aliquet risus feugiat in. Quis enim lobortis scelerisque fermentum dui faucibus in ornare. Aliquam vestibulum morbi blandit cursus risus at ultrices mi tempus. Ut sem viverra aliquet eget. Consectetur adipiscing elit ut aliquam purus. Eu augue ut lectus arcu bibendum at varius vel pharetra. A pellentesque sit amet porttitor eget dolor. Ipsum a arcu cursus vitae congue mauris!
 

@@ -10,6 +10,8 @@
     --color-table-hover: rgb(218, 234, 251);
     --color-link: rgb(16, 134, 251);
     --color-link-hover: rgb(189, 16, 251);
+    --color-preamble-text: #555;
+    --color-postamble-text: #999;
 }
 
 html {
@@ -153,14 +155,15 @@ tbody tr:hover {
 #preamble > nav > ol > li {
     display: block;
     margin: 0 0.6rem 0 0;
-    padding: 0;
+    padding: 0.6rem 0 0 0;
     font-family: var(--sans-font-family);
     font-size: 80%;
-    color: #555;
+    color: var(--color-preamble-text);
 }
 
 #preamble > nav > ol > li.nav-first {
     margin: 0 0.3rem 0 0;
+    padding: 0;
 }
 
 #preamble a {
@@ -179,7 +182,7 @@ tbody tr:hover {
     font-size: 60%;
     font-family: var(--mono-font-family);
     text-transform: uppercase;
-    color: #999;
+    color: var(--color-postamble-text);
     margin: 0 1rem 0 0;
 }
 
@@ -189,6 +192,11 @@ tbody tr:hover {
 
 #postamble > p > a {
     color: rgb(112, 184, 255);
+}
+
+#index-item-list-container > ul > li {
+    color: var(--color-postamble-text);
+    margin-bottom: 0.6rem;
 }
 
 /* Photos */

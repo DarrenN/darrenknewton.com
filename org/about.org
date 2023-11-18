@@ -1,6 +1,6 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
-#+TITLE: Hello
-#+date: <2033-10-13 Thur>
+#+TITLE: About
+#+date: <1970-10-13 Tue>
 #+description: About this special internet website
 #+keywords: biography, website, recursion
 #+OPTIONS: title:nil

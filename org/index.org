@@ -1,9 +1,17 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
 #+TITLE: Miscellanea
-#+date: <2033-10-13 Thur>
+#+date: <1970-10-13 Tue>
 #+description: Random words from @d_run
 #+keywords: emacs, computers, v25media, lisp, scheme, racket
-#+OPTIONS: title:nil html-preamble:"<nav><ol><li class=\"nav-first\">📝 Miscellanea ::</li><li><a href=\"index.html\">Index</a></li><li><a href=\"about.html\">About</a></li></ol></nav>"
+#+OPTIONS: title:nil
 
-- [[file:test-a.org][Racket / Org-Mode Test]] | <2022-10-02 Sun>
-
+#+BEGIN_EXPORT html
+<div id="index-item-list-container">
+#+END_EXPORT
+#+BEGIN_SRC elisp :exports results :results raw
+  (setq org-html-preamble-format index-html-preamble-format)
+  (blog/generate-bloglist)
+#+END_SRC
+#+BEGIN_EXPORT html
+</div>
+#+END_EXPORT

@@ -1,11 +1,24 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
-#+title: Papers We Love & Strange Loop
+#+title: Requiem for a Strange Loop
 #+date: <2023-09-30 Sat>
 #+description: An incomplete history of the Papers We Love Conference at Strange Loop
 #+keywords: paperswelove, pwlconf, strange loop, history, conferences, tech
 #+options: title:nil
 
-[[https://youtu.be/suv76aL0NrA?si=VN4w3uRMV7k0PhiI][Strange Loop]] has ended.
+[[file:img/2023-09-22 14.43.47.jpg]]
+
+[[https://youtu.be/suv76aL0NrA?si=VN4w3uRMV7k0PhiI][Strange Loop]] has ended. I say it out loud and realize I won't be flying into St. Louis next September. It's absence is palpable for now, but this will soften with time. What comes next is already a topic of discussion across newly fragmented social meadia platforms.
+
+It's easy to talk about Strange Loop as a monolithic community. In reality it encompassed many different niche communities, cliques, and communal ideas. If you talked to five different attendees each would describe a completely different conference than what you just experienced. This is also what made Strange Loop special, the ability to choose your own conference, find your own affinity groups within the bigger gathering.
+
+Alex Miller, Strange Loop's creator, [[https://www.youtube.com/watch?v=loNeu5Yrazs][recently mentioned]] that the conference happened at the "just the right time". It brought together a lot different ideas about computers and software that were floating around in meetups and online forums. I think this is the important point folks should consider when thinking about "what comes after Strange Loop". Don't try to emulate what was, try to identify interesting strands of ideas floating around now and build on those.
+
+
+It got so big that the Pre-Conference Program of years past became a thriving ecosystem of it's own. It certainly did for [[https://paperswelove.org/][Papers We Love]], providing a home for our yearly [[https://pwlconf.org/][conference]] and then allowing us to "graduate" into a Strange Loop track proper for this final year.
+
+I recently had the opportunity to participate in an [[https://www.youtube.com/watch?v=loNeu5Yrazs][episode of the Causal Islands podcast]] with [[https://github.com/puredanger][Alex Miller]], [[https://www.linkedin.com/in/zeeshanlakhani/][Zeeshan Lakhani]], [[https://www.deltamualpha.org/][David Ashby]], and [[https://cemerick.com/][Chas Emerick]] about both Strange Loop and Papers We Love.
+
+
 
 There is a finality in saying it, and it's been sinking in that I won't be making my regular flight to St. Louis next September. I didn't know it at the time, but landing in Missouri for the [[https://thestrangeloop.com/2013/sessions.html][2013 edition]] of the conference would have a profound impact on my career in software. Running meetups and conferences was the furthest thing from my mind, but a decade later I'm pondering the future of both.
 
