@@ -5,6 +5,14 @@
 #+keywords: common lisp, docker, lisp, container
 #+options: title:nil
 
+#+BEGIN_SRC elisp :exports results :results raw
+  (setq org-html-preamble-format (make-preamble))
+  (make-metadata
+   '(:title "Dockerizing Common Lisp"
+     :type  "article"
+     :url   "lisp-docker.html"))
+#+END_SRC
+
 #+begin_quote
 *What we're going to do:* Containerize a simple echo server written in Lisp and put it behind a reverse proxy.
 #+end_quote

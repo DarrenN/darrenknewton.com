@@ -1,11 +1,17 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
-#+title: Unstraight Lines
+#+title: Drawing unstraight lines
 #+date: <2022-11-03 Thu>
-#+description: Creating unstraight lines with Racket
 #+keywords: racket lewitt art metapict
 #+OPTIONS: title:nil
 
-* Drawing unstraight lines
+#+BEGIN_SRC elisp :exports results :results raw
+  (setq org-html-preamble-format (make-preamble))
+  (make-metadata
+   '(:title       "Drawing unstraigt lines"
+     :description "Creating unstraight lines with Racket"
+     :type        "article"
+     :url         "unstraight-lines.html"))
+#+END_SRC
 
 A collection of notes about drawing "unstraight lines" for use with an AxiDraw plotter. [[https://shihn.ca/posts/2020/roughjs-algorithms/][Prior art.]]
 
@@ -59,7 +65,7 @@ To use this, we draw an arbitrary line starting at =(0, 170)= and ending at =(35
   (define m1 (cadr (uline-midpoints ul1)))
 
   (set-curve-pict-size 400 200)
-  (define img  
+  (define img
     (with-window (window -20 400 -20 200)
       (draw (color "lightgray" (draw (curve origo -- top)))
             (color "lightgray" (draw (curve origo -- bottom)))
@@ -109,7 +115,7 @@ Let's try a few more:
        (penwidth 6 (color "red" (draw (uline-end l))))))
 
     (set-curve-pict-size 400 200)
-    (define img  
+    (define img
       (with-window (window -20 400 -20 200)
         (draw (color "lightgray" (draw (curve origo -- top)))
               (color "lightgray" (draw (curve origo -- bottom)))

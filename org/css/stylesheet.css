@@ -186,6 +186,10 @@ tbody tr:hover {
     margin: 0 1rem 0 0;
 }
 
+#postamble > p > strong {
+   text-transform: uppercase;
+}
+
 #postamble > p.copyright,
 #postamble > p.zaibatsu {
     text-transform: none;

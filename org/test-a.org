@@ -1,15 +1,17 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
-#+options:   title:nil
 #+title:     Racket / Org-Mode Test
 #+date:      <2023-10-13 Fri>
+#+options:   title:nil
+
 #+BEGIN_SRC elisp :exports results :results raw
+  (setq org-html-preamble-format (make-preamble))
   (make-metadata
    '(:title       "Racket / Org-Mode Test"
      :description "Testing Org-Mode / Babel with Racket"
      :date        "<2023-10-13 Fri>"
      :keywords    "racket org-mode emacs"
      :type        "article"
-     :url         "test-a.html" 
+     :url         "test-a.html"
      :img-url     "http://darrennewton.com/img/circle.png"
      :img-type    "image/png"
      :img-width   "200"
