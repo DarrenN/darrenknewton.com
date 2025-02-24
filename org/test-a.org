@@ -1,21 +1,23 @@
 #+setupfile: ~/github/darrenknewton.com/template.org
-#+options: title:nil
-#+title: Racket / Org-Mode Test
-#+date: <2023-10-13 Fri>
+#+options:   title:nil
+#+title:     Racket / Org-Mode Test
+#+date:      <2023-10-13 Fri>
 #+BEGIN_SRC elisp :exports results :results raw
   (make-metadata
-   '((title . "Racket / Org-Mode Test")
-     (description . "Testing Org-Mode / Babel with Racket")
-     (date . "<2023-10-13 Fri>")
-     (Keywords . "racket org-mode emacs")
-     (img-url . "http://darrennewton.com/img/circle.png")
-     (img-type . "image/png")
-     (img-width . "200")
-     (img-height . "200")
-     (img-alt . "Image of a circle, yo")))
+   '(:title       "Racket / Org-Mode Test"
+     :description "Testing Org-Mode / Babel with Racket"
+     :date        "<2023-10-13 Fri>"
+     :keywords    "racket org-mode emacs"
+     :type        "article"
+     :url         "test-a.html" 
+     :img-url     "http://darrennewton.com/img/circle.png"
+     :img-type    "image/png"
+     :img-width   "200"
+     :img-height  "200"
+     :img-alt     "Image of a circle, yo"))
 #+END_SRC
 
-* Testing Racket and Org-Babel
+* Testing Racket and Org-Babel!
 
 Mauris pharetra et ultrices neque ornare aenean. *Id eu nisl* nunc mi /ipsum faucibus vitae/. Sed faucibus turpis in eu mi bibendum. [[file+sys:index.org][Back home]]. Et malesuada fames ac turpis egestas integer eget. Et netus et malesuada fames. Tristique risus nec feugiat in. Sit amet consectetur adipiscing elit pellentesque habitant morbi. Id aliquet lectus proin nibh nisl condimentum. In pellentesque massa placerat duis ultricies lacus sed. Condimentum lacinia quis vel eros donec ac odio tempor orci. Ullamcorper dignissim cras tincidunt lobortis feugiat. Nisi vitae suscipit tellus mauris a diam maecenas. Id aliquet risus feugiat in. Quis enim lobortis scelerisque fermentum dui faucibus in ornare. Aliquam vestibulum morbi blandit cursus risus at ultrices mi tempus. Ut sem viverra aliquet eget. Consectetur adipiscing elit ut aliquam purus. Eu augue ut lectus arcu bibendum at varius vel pharetra. A pellentesque sit amet porttitor eget dolor. Ipsum a arcu cursus vitae congue mauris!
 
@@ -24,8 +26,8 @@ Mauris pharetra et ultrices neque ornare aenean. *Id eu nisl* nunc mi /ipsum fau
 The body is treated as a =racket= language expression, and the result is output and shit!!
 
 #+BEGIN_SRC racket :tangle yes :eval no :exports code
-    (for ([i (in-range 10)])
-      (displayln (format "| ~a | ~a | ~a |" i (* 11 i) (* 23 i))))
+  (for ([i (in-range 10)])
+    (displayln (format "| ~a | ~a | ~a |" i (* 11 i) (* 23 i))))
 #+END_SRC
 
 #+BEGIN_SRC typescript :tangle yes :eval no :exports code
@@ -48,13 +50,13 @@ In the org file, we have a =SRC= block of Racket code which generates the table 
 *** Random figures in a table
 
 #+BEGIN_SRC racket :noweb yes :exports results :results output raw verbatim :colnames '("a" "b" "c")
-      (define (->cur n)
-        (exact->inexact (/ n 100)))
-      (displayln "| a | b | c |")
-      (displayln "|--")
-      (for ([i (in-range 10)])
-        (displayln (format "| ~a | ~a | ~a |" (->cur (* 111 i)) (->cur (* 1123 i))
-                           (number->string (->cur (* 2321 i))))))
+  (define (->cur n)
+    (exact->inexact (/ n 100)))
+  (displayln "| a | b | c |")
+  (displayln "|--")
+  (for ([i (in-range 10)])
+    (displayln (format "| ~a | ~a | ~a |" (->cur (* 111 i)) (->cur (* 1123 i))
+                       (number->string (->cur (* 2321 i))))))
 #+END_SRC
 
 #+RESULTS:
@@ -76,10 +78,10 @@ In the org file, we have a =SRC= block of Racket code which generates the table 
 The image below is generated with some Racket code within a =#+BEGIN_SRC= block.
 
 #+BEGIN_SRC racket :noweb yes :exports results :results file graphics :file "/Users/yuzu/github/darrenknewton.com/org/img/circle.png"
-(require 2htdp/image)
-(define canvas (rectangle 200 200 "solid" "blue"))
-(define c (circle 50 "solid" "red"))
-(save-image (overlay c canvas) "/Users/yuzu/github/darrenknewton.com/org/img/circle.png")
+  (require 2htdp/image)
+  (define canvas (rectangle 200 200 "solid" "blue"))
+  (define c (circle 50 "solid" "red"))
+  (save-image (overlay c canvas) "/Users/yuzu/github/darrenknewton.com/org/img/circle.png")
 #+END_SRC
 
 #+RESULTS:
@@ -96,9 +98,3 @@ The image below is generated with some Racket code within a =#+BEGIN_SRC= block.
 #+BEGIN_EXPORT html
 <b>Boo!</b>
 #+END_EXPORT
-
-
-
-
-
-

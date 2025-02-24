@@ -64,7 +64,7 @@ p.publish-date {
     font-family: var(--sans-font-family);
     font-size: 90%;
     margin-top: 0;
-    color: #333;
+    color: #666;
 }
 
 a {
@@ -235,4 +235,4 @@ div.photo-container > figure > a > img {
     .org-src-container {
         overflow: auto;
     }
-}  
+}

@@ -1,0 +1,262 @@
+#+setupfile: ~/github/darrenknewton.com/template.org
+#+title: Dockerizing Common Lisp
+#+date: <2025-02-23 Sun>
+#+description: Packing up a Common Lisp web application into a Docker container
+#+keywords: common lisp, docker, lisp, container
+#+options: title:nil
+
+#+begin_quote
+*What we're going to do:* Containerize a simple echo server written in Lisp and put it behind a reverse proxy.
+#+end_quote
+
+To deploy web services at home and on the public internet I usually create [[https://www.docker.com/][Docker]] containers that can be composed together. This keeps things somewhat portable and I can mix and match containers as necessary. My preferred pattern is to use [[https://caddyserver.com/][Caddy]] as an HTTP server and reverse proxy to the other containers.
+
+I've been teaching myself [[https://lisp-lang.org/][Common Lisp]] lately and wanted to stand up some toy services to get the hang of things. Figuring out how to deploy a Lisp application in a container wasn't very straightforward as there aren't may guides available. I found the different [[https://hub.docker.com/search?q=sbcl][SBCL images]] on Dockerhub but I didn't know how to use them to containerize my own application.
+
+Luckily I stumbled across [[https://github.com/fukamachi/docker-cl-example/tree/master][docker-cl-example]] which is a fantastic resource. It demonstrates how to pack a Common Lisp web application into a Docker container using one of the SBCL images. It contains a simple "Hello World" app and a full blown postgres driven application. It also demos hooking up [[https://www.cliki.net/SWANK][Swank]] to a running container for debugging, among other things. Take a look at the [[https://github.com/fukamachi/docker-cl-example/blob/master/standard/Makefile][Makefile]] for more goodies.
+
+** Dockerize a lisp application
+
+We'll use that as a starting point for [[https://github.com/DarrenN/cl-echo][cl-echo]]. This is a simple [[https://github.com/fukamachi/clack][clack]] application that returns a JSON echo of the incoming web request. Go ahead and clone / fork it as necessary.
+
+First thing is to create a [[https://docs.docker.com/reference/dockerfile/][Dockerfile]] specifying our image in =/docker=. I started with =Dockerfile-app-production= from the =docker-cl-example= and made some small changes. Here's the whole file, and I'll explain sections below.
+
+#+begin_src shell
+# syntax=docker/dockerfile:experimental
+ARG SBCL_VERSION=2.5.1-debian
+FROM fukamachi/sbcl:${SBCL_VERSION}
+ARG QLOT_VERSION=1.6.0
+ARG PORT=5001
+
+ENV APP_ENV production
+ENV APP_PORT 5001
+ENV APP_SERVER woo
+ENV APP_ADDRESS 0.0.0.0
+
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt set -x; \
+  apt-get update && apt-get -y install --no-install-recommends \
+    git \
+    libev-dev \
+    gcc \
+    libc6-dev && \
+  ros install fukamachi/qlot/${QLOT_VERSION}
+
+WORKDIR /app
+RUN ros -e '(ql:quickload :qlot/distify)'
+COPY . /app
+
+RUN qlot install
+RUN qlot exec ros -e "(ql:quickload :cl-echo)"
+
+EXPOSE ${PORT}
+ENTRYPOINT .qlot/bin/clackup \
+           -s cl-echo "src/app.lisp" \
+           --debug nil \
+           --server $APP_SERVER \
+           --port $APP_PORT \
+           --address $APP_ADDRESS
+#+end_src
+
+*** SBCL
+
+#+begin_src shell
+ARG SBCL_VERSION=2.5.1-debian
+FROM fukamachi/sbcl:${SBCL_VERSION}
+#+end_src
+
+We're using [[https://github.com/fukamachi/docker-cl-example/tree/master][Fukamachi]]'s SBCL images from [[https://hub.docker.com/r/fukamachi/sbcl][Dockerhub]] to get =2.5.1-debian= as our base. This image comes with Quicklisp and Roswell installed.
+
+*** ARGs and ENVs
+
+#+begin_src shell
+ARG QLOT_VERSION=1.6.0
+ARG PORT=5001
+
+ENV APP_ENV production
+ENV APP_PORT 5001
+ENV APP_SERVER woo
+ENV APP_ADDRESS 0.0.0.0
+#+end_src
+
+This is where we set =ARG= values used in the Docker file, and set environment variables in the container with =ENV=. =QLOT_VERSION= specifies which version of [[https://github.com/fukamachi/qlot][qlot]] is installed. Qlot will manage the Lisp packages for our echo application.
+
+*** Prepare the image
+
+#+begin_src shell
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt set -x; \
+  apt-get update && apt-get -y install --no-install-recommends \
+    git \
+    libev-dev \
+    gcc \
+    libc6-dev && \
+  ros install fukamachi/qlot/${QLOT_VERSION}
+
+WORKDIR /app
+RUN ros -e '(ql:quickload :qlot/distify)'
+COPY . /app
+
+RUN qlot install
+RUN qlot exec ros -e "(ql:quickload :cl-echo)"
+#+end_src
+
+We need to install some Debian packages in the image. =git= is necessary for =qlot= to install packages. =libev-dev= and the others are for [[https://github.com/fukamachi/woo][Woo]], a non-blocking HTTP server built on top of [[https://github.com/enki/libev][libev]]. We're using that instead of [[https://edicl.github.io/hunchentoot/][Hunchentoot]] to serve our application.
+
+Next we set our working directory and tell =qlot= to set itself up and install the packages specified in [[https://github.com/DarrenN/cl-echo/blob/main/qlfile][qlfile]]. Then we use Roswell to load up our application namespace
+
+*** Set the entrypoint
+
+#+begin_src shell
+EXPOSE ${PORT}
+ENTRYPOINT .qlot/bin/clackup \
+           -s cl-echo "src/app.lisp" \
+           --debug nil \
+           --server $APP_SERVER \
+           --port $APP_PORT \
+           --address $APP_ADDRESS
+#+end_src
+
+We want to open up the =PORT= we specified earlier, and we'll serve the application at =http://$APP_ADDRESS:$APP_PORT=. =ENTRYPOINT= is a command that's executed when we startup the container. In this case it runs =clackup= (which we installed with =qlot=) passing it our application file (=app.lisp=) and =ENV= vars.
+
+*** Build and run
+
+To kick this off use the =Makefile= included in the repo:
+
+#+begin_src shell
+make build
+make up
+#+end_src
+
+If the image builds you should be able to =curl= it at =http://127.0.0.1:5001=.
+
+*** Some things to note
+
+The resulting image is very large, ~530-600MB in size. I think that's way too large for something like this. I'd like to explore using Alpine as a slimmer base image.
+
+I'd also like to find a way to compile the application to a binary during the build step and discard everything else that I can. When I tried to compile a binary locally I got a lot of cryptic errors, so will need to do more research there.
+
+** Docker Compose / Reverse Proxy
+
+Now we have a web application running in a container. The next step is to get the application running behind a reverse proxy. We're going to use [[https://docs.docker.com/compose/][Docker Compose]] to manage multiple containers at once.
+
+The architecture is very simple, we'll run Caddy in one container. It will serve static files from disk and also reverse proxy to =cl-echo= in another container. They'll share a virtual network which Docker manages, making it easy for them to communicate. Caddy will be exposed to port 80 on the host machine, which will most likely require =sudo=.
+
+Let's setup a =compose.yaml= file to our infrastructure:
+
+#+begin_src yaml
+services:
+  ###
+  # REVERSE PROXY
+  ###
+  reverse-proxy: # https://github.com/caddyserver/caddy/releases
+    image: docker.io/library/caddy:alpine
+    container_name: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/data:/data
+      - ./caddy/config:/config
+      - ./caddy:/etc/caddy
+      - ./caddy/static:/static
+    restart: always
+    depends_on:
+      - echo
+    labels:
+      - io.containers.autoupdate=registry
+      - your.container.category=proxy
+    networks:
+      - caddy
+
+  ###
+  # WEB SERVICES
+  ###
+  cl-echo:
+    image: cl-echo-app:latest
+    container_name: cl-echo
+    restart: always
+    environment:
+      APP_PORT: 80
+    labels:
+      - your.container.category=services
+    networks:
+      - caddy
+#+end_src
+
+*** Reverse Proxy
+
+Caddy has ready-to-go images available on Dockerhub, so we can pull one and use it immediately. We'll setup a very simple [[https://caddyserver.com/docs/caddyfile-tutorial][Caddyfile]] to tell it what to do:
+
+#+begin_src yaml
+{
+    email <your.email>
+    servers {
+        metrics
+    }
+}
+
+<your.domain> {
+    tls internal
+    root * /static
+    encode zstd gzip
+    file_server
+    log
+
+    reverse_proxy /echo/* cl-echo
+}
+#+end_src
+
+Through some magic Caddy will send all requests to =https://<your.domain>/echo/= to the =cl-echo= container. Make note of the =networks= field in =compose.yaml=. This tells Docker to setup a named virtual network, which we can tell the =cl-echo= container to use as well.
+
+*** Web Services
+
+For the web application we're using the image we built on our local machine, so we need to specify =cl-echo-app:latest= as the =image=. Ideally we would push our image into an OCI registry like [[https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry][GitHub's Container Registry]]. I will leave that as an exercise to the reader.
+
+We also need to set the =APP_PORT= to =80=. This is important! Caddy will try to proxy requests to port 80 on this container, and if it doesn't answer Caddy will respond with a 502 Error. There is /probably/ a way to set this up using different ports but I couldn't figure it out. Most importantly, =cl-echo= will be serving to port 80 on the /Docker virtual network/, not the host machine's. So you don't need to worry about opening up =cl-echo= to the whole web.
+
+*** Running your infra
+
+Next step is firing up all the containers (you may need =sudo=):
+
+#+begin_src shell
+docker compose up
+#+end_src
+
+This should bring up both containers and you should be able to hit the echo server at =https://<your.domain>/echo/= in a browser or with =curl=. The response should be something like:
+
+#+begin_src json
+{
+  "content-length": false,
+  "content-type": false,
+  "header": {
+    "host": "<your.domain>",
+    "user-agent": "curl/8.7.1",
+    "accept": "*/*",
+    "x-forwarded-for": "172.18.0.1",
+    "x-forwarded-host": "<your.domain>",
+    "x-forwarded-proto": "https",
+    "accept-encoding": "gzip"
+  },
+  "path-info": "/echo/",
+  "query-string": false,
+  "remote-addr": "172.18.0.4",
+  "request-method": "GET",
+  "remote-port": 18077,
+  "request-uri": "/echo/",
+  "script-name": "",
+  "server-name": "<your.domain>",
+  "server-port": 80,
+  "server-protocol": "HTTP/1.1",
+  "url-scheme": "http",
+  "env": {
+    "app_env": "production",
+    "app_port": "80",
+    "app_server": "woo"
+  }
+}
+#+end_src
+
+** Success!
+
+This works well enough. I'm sure there are a lot of optimizations that can be made and I would love to hear about them. You can drop issues or pull requests on [[https://github.com/DarrenN/cl-echo][cl-echo]] if you have any tips.
+
+As I noted above, I'd love to know how to shrink the image size and also successfully compile the application to a binary.

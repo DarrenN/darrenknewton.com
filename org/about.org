@@ -5,5 +5,12 @@
 #+keywords: biography, website, recursion
 #+OPTIONS: title:nil
 
-Nice to meet you. I'm a [[https://lisp-lang.org/][parenthesis enthusiast]] in New York City who co-founded [[https://paperswelove.org/][Papers We Love]] and it's [[https://pwlconf.org/][eponymous conference]] with [[https://github.com/zeeshanlakhani][Zeeshan Lakhani]]. You can find me on 🦣 [[https://mastodon.social/@d_run@mastodon.social][@d_run@mastodon.social]].
+#+BEGIN_SRC elisp :exports results :results raw
+  (setq org-html-preamble-format index-html-preamble-format)
+  (make-metadata '(:type "website" :url "about.html" :title "About"))
+#+END_SRC
+
+Nice to meet you.
+
+I'm a [[https://lisp-lang.org/][parenthesis enthusiast]] in New York City who co-founded [[https://paperswelove.org/][Papers We Love]] and it's [[https://pwlconf.org/][eponymous conference]] with [[https://github.com/zeeshanlakhani][Zeeshan Lakhani]]. You can find me on [[https://bsky.app/profile/drun.v25media.com][bsky]].
 
