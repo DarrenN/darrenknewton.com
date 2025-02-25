@@ -2,8 +2,4 @@
 
 - [[file:about.org][About]]
 - [[file:lisp-docker.org][Dockerizing Common Lisp]]
-- [[file:unstraight-lines.org][Drawing unstraight lines]]
 - [[file:index.org][Miscellanea]]
-- [[file:quadtree.org][Quadtrees]]
-- [[file:test-a.org][Racket / Org-Mode Test]]
-- [[file:papers-we-love-at-strangeloop.org][Requiem for a Strange Loop]]

@@ -1,0 +1,130 @@
+#+setupfile: ~/github/darrenknewton.com/template.org
+#+title: Drawing unstraight lines
+#+date: <2022-11-03 Thu>
+#+keywords: racket lewitt art metapict
+#+OPTIONS: title:nil
+
+#+BEGIN_SRC elisp :exports results :results raw
+  (regenerate-preamble-postamble)
+  (make-metadata
+   '(:title       "Drawing unstraigt lines"
+     :description "Creating unstraight lines with Racket"
+     :type        "article"
+     :url         "unstraight-lines.html"))
+#+END_SRC
+
+A collection of notes about drawing "unstraight lines" for use with an AxiDraw plotter. [[https://shihn.ca/posts/2020/roughjs-algorithms/][Prior art.]]
+
+** Finding points on a line, now
+
+*Problem*: Give a lined defined by points =a= and =b= on a 2 dimensional plane, find arbitrary points along the line and apply "jitter" to the =y= axis of those points.
+
+[[https://math.stackexchange.com/a/175906][This answer on MathOverflow]] got me moving in the right direction. With some help from [[https://docs.racket-lang.org/metapict/index.html][MetaPict's]] built-in functions. The general steps extracted from that answer boil down to:
+
+[[file:./img/unstraight-line-whiteboard.jpg]]
+
+Translating that into Racket starts to look like:
+
+#+BEGIN_SRC racket :tangle yes :eval no :exports code
+  ;; Define the line
+  (define a (pt x0 y0)) ; Start point on a plane
+  (define b (pt x1 y1)) ; End point on a plane
+
+  ;; Get the distance of the two points
+  (define d0 (dist a b))
+
+  ;; The "distance space" of the line
+  (define Δ (range 0 d0))
+
+  ;; Get u, the ratio of vector over vector distance
+  ;; (we use this to calculate the intermediate points)
+  ;; v / ||v||
+  (define u (vec (/ (pt-x b) d0) (* -1 (/ (pt-y a) d0))))
+
+  ;; With these values we can calculate the intermediate points of the line.
+  ;; In MetaPict the grid is "flipped" with 0,0 at the bottom left of the grid,
+  ;; so we need to subtract our vector from the end point (b).
+  (define m (pt- b (vec* Δ u)))
+#+END_SRC
+
+To use this, we draw an arbitrary line starting at =(0, 170)= and ending at =(350, 0)= (remember that in MetaPict the origin 0,0 is at the bottom left). The /distance/ between the points is =389.10=. I'd like to get a couple of additional points at 25% and 45% of that distance respectively. Using =(pt- b (vec* Δ u))= I can calculate these to =(pt 262.5 42.5)= and  =(pt 192.5 76.5)=:
+
+#+BEGIN_SRC racket :noweb yes :exports results :results file graphics :file "./img/unstraight-line-a.svg"
+  (require metapict
+           lewitt-lib)
+
+  (define a (pt 0 170))
+  (define b (pt 350 0))
+
+  (define top (pt 0 200))
+  (define bottom (pt 400 0))
+
+  (define ul1 (make-uline a b))
+
+  (define m0 (car (uline-midpoints ul1)))
+  (define m1 (cadr (uline-midpoints ul1)))
+
+  (set-curve-pict-size 400 200)
+  (define img
+    (with-window (window -20 400 -20 200)
+      (draw (color "lightgray" (draw (curve origo -- top)))
+            (color "lightgray" (draw (curve origo -- bottom)))
+            (dot-label "start: a (0, 170)" a (urt))
+            (dot-label "end: b (350, 0)" b (llft))
+            (dot-label (format "m0 (~a, ~a)" (round (pt-x m0)) (round (pt-y m0))) m0 (llft))
+            (dot-label (format "m1 (~a, ~a)" (round (pt-x m1)) (round (pt-y m1))) m1 (urt))
+            (draw (curve a -- b))
+            (penwidth 6 (color "red" (draw a)))
+            (penwidth 6 (color "red" (draw b))))))
+  (save-pict "/Users/yuzu/github/darrenknewton.com/org/img/unstraight-line-a.svg" img 'svg)
+#+END_SRC
+
+#+RESULTS:
+[[file:./img/unstraight-line-a.svg]]
+
+Let's try a few more:
+
+#+BEGIN_SRC racket :noweb yes :exports results :results file graphics :file "./img/unstraight-line-b.svg"
+    (require metapict
+             lewitt-lib)
+
+    (define a1 (pt 10 10))
+    (define a2 (pt 350 50))
+
+    (define b1 (pt 50 50))
+    (define b2 (pt 150 180))
+
+    (define c2 (pt 0 170))
+    (define c1 (pt 350 0))
+
+    (define top (pt 0 200))
+    (define bottom (pt 400 0))
+
+    (define ul1 (make-uline a1 a2))
+    (define ul2 (make-uline b1 b2))
+    (define ul3 (make-uline c1 c2))
+
+    (define (draw-line l)
+      (define m0 (car (uline-midpoints l)))
+      (define m1 (cadr (uline-midpoints l)))
+      (draw
+       (penwidth 4 (draw m0))
+       (penwidth 4 (draw m1))
+       (draw (curve (uline-start l) -- (uline-end l)))
+       (penwidth 6 (color "red" (draw (uline-start l))))
+       (penwidth 6 (color "red" (draw (uline-end l))))))
+
+    (set-curve-pict-size 400 200)
+    (define img
+      (with-window (window -20 400 -20 200)
+        (draw (color "lightgray" (draw (curve origo -- top)))
+              (color "lightgray" (draw (curve origo -- bottom)))
+              (draw-line ul1)
+              (draw-line ul2)
+              (draw-line ul3))))
+
+    (save-pict "/Users/yuzu/github/darrenknewton.com/org/img/unstraight-line-b.svg" img 'svg)
+#+END_SRC
+
+#+RESULTS:
+[[file:./img/unstraight-line-b.svg]]

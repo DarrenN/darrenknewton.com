@@ -6,7 +6,7 @@
 #+options: title:nil
 
 #+BEGIN_SRC elisp :exports results :results raw
-  (setq org-html-preamble-format (make-preamble))
+  (regenerate-preamble-postamble)
   (make-metadata
    '(:title "Dockerizing Common Lisp"
      :type  "article"

@@ -1,0 +1,10 @@
+#+setupfile: ~/github/darrenknewton.com/template.org
+#+title: Quadtrees
+#+date: <2023-04-30 Sun>
+#+description: Implementing Quadtrees in Racket
+#+keywords: quadtree algorithm racket
+#+creator: Nishiyama Diversified Transport | Spatial Indexing Unit
+
+* Implementing Quadtrees in Racket
+
+[[https://en.wikipedia.org/wiki/Quadtree][Quadtrees]] are a common algorithm used in spatial indexing. They're handy when you want to quickly find nearest neighbors within a 2d space. I have a use case for them in a project that generates [[https://en.wikipedia.org/wiki/Delaunay_triangulation][Delaunay triangles]].
