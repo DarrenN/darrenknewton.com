@@ -5,8 +5,6 @@
 #+keywords: emacs, computers, v25media, lisp, scheme, racket
 #+OPTIONS: title:nil
 
-** :: Writing
-
 #+BEGIN_EXPORT html
 <div id="index-item-list-container">
 #+END_EXPORT
