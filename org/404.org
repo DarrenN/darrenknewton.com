@@ -1,0 +1,10 @@
+#+setupfile: ~/github/darrenknewton.com/template.org
+#+title: 404
+#+date: <1970-10-13 Tue>
+#+description: 404 / Not Found
+#+keywords: bad computer
+#+OPTIONS: title:nil
+
+* 404 / Not Found
+
+[[file:img/404.jpg]]
