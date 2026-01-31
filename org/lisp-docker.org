@@ -6,11 +6,12 @@
 #+options: title:nil
 
 #+BEGIN_SRC elisp :exports results :results raw
-    (regenerate-preamble-postamble)
-    (make-metadata
-     '(:title "Dockerizing Common Lisp"
-       :type  "article"
-       :url   "lisp-docker.html"))
+  (regenerate-preamble-postamble)
+  (make-metadata
+   '(:title "Dockerizing Common Lisp"
+            :type  "article"
+            :url   "lisp-docker.html"
+            :description "Packing up a Common Lisp web application into a Docker container"))
 #+END_SRC
 
 #+begin_quote
