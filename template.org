@@ -1,0 +1,20 @@
+#+options: html-link-use-abs-url:nil html-postamble:t html-header:nil
+#+options: html-scripts:nil html-style:nil toc:nil author:nil num:nil ':t
+#+options: html5-fancy:t tex:t
+#+html_doctype: html5
+#+html_container: div
+#+html_content_class: container
+#+description:
+#+keywords:
+#+html_link_home:
+#+html_link_up:
+#+html_mathjax:
+#+html_equation_reference_format: \eqref{%s}
+#+html_head: <meta name="AdsBot-Google" content="noindex">
+#+html_head: <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
+#+html_head_extra:
+#+subtitle:
+#+infojs_opt:
+#+latex_header:
+#+author: DarrenN
+#+generator: Saito Industries Advanced Text Processor

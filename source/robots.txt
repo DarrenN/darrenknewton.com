@@ -1,6 +1,0 @@
-# sachiko.v25media.com
-
-User-agent: *
-Allow: /
-
-Sitemap: http://darrenknewton.com/sitemap.xml

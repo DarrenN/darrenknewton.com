@@ -1,0 +1,11 @@
+#+setupfile: ~/github/darrenknewton.com/template.org
+#+title: 404 Not Found
+#+date: <1970-10-13 Tue>
+#+description: 404 / Not Found
+#+keywords: bad computer
+#+OPTIONS: title:nil
+
+* 404 / Not Found
+
+#+ATTR_HTML: :alt 404 Not Found :title Bye Dave!
+[[file:img/404.jpg]]

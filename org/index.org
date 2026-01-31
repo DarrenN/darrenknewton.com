@@ -1,0 +1,20 @@
+#+setupfile: ~/github/darrenknewton.com/template.org
+#+title: Miscellanea
+#+date: <1970-10-13 Tue>
+#+description: Random words from @d_run
+#+keywords: emacs, computers, v25media, lisp, scheme, racket
+#+OPTIONS: title:nil
+
+#+BEGIN_EXPORT html
+<div id="index-item-list-container">
+#+END_EXPORT
+#+BEGIN_SRC elisp :exports results :results raw
+  (make-metadata '(:url ""))
+#+END_SRC
+#+BEGIN_SRC elisp :exports results :results raw
+  (setq org-html-preamble-format index-html-preamble-format)
+  (blog/generate-bloglist)
+#+END_SRC
+#+BEGIN_EXPORT html
+</div>
+#+END_EXPORT

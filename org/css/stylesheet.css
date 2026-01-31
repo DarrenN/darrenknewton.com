@@ -1,0 +1,243 @@
+:root {
+    --serif-font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+    --sans-font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+    --table-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono-font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --color-code-bg: rgb(241 245 249);
+    --color-code-block-bg: #333;
+    --color-text: rgb(55, 65, 81);
+    --color-table-border: #333;
+    --color-table-hover: rgb(218, 234, 251);
+    --color-link: rgb(16, 134, 251);
+    --color-link-hover: rgb(189, 16, 251);
+    --color-preamble-text: #555;
+    --color-postamble-text: #999;
+}
+
+html {
+    color-scheme: light;
+    height: 100vh;
+}
+
+body {
+    font-family: var(--serif-font-family);
+    font-weight: 400;
+    font-style: normal;
+    -moz-osx-font-smoothing: grayscale;
+    color: var(--color-text);
+    padding: 1rem;
+    font-size: 110%;
+    line-height: 1.375;
+}
+
+#content, #preamble, #postamble {
+    margin: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+figure {
+    margin: 1rem 0;
+}
+
+header {
+    display: block;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: var(--sans-font-family);
+    font-weight: 500;
+}
+
+h2, h3, h4, h4 {
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+h1.title {
+    margin-bottom: 0;
+}
+
+p.publish-date {
+    font-family: var(--sans-font-family);
+    font-size: 90%;
+    margin-top: 0;
+    color: #666;
+}
+
+a {
+    color: var(--color-link);
+}
+
+a:hover {
+    color: var(--color-link-hover);
+}
+
+p > code {
+    font-family: var(--mono-font-family);
+    background: var(--color-code-bg);
+    font-size: 80%;
+    padding: 0.2rem;
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.2rem;
+}
+
+pre code {
+    font-family: var(--mono-font-family);
+    white-space: pre-wrap;
+}
+
+blockquote {
+    display: block;
+    background-color: var(--color-code-bg);
+    padding: 0.6rem 1rem;
+    border-left: 2px #aaa solid;
+    margin: 2rem 0;
+}
+
+blockquote > p {
+    font-style: italic;
+    font-weight: 400;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--table-font-family);
+}
+
+thead > tr > th {
+    border-bottom: var(--color-table-border) 2px solid;
+    padding: 0.5rem 0.8rem;
+}
+
+tbody > tr > td {
+    padding: 0.2rem 0.8rem;
+}
+
+tbody tr:nth-child(even) {
+    background-color: var(--color-code-bg);
+}
+
+tbody tr:hover {
+    background-color: var(--color-table-hover);
+}
+
+.org-right {
+    text-align: right;
+}
+
+.org-src-container {
+    background: var(--color-code-block-bg);
+    color: #eee;
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.4rem;
+    overflow: scroll;
+}
+
+#preamble > nav {
+    display: block;
+    padding-bottom: 1.4rem;
+    margin-botton: 1rem;
+    border-bottom: #eee 1px solid;
+}
+
+#preamble > nav > ol {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+#preamble > nav > ol > li {
+    display: block;
+    margin: 0 0.6rem 0 0;
+    padding: 0.6rem 0 0 0;
+    font-family: var(--sans-font-family);
+    font-size: 80%;
+    color: var(--color-preamble-text);
+}
+
+#preamble > nav > ol > li.nav-first {
+    margin: 0 0.3rem 0 0;
+    padding: 0;
+}
+
+#preamble a {
+    color: rgb(112, 184, 255);
+}
+
+#postamble {
+    display: flex;
+    justify-content: flex-start;
+    margin: 2rem 0 1rem 0;
+    padding: 2rem 0;
+    border-top: #eee 1px solid;
+}
+
+#postamble > p {
+    font-size: 60%;
+    font-family: var(--mono-font-family);
+    text-transform: uppercase;
+    color: var(--color-postamble-text);
+    margin: 0 1rem 0 0;
+}
+
+#postamble > p > strong {
+   text-transform: uppercase;
+}
+
+#postamble > p.copyright,
+#postamble > p.zaibatsu {
+    text-transform: none;
+}
+
+#postamble > p > a {
+    color: rgb(112, 184, 255);
+}
+
+#index-item-list-container > ul > li {
+    color: var(--color-postamble-text);
+    margin-bottom: 0.6rem;
+}
+
+/* Photos */
+div.photo-container {
+    display: flex;
+    justify-content: flex-start;
+}
+
+div.photo-container > figure {
+    display: block;
+    margin: 1rem 0.5rem;
+}
+
+div.photo-container > figure > figcaption {
+    font-size: 0.8rem;
+    font-style: italic;
+}
+
+div.photo-container > figure > a > img {
+    border: #eee 1px solid;
+}
+
+/* Medium screen devices (768px and above) */
+@media only screen and (min-width: 768px) {
+    body {
+        padding: 2rem 4rem;
+        font-size: 115%;
+        line-height: 1.375;
+    }
+
+    #content, #preamble, #postamble {
+        max-width: 60rem;
+        margin: 0 auto;
+    }
+
+    .org-src-container {
+        overflow: auto;
+    }
+}
